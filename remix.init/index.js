@@ -9,22 +9,74 @@ const toml = require("@iarna/toml")
 const sort = require("sort-package-json")
 
 /**
- * @param {*} string
+ * @description
+ * Runs after the project has been generated and dependencies have been installed.
  */
-const escapeRegExp = (string) =>
+async function main({ rootDirectory, packageManager, isTypeScript }) {
+  // Javascript support is on the way!
+  if (!isTypeScript) {
+    throw new Error(
+      "😓 Javascript implementation of this template will be released soon! We apologise!"
+    )
+  }
+
+  const DIR_NAME = path.basename(rootDirectory)
+  const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
+
+  // Creates and initiates a newly `.env` file,with provided variables from `.env.example`.
+  await createAndInitEnvFile(rootDirectory)
+
+  // Replaces default project name for the one provided by `DIR_NAME`.
+  await replaceProjectNameFromFiles(rootDirectory, APP_NAME)
+
+  /* const prodToml = toml.parse(prodContent)
+  prodToml.app = prodToml.app.replace(REPLACER, APP_NAME)
+  
+  execSync("npm run format -- --loglevel warn", {
+    stdio: "inherit",
+    cwd: rootDirectory,
+  }) */
+
+  console.log(
+    `Setup is complete. 🔋 Batteries has been included!
+Start development with \`npm run dev\`
+ `.trim()
+  )
+}
+
+/**
+ * @param {*} string
+ * @returns
+ */
+function escapeRegExp(string) {
   // $& means the whole matched string.
-  string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}
+
+/**
+ *
+ * @param {*} length
+ * @returns
+ */
+function getRandomString(length) {
+  return crypto.randomBytes(length).toString("hex")
+}
 
 /**
  * @description
  * Creates and initiates a newly `.env` file, with provided variables from `.env.example`.
  */
-const createAndInitEnvFile = async (rootDirectory) => {
+async function createAndInitEnvFile(rootDirectory) {
   const ENV_PATH = path.join(rootDirectory, ".env")
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example")
 
-  const exampleEnvFile = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
-  await fs.writeFile(ENV_PATH, exampleEnvFile)
+  const exampleEnv = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
+  const replacedExampleEnv = exampleEnv.replace(
+    /^SESSION_SECRET=.*$/m,
+    `SESSION_SECRET="${getRandomString(16)}"`
+  )
+
+  await fs.writeFile(ENV_PATH, replacedExampleEnv)
 }
 
 /**
@@ -35,7 +87,7 @@ const createAndInitEnvFile = async (rootDirectory) => {
  * - fly.toml
  * - README.md
  */
-const replaceProjectNameFromFiles = async (rootDirectory, appName) => {
+async function replaceProjectNameFromFiles(rootDirectory, appName) {
   const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json")
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
   const README_PATH = path.join(rootDirectory, "README.md")
@@ -78,42 +130,6 @@ const replaceProjectNameFromFiles = async (rootDirectory, appName) => {
     fs.writeFile(FLY_TOML_PATH, toml.stringify(replacedToml)),
     fs.writeFile(README_PATH, replacedReadmeHeaderAndText),
   ])
-}
-
-/**
- * @description
- * Runs after the project has been generated and dependencies have been installed.
- */
-const main = async ({ rootDirectory, packageManager, isTypeScript }) => {
-  const DIR_NAME = path.basename(rootDirectory)
-  const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
-
-  if (!isTypeScript) {
-    throw new Error(
-      "😓 Javascript implementation of this template will be released soon! We apologise!"
-    )
-  }
-
-  // Creates and initiates a newly `.env` file,
-  // with provided variables from `.env.example`.
-  await createAndInitEnvFile(rootDirectory)
-
-  // Replaces default project name for the one provided by `DIR_NAME`.
-  await replaceProjectNameFromFiles(rootDirectory, APP_NAME)
-
-  /* const prodToml = toml.parse(prodContent)
-  prodToml.app = prodToml.app.replace(REPLACER, APP_NAME)
-  
-  execSync("npm run format -- --loglevel warn", {
-    stdio: "inherit",
-    cwd: rootDirectory,
-  }) */
-
-  console.log(
-    `Setup is complete. 🔋 Batteries has been included!
-Start development with \`npm run dev\`
- `.trim()
-  )
 }
 
 module.exports = main

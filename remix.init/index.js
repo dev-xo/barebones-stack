@@ -80,7 +80,8 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
   const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json")
   const README_PATH = path.join(rootDirectory, "README.md")
 
-  const README_REGEX_MATCHER = /##\sBoilerplate\sName/gm
+  const README_REGEX_HEADER_MATCHER = /##\sBarebones\sStack/gm
+  const README_REGEX_TEXT_MATCHER = /barebones-stack/gm
   const README_HEADER_APP_NAME = "## " + appName
 
   // 1. Reads.
@@ -96,15 +97,19 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
       null,
       2
     ) + "\n"
-  const replacedReadmeFile = readmeFile.replace(
-    README_REGEX_MATCHER,
+  const replacedHeaderReadmeFile = readmeFile.replace(
+    README_REGEX_HEADER_MATCHER,
     README_HEADER_APP_NAME
+  )
+  const replacedHeaderAndTextReadmeFile = replacedHeaderReadmeFile.replace(
+    README_REGEX_TEXT_MATCHER,
+    appName
   )
 
   // 3. Writes.
   await Promise.all([
     fs.writeFile(PACKAGE_JSON_PATH, replacedPackageJsonFile),
-    fs.writeFile(README_PATH, replacedReadmeFile),
+    fs.writeFile(README_PATH, replacedHeaderAndTextReadmeFile),
   ])
 }
 

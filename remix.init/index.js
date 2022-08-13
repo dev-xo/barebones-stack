@@ -10,8 +10,8 @@ const toml = require("@iarna/toml")
 const sort = require("sort-package-json")
 
 /**
- * @description
- * Runs after the project has been generated and dependencies have been installed.
+ * @description Runs after the project has been generated
+ * and dependencies have been installed.
  */
 async function main({ rootDirectory, packageManager, isTypeScript }) {
   // Javascript support is on the way!
@@ -29,6 +29,9 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
   // Replaces default project name for the one provided by `DIR_NAME`.
   await replaceProjectNameFromFiles(rootDirectory, APP_NAME)
+
+  // Replaces `Dockerfile` based on the current package manager used from the user.
+  await replaceDockerLockFile(rootDirectory, packageManager)
 
   /* const prodToml = toml.parse(prodContent)
   prodToml.app = prodToml.app.replace(REPLACER, APP_NAME)
@@ -65,20 +68,20 @@ function getRandomString(length) {
 }
 
 /**
- * @description
- * Creates and initiates a newly `.env` file, with provided variables from `.env.example`.
+ * @description Creates and initiates a newly `.env` file,
+ * with provided variables from `.env.example`.
  */
 async function createAndInitEnvFile(rootDirectory) {
   const ENV_PATH = path.join(rootDirectory, ".env")
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example")
 
-  const exampleEnv = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
-  const replacedExampleEnv = exampleEnv.replace(
+  const exampleEnvFil = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
+  const replacedExampleEnvFile = exampleEnvFil.replace(
     /^SESSION_SECRET=.*$/m,
     `SESSION_SECRET="${getRandomString(16)}"`
   )
 
-  await fs.writeFile(ENV_PATH, replacedExampleEnv)
+  await fs.writeFile(ENV_PATH, replacedExampleEnvFile)
 }
 
 /**
@@ -96,7 +99,6 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
 
   const README_HEADER_MATCHER = /#\sRemix\sBarebones\sStack/gm
   const APP_NAME_MATCHER = /barebones-stack/gm
-
   const README_HEADER_REPLACER = "# " + appName
 
   // 1. Reads.
@@ -107,31 +109,62 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
   ])
 
   // 2. Replaces.
-  const replacedPackageJson =
+  // Replaces Package.json file.
+  const replacedPackageJsonFile =
     JSON.stringify(
       sort({ ...JSON.parse(packageJsonFile), name: appName }),
       null,
       2
     ) + "\n"
 
-  const replacedToml = toml.parse(tomlFile)
-  replacedToml.app = replacedToml.app.replace(APP_NAME_MATCHER, appName)
+  // Replaces Fly.toml file.
+  const replacedTomlFile = toml.parse(tomlFile)
+  replacedTomlFile.app = replacedTomlFile.app.replace(APP_NAME_MATCHER, appName)
 
+  // Replaces README.md file.
   const replacedReadmeHeader = readmeFile.replace(
     README_HEADER_MATCHER,
     README_HEADER_REPLACER
   )
-  const replacedReadmeHeaderAndText = replacedReadmeHeader.replace(
+  const replacedReadmeFile = replacedReadmeHeader.replace(
     APP_NAME_MATCHER,
     appName
   )
 
   // 3. Writes.
   await Promise.all([
-    fs.writeFile(PACKAGE_JSON_PATH, replacedPackageJson),
-    fs.writeFile(FLY_TOML_PATH, toml.stringify(replacedToml)),
-    fs.writeFile(README_PATH, replacedReadmeHeaderAndText),
+    fs.writeFile(PACKAGE_JSON_PATH, replacedPackageJsonFile),
+    fs.writeFile(FLY_TOML_PATH, toml.stringify(replacedTomlFile)),
+    fs.writeFile(README_PATH, replacedReadmeFile),
   ])
+}
+
+/**
+ * @description Replaces `Dockerfile`
+ * based on the current package manager used from the user.
+ */
+async function replaceDockerLockFile(rootDirectory, packageManager) {
+  const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile")
+
+  // 1. Reads.
+  const dockerfile = await fs.readFile(DOCKERFILE_PATH, "utf-8")
+
+  // 2. Replaces.
+  const lockfile = {
+    npm: "package-lock.json",
+    yarn: "yarn.lock",
+    pnpm: "pnpm-lock.yaml",
+  }[packageManager]
+
+  const replacedDockerFile = lockfile
+    ? dockerfile.replace(
+        new RegExp(escapeRegExp("ADD package.json"), "g"),
+        `ADD package.json ${lockfile}`
+      )
+    : dockerfile
+
+  // 3. Writes.
+  await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile)
 }
 
 module.exports = main

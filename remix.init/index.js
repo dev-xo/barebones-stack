@@ -10,9 +10,55 @@ const path = require("path")
 const toml = require("@iarna/toml")
 const sort = require("sort-package-json")
 
-const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-const getRandomString = (length) => crypto.randomBytes(length).toString("hex")
+/**
+ * @description
+ * Runs after the project has been generated and dependencies have been installed.
+ */
+async function main({ rootDirectory, packageManager, isTypeScript }) {
+  const DIR_NAME = path.basename(rootDirectory)
+  const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
+  if (!isTypeScript) {
+    throw new Error(
+      "😓 Javascript implementation of this template will be released soon! We apologise!"
+    )
+  }
+
+  // Creates and initiates a newly `.env` file,
+  // with provided variables from `.env.example`.
+  await createAndInitEnvFile(rootDirectory)
+
+  // Replaces default project name for the one provided by `DIR_NAME`.
+  await replaceProjectNameFromFiles(rootDirectory, APP_NAME)
+
+  /* const prodToml = toml.parse(prodContent)
+  prodToml.app = prodToml.app.replace(REPLACER, APP_NAME)
+  
+  execSync("npm run format -- --loglevel warn", {
+    stdio: "inherit",
+    cwd: rootDirectory,
+  }) */
+
+  console.log(
+    `Setup is complete. 🔋 Batteries has been included!
+Start development with \`npm run dev\`
+ `.trim()
+  )
+}
+
+function escapeRegExp(string) {
+  // $& means the whole matched string.
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}
+
+function getRandomString(length) {
+  return crypto.randomBytes(length).toString("hex")
+}
+
+/**
+ * @description
+ * Creates and initiates a newly `.env` file, with provided variables from `.env.example`.
+ */
 const createAndInitEnvFile = async (rootDirectory) => {
   const ENV_PATH = path.join(rootDirectory, ".env")
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example")
@@ -21,87 +67,45 @@ const createAndInitEnvFile = async (rootDirectory) => {
   await fs.writeFile(ENV_PATH, exampleEnvFile)
 }
 
-const main = async ({ rootDirectory, packageManager, isTypeScript }) => {
-  if (!isTypeScript) {
-    throw new Error(
-      "😓 Javascript implementation of this template will be released soon! We apologise!"
-    )
-  }
-
-  const DIR_NAME = path.basename(rootDirectory)
-
+/**
+ * @description Replaces default project name for the one provided by `DIR_NAME`.
+ *
+ * Files that are being updated:
+ * - package.json
+ * - README.md
+ *
+ * // TODO: Fly.toml
+ */
+async function replaceProjectNameFromFiles(rootDirectory, appName) {
   const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json")
-  const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile")
-  const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
   const README_PATH = path.join(rootDirectory, "README.md")
-  const STACK_GITHUB_ACTION = path.join(
-    rootDirectory,
-    ".github/workflows/deploy.yml"
-  )
 
-  const REPLACER = "remix-barebones-template"
-  const SUFFIX = getRandomString(2)
-  const APP_NAME = (DIR_NAME + "-" + SUFFIX).replace(/[^a-zA-Z0-9-_]/g, "-")
+  const README_REGEX_MATCHER = /##\sBoilerplate\sName/gm
+  const README_HEADER_APP_NAME = "## " + appName
 
-  const [packageJson, dockerfile, prodContent, readme] = await Promise.all([
-    fs.readFile(PACKAGE_JSON_PATH, "utf-8").then((s) => JSON.parse(s)),
-    fs.readFile(DOCKERFILE_PATH, "utf-8"),
-    fs.readFile(FLY_TOML_PATH, "utf-8"),
+  // 1. Reads.
+  const [packageJsonFile, readmeFile] = await Promise.all([
+    fs.readFile(PACKAGE_JSON_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
-    fs.rm(STACK_GITHUB_ACTION),
   ])
 
-  await createAndInitEnvFile(rootDirectory)
-
-  const prodToml = toml.parse(prodContent)
-  prodToml.app = prodToml.app.replace(REPLACER, APP_NAME)
-
-  const newReadme = readme.replace(
-    new RegExp(escapeRegExp(REPLACER), "g"),
-    APP_NAME
+  // 2. Replaces.
+  const replacedPackageJsonFile =
+    JSON.stringify(
+      sort({ ...JSON.parse(packageJsonFile), name: appName }),
+      null,
+      2
+    ) + "\n"
+  const replacedReadmeFile = readmeFile.replace(
+    README_REGEX_MATCHER,
+    README_HEADER_APP_NAME
   )
 
-  const newPackageJson =
-    JSON.stringify(sort({ ...packageJson, name: APP_NAME }), null, 2) + "\n"
-
-  /* 
-  const lockfile = {
-    npm: "package-lock.json",
-    yarn: "yarn.lock",
-    pnpm: "pnpm-lock.yaml",
-  }[packageManager]
-
-
-  const newDockerfile = lockfile
-    ? dockerfile.replace(
-        new RegExp(escapeRegExp("ADD package.json"), "g"),
-        `ADD package.json ${lockfile}`
-      )
-    : dockerfile 
-  */
-
+  // 3. Writes.
   await Promise.all([
-    fs.writeFile(PACKAGE_JSON_PATH, newPackageJson),
-    // fs.writeFile(DOCKERFILE_PATH, newDockerfile),
-    fs.writeFile(FLY_TOML_PATH, toml.stringify(prodToml)),
-    fs.writeFile(README_PATH, newReadme),
-
-    /* fs.copyFile(
-      path.join(rootDirectory, "remix.init", "gitignore"),
-      path.join(rootDirectory, ".gitignore")
-    ), */
+    fs.writeFile(PACKAGE_JSON_PATH, replacedPackageJsonFile),
+    fs.writeFile(README_PATH, replacedReadmeFile),
   ])
-
-  execSync("npm run format -- --loglevel warn", {
-    stdio: "inherit",
-    cwd: rootDirectory,
-  })
-
-  console.log(
-    `Setup is complete. 🔋 Batteries has been included!
-Start development with \`npm run dev\`
- `.trim()
-  )
 }
 
 module.exports = main

@@ -30,7 +30,8 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   // Replaces default project name for the one provided by `DIR_NAME`.
   await replaceProjectNameFromFiles(rootDirectory, APP_NAME)
 
-  // Replaces `Dockerfile` based on the current package manager used from the user.
+  // Replaces `Dockerfile` and adds a `lockfile`,
+  // based on the provided package manager from user.
   await replaceDockerLockFile(rootDirectory, packageManager)
 
   /* const prodToml = toml.parse(prodContent)
@@ -97,8 +98,9 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
   const README_PATH = path.join(rootDirectory, "README.md")
 
-  const README_HEADER_MATCHER = /#\sRemix\sBarebones\sStack/gm
-  const APP_NAME_MATCHER = /barebones-stack/gm
+  // const README_HEADER_MATCHER = /#\sRemix\sBarebones\sStack/gm
+  // const APP_NAME_MATCHER = /barebones-stack/gm
+  const REPLACER_MATCHER = /barebones[\s|-]Stack/gim
   const README_HEADER_REPLACER = "# " + appName
 
   // 1. Reads.
@@ -119,15 +121,15 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
 
   // Replaces Fly.toml file.
   const replacedTomlFile = toml.parse(tomlFile)
-  replacedTomlFile.app = replacedTomlFile.app.replace(APP_NAME_MATCHER, appName)
+  replacedTomlFile.app = replacedTomlFile.app.replace(REPLACER_MATCHER, appName)
 
   // Replaces README.md file.
   const replacedReadmeHeader = readmeFile.replace(
-    README_HEADER_MATCHER,
+    REPLACER_MATCHER,
     README_HEADER_REPLACER
   )
   const replacedReadmeFile = replacedReadmeHeader.replace(
-    APP_NAME_MATCHER,
+    REPLACER_MATCHER,
     appName
   )
 
@@ -140,8 +142,8 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
 }
 
 /**
- * @description Replaces `Dockerfile`
- * based on the current package manager used from the user.
+ * @description Replaces `Dockerfile` and adds a lockfile,
+ * based on the provided package manager from user.
  */
 async function replaceDockerLockFile(rootDirectory, packageManager) {
   const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile")

@@ -4,6 +4,9 @@
 
 A simple Remix Stack that follows community guidelines and applies best practices into a clean, batteries included template.
 
+Authentication less, fancy stuff less. You build from here, I've just included the batteries!.
+Inspired in Blues Stacks, other cool stacks.
+
 ```
 npx create-remix --template dev-xo/barebones-stack
 ```

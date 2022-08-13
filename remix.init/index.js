@@ -70,7 +70,8 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   const newPackageJson =
     JSON.stringify(sort({ ...packageJson, name: APP_NAME }), null, 2) + "\n"
 
-  /*   const lockfile = {
+  /*   
+  const lockfile = {
     npm: "package-lock.json",
     yarn: "yarn.lock",
     pnpm: "pnpm-lock.yaml",
@@ -81,7 +82,8 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
         new RegExp(escapeRegExp("ADD package.json"), "g"),
         `ADD package.json ${lockfile}`
       )
-    : dockerfile */
+    : dockerfile 
+  */
 
   await Promise.all([
     fs.writeFile(ENV_PATH, newEnv),
@@ -102,8 +104,9 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   })
 
   console.log(
-    `Setup is complete. You're now ready to rock and roll 🤘
- Start development with \`npm run dev\`
+    `Setup is complete.
+🔋 Batteries has been included!
+Start development with \`npm run dev\`
  `.trim()
   )
 }

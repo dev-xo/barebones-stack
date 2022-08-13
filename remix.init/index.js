@@ -68,7 +68,7 @@ const replaceProjectNameFromFiles = async (rootDirectory, appName) => {
     README_HEADER_REPLACER
   )
   const replacedReadmeHeaderAndText = replacedReadmeHeader.replace(
-    APP_NAME_REPLACER_MATCHER,
+    APP_NAME_MATCHER,
     appName
   )
 

@@ -40,9 +40,10 @@ const replaceProjectNameFromFiles = async (rootDirectory, appName) => {
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
   const README_PATH = path.join(rootDirectory, "README.md")
 
-  const README_REGEX_HEADER_MATCHER = /#\sBarebones\sStack/gm
-  const APP_NAME_REPLACER_MATCHER = /barebones-stack/gm
-  const README_HEADER_REPLACER = "## " + appName
+  const README_HEADER_MATCHER = /#\sRemix\sBarebones\sStack/gm
+  const APP_NAME_MATCHER = /barebones-stack/gm
+
+  const README_HEADER_REPLACER = "# " + appName
 
   // 1. Reads.
   const [packageJsonFile, tomlFile, readmeFile] = await Promise.all([
@@ -59,11 +60,8 @@ const replaceProjectNameFromFiles = async (rootDirectory, appName) => {
       2
     ) + "\n"
 
-  const replacedToml = toml.parse(tomlFile)
-  replacedToml.app = replacedToml.app.replace(
-    APP_NAME_REPLACER_MATCHER,
-    appName
-  )
+  const parsedToml = toml.parse(tomlFile)
+  const replacedToml = parsedToml.app.replace(APP_NAME_MATCHER, appName)
 
   const replacedReadmeHeader = readmeFile.replace(
     README_REGEX_HEADER_MATCHER,

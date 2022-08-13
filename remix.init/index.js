@@ -10,13 +10,15 @@ const path = require("path")
 const toml = require("@iarna/toml")
 const sort = require("sort-package-json")
 
-function escapeRegExp(string) {
-  // $& means the whole matched string
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-}
+const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+const getRandomString = (length) => crypto.randomBytes(length).toString("hex")
 
-function getRandomString(length) {
-  return crypto.randomBytes(length).toString("hex")
+const createAndInitEnvFile = async (rootDirectory) => {
+  const ENV_PATH = path.join(rootDirectory, ".env")
+  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example")
+
+  const exampleEnvFile = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
+  await fs.writeFile(ENV_PATH, exampleEnvFile)
 }
 
 async function main({ rootDirectory, packageManager, isTypeScript }) {
@@ -28,8 +30,6 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
   const DIR_NAME = path.basename(rootDirectory)
 
-  const ENV_PATH = path.join(rootDirectory, ".env")
-  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example")
   const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json")
   const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile")
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
@@ -43,21 +43,15 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   const SUFFIX = getRandomString(2)
   const APP_NAME = (DIR_NAME + "-" + SUFFIX).replace(/[^a-zA-Z0-9-_]/g, "-")
 
-  const [prodContent, readme, env, packageJson, dockerfile] = await Promise.all(
-    [
-      fs.readFile(EXAMPLE_ENV_PATH, "utf-8"),
-      fs.readFile(PACKAGE_JSON_PATH, "utf-8").then((s) => JSON.parse(s)),
-      fs.readFile(DOCKERFILE_PATH, "utf-8"),
-      fs.readFile(FLY_TOML_PATH, "utf-8"),
-      fs.readFile(README_PATH, "utf-8"),
-      fs.rm(STACK_GITHUB_ACTION),
-    ]
-  )
+  const [packageJson, dockerfile, prodContent, readme] = await Promise.all([
+    fs.readFile(PACKAGE_JSON_PATH, "utf-8").then((s) => JSON.parse(s)),
+    fs.readFile(DOCKERFILE_PATH, "utf-8"),
+    fs.readFile(FLY_TOML_PATH, "utf-8"),
+    fs.readFile(README_PATH, "utf-8"),
+    fs.rm(STACK_GITHUB_ACTION),
+  ])
 
-  const newEnv = env.replace(
-    /^SESSION_SECRET=.*$/m,
-    `SESSION_SECRET="${getRandomString(16)}"`
-  )
+  await createAndInitEnvFile(rootDirectory)
 
   const prodToml = toml.parse(prodContent)
   prodToml.app = prodToml.app.replace(REPLACER, APP_NAME)
@@ -86,7 +80,6 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   */
 
   await Promise.all([
-    fs.writeFile(ENV_PATH, newEnv),
     fs.writeFile(PACKAGE_JSON_PATH, newPackageJson),
     // fs.writeFile(DOCKERFILE_PATH, newDockerfile),
     fs.writeFile(FLY_TOML_PATH, toml.stringify(prodToml)),

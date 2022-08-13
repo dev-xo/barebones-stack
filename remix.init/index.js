@@ -64,7 +64,7 @@ const replaceProjectNameFromFiles = async (rootDirectory, appName) => {
   const replacedToml = parsedToml.app.replace(APP_NAME_MATCHER, appName)
 
   const replacedReadmeHeader = readmeFile.replace(
-    README_REGEX_HEADER_MATCHER,
+    README_HEADER_MATCHER,
     README_HEADER_REPLACER
   )
   const replacedReadmeHeaderAndText = replacedReadmeHeader.replace(

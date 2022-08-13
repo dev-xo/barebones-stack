@@ -4,6 +4,7 @@
  */
 const fs = require("fs/promises")
 const path = require("path")
+const crypto = require("crypto")
 
 const toml = require("@iarna/toml")
 const sort = require("sort-package-json")
@@ -38,7 +39,8 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   }) */
 
   console.log(
-    `Setup is complete. 🔋 Batteries has been included!
+    `
+Setup is complete. 🔋 Batteries has been included!
 Start development with \`npm run dev\`
  `.trim()
   )

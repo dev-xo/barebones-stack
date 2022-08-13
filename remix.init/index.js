@@ -21,7 +21,7 @@ const createAndInitEnvFile = async (rootDirectory) => {
   await fs.writeFile(ENV_PATH, exampleEnvFile)
 }
 
-async function main({ rootDirectory, packageManager, isTypeScript }) {
+const main = async ({ rootDirectory, packageManager, isTypeScript }) => {
   if (!isTypeScript) {
     throw new Error(
       "😓 Javascript implementation of this template will be released soon! We apologise!"
@@ -64,13 +64,13 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   const newPackageJson =
     JSON.stringify(sort({ ...packageJson, name: APP_NAME }), null, 2) + "\n"
 
-  /*   
   const lockfile = {
     npm: "package-lock.json",
     yarn: "yarn.lock",
     pnpm: "pnpm-lock.yaml",
   }[packageManager]
 
+  /* 
   const newDockerfile = lockfile
     ? dockerfile.replace(
         new RegExp(escapeRegExp("ADD package.json"), "g"),
@@ -85,10 +85,10 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
     fs.writeFile(FLY_TOML_PATH, toml.stringify(prodToml)),
     fs.writeFile(README_PATH, newReadme),
 
-    fs.copyFile(
+    /* fs.copyFile(
       path.join(rootDirectory, "remix.init", "gitignore"),
       path.join(rootDirectory, ".gitignore")
-    ),
+    ), */
   ])
 
   execSync("npm run format -- --loglevel warn", {

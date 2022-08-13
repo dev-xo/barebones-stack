@@ -1,7 +1,25 @@
+import type { Welcome } from "@prisma/client"
+import type { LoaderFunction } from "@remix-run/node"
+
+import { json } from "@remix-run/node"
+import { prisma } from "~/utils/db.server"
+import { useLoaderData } from "@remix-run/react"
+
 import BeamsPNG from "~/assets/images/beams.png"
 import ThumbnailPNG from "~/assets/images/bone.png"
 
+type LoaderData = {
+  dbWelcomeMessage: Awaited<Welcome> | null
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const dbWelcomeMessage = await prisma.welcome.findFirst()
+  return json<LoaderData>({ dbWelcomeMessage })
+}
+
 export default function Index() {
+  const { dbWelcomeMessage } = useLoaderData() as LoaderData
+
   return (
     <div className="flex flex-col items-center justify-center overflow-x-hidden px-6">
       <img
@@ -156,6 +174,15 @@ export default function Index() {
           ))}
         </div>
       </div>
+
+      {dbWelcomeMessage?.message && (
+        <p
+          className="shake fixed bottom-6 z-[1] rounded-full border border-slate-200 bg-slate-800 py-[7px] px-4 
+          text-center text-base font-semibold text-white drop-shadow-xl transition hover:scale-105 hover:cursor-default"
+        >
+          {dbWelcomeMessage.message}
+        </p>
+      )}
     </div>
   )
 }

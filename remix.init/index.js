@@ -64,13 +64,14 @@ const main = async ({ rootDirectory, packageManager, isTypeScript }) => {
   const newPackageJson =
     JSON.stringify(sort({ ...packageJson, name: APP_NAME }), null, 2) + "\n"
 
+  /* 
   const lockfile = {
     npm: "package-lock.json",
     yarn: "yarn.lock",
     pnpm: "pnpm-lock.yaml",
   }[packageManager]
 
-  /* 
+
   const newDockerfile = lockfile
     ? dockerfile.replace(
         new RegExp(escapeRegExp("ADD package.json"), "g"),
@@ -97,8 +98,7 @@ const main = async ({ rootDirectory, packageManager, isTypeScript }) => {
   })
 
   console.log(
-    `Setup is complete.
-🔋 Batteries has been included!
+    `Setup is complete. 🔋 Batteries has been included!
 Start development with \`npm run dev\`
  `.trim()
   )

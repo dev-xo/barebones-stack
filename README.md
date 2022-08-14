@@ -8,12 +8,12 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested template, to start coding right away.<br />
 
-- Clean and easy start: `npm run dev`
+- Clean and easy start.
 - Everything is already set up, and it will work out of the box.
-- Solid template with all the features from the bigger stacks.
+- Solid template with all the good features from the bigger stacks.
 
 We've just included the batteries. You build the rest!<br />
-Inspired in [Indie Stack](https://github.com/remix-run/indie-stack) and other cool stacks.
+Inspired in [Indie Stack](https://github.com/remix-run/indie-stack) and some other cool stacks.
 
 - Javascript version of this template is currently on development.
 

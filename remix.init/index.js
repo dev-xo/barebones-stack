@@ -225,19 +225,21 @@ async function cleanupDeployWorkflow(rootDirectory) {
 
   // 1. Reads.
   const githubDeployYmlFile = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8")
+
+  // 1. Replaces.
   const githubDeployYmlParsedFile = YAML.parse(githubDeployYmlFile)
 
-  console.log(githubDeployYmlParsedFile)
-  /*   // 1. Replaces.
-  delete githubDeployYmlFile.jobs.typecheck
-  githubDeployYmlFile.jobs.deploy.needs =
-    githubDeployYmlFile.jobs.deploy.needs.filter((need) => need !== "typecheck")
+  delete githubDeployYmlParsedFile.jobs.typecheck
+  githubDeployYmlParsedFile.jobs.deploy.needs =
+    githubDeployYmlParsedFile.jobs.deploy.needs.filter(
+      (need) => need !== "typecheck"
+    )
 
   // Writes.
   return await fs.writeFile(
     DEPLOY_WORKFLOW_PATH,
     YAML.stringify(githubDeployYmlFile)
-  ) */
+  )
 }
 
 module.exports = main

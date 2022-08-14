@@ -101,7 +101,7 @@ async function replaceProjectNameFromFiles(rootDirectory, APP_NAME) {
   const REPLACER_MATCHER = /barebones[\s|-]stack/gim
 
   // 1. Reads.
-  const [packageJsonFile, tomlFile, readmeFile] = await Promise.all([
+  const [tomlFile, readmeFile] = await Promise.all([
     fs.readFile(PACKAGE_JSON_PATH, "utf-8"),
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
@@ -120,7 +120,6 @@ async function replaceProjectNameFromFiles(rootDirectory, APP_NAME) {
 
   // 3. Writes.
   await Promise.all([
-    fs.writeFile(PACKAGE_JSON_PATH, replacedPackageJsonFile),
     fs.writeFile(FLY_TOML_PATH, toml.stringify(replacedTomlFile)),
     fs.writeFile(README_PATH, replacedReadmeFile),
   ])

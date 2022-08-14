@@ -25,7 +25,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   if (!isTypeScript) {
     // Cleans up Typescript references from the project.
     await updatePackageJson(rootDirectory, isTypeScript, APP_NAME)
-    await cleanupCypressFiles(rootDirectory)
+    /*   await cleanupCypressFiles(rootDirectory) */
     await cleanupVitestConfig(rootDirectory)
     await cleanupDeployWorkflow(rootDirectory)
   }
@@ -171,12 +171,9 @@ async function updatePackageJson(rootDirectory, isTypeScript, APP_NAME) {
     name: APP_NAME,
     devDependencies: isTypeScript
       ? devDependencies
-      : removeUnusedDependencies(devDependencies, [
-          "ts-node",
-          "vite-tsconfig-paths",
-        ]),
+      : removeUnusedDependencies(devDependencies, ["ts-node"]),
     prisma: isTypeScript
-      ? prisma
+      ? { ...prisma, seed: prismaSeed }
       : {
           ...prisma,
           seed: prismaSeed
@@ -199,17 +196,17 @@ async function updatePackageJson(rootDirectory, isTypeScript, APP_NAME) {
  * @description
  * Cleans up Typescript references from Cypress folders.
  */
-async function cleanupCypressFiles(rootDirectory) {
+/* async function cleanupCypressFiles(rootDirectory) {
   const CYPRESS_CONFIG_PATH = path.join(rootDirectory, "cypress.config.js")
 
   // Reads, replaces and writes a new file.
   const cypressConfig = await fs.readFile(CYPRESS_CONFIG_PATH, "utf-8")
   const replacedCypressConfig = cypressConfig.replace(
     "export default",
-    "module.exports = "
+    "module.exports ="
   )
   await fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig)
-}
+} */
 
 /**
  * @description

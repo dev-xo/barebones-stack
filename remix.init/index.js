@@ -22,7 +22,6 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   const DIR_NAME = path.basename(rootDirectory)
   const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
-  // Javascript support is on the way!
   if (!isTypeScript) {
     // TODO: SHOULD BE AN OBJECT? INSTEAD OF PROPS?
     // Updates packageJson, removing all Typescript references.
@@ -30,6 +29,9 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
     // Cleans up Typescript references from Github Actions deploy workflow.
     await cleanupDeployWorkflow(rootDirectory)
+
+    // Cleans up Typescript references from Vitest config.
+    await cleanupVitestConfig(rootDirectory)
   }
 
   // Creates and initiates a newly `.env` file,
@@ -44,6 +46,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   await replaceDockerLockFile(rootDirectory, packageManager)
 
   /*
+  TODO: check more cmds.
   execSync("npm run format -- --loglevel warn", {
     stdio: "inherit",
     cwd: rootDirectory,
@@ -69,10 +72,6 @@ function escapeRegExp(string) {
 function getRandomString(length) {
   return crypto.randomBytes(length).toString("hex")
 }
-
-/**
- * Functionality related scripts.
- */
 
 /**
  * @description
@@ -241,6 +240,22 @@ async function cleanupDeployWorkflow(rootDirectory) {
     DEPLOY_WORKFLOW_PATH,
     YAML.stringify(githubDeployYmlParsedFile)
   )
+}
+
+/**
+ * @description
+ * Cleans up Typescript references from Vitest config.
+ */
+async function cleanupVitestConfig(rootDirectory) {
+  const VITEST_CONFIG_PATH = path.join(rootDirectory, "vitest.config.js")
+
+  // Reads, replaces and writes new file.
+  const vitestConfigFile = await fs.readFile(VITEST_CONFIG_PATH, "utf-8")
+  const replacedVitestConfig = vitestConfigFile.replace(
+    "setup-test-env.ts",
+    "setup-test-env.js"
+  )
+  return await fs.writeFile(VITEST_CONFIG_PATH, replacedVitestConfig)
 }
 
 module.exports = main

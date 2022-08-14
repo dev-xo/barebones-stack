@@ -4,14 +4,15 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-[env]
-  PORT = "8080"
-
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
   cmd = "start.sh"
   entrypoint = "sh" 
+
+  [mounts]
+  source = "data"
+  destination = "/data" 
 
 [[services]]
   internal_port = 8080

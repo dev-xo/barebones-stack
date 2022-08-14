@@ -25,8 +25,9 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   if (!isTypeScript) {
     // Cleans up Typescript references from the project.
     await updatePackageJson(rootDirectory, isTypeScript, APP_NAME)
-    await cleanupDeployWorkflow(rootDirectory)
+    await cleanupCypressFiles(rootDirectory)
     await cleanupVitestConfig(rootDirectory)
+    await cleanupDeployWorkflow(rootDirectory)
   }
 
   // Creates and initiates a newly `.env` file, with provided variables from `.env.example`.
@@ -184,7 +185,10 @@ async function updatePackageJson(rootDirectory, isTypeScript, APP_NAME) {
         },
     scripts: isTypeScript
       ? { ...scripts, typecheck, validate }
-      : { ...scripts, validate: validate.replace(" typecheck", "") },
+      : {
+          ...scripts,
+          validate: validate.replace(" typecheck", ""),
+        },
   })
 
   // Saves.
@@ -196,11 +200,15 @@ async function updatePackageJson(rootDirectory, isTypeScript, APP_NAME) {
  * Cleans up Typescript references from Cypress folders.
  */
 async function cleanupCypressFiles(rootDirectory) {
-  /*   filesEntries.flatMap(([filePath, content]) => {
-    const newContent = content.replace("npx ts-node", "node")
+  const CYPRESS_CONFIG_PATH = path.join(rootDirectory, "cypress.config.js")
 
-    return [fs.writeFile(filePath, newContent)]
-  }) */
+  // Reads, replaces and writes a new file.
+  const cypressConfig = await fs.readFile(CYPRESS_CONFIG_PATH, "utf-8")
+  const replacedCypressConfig = cypressConfig.replace(
+    "export default",
+    "module.exports = "
+  )
+  await fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig)
 }
 
 /**

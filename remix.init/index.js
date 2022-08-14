@@ -226,7 +226,7 @@ async function cleanupDeployWorkflow(rootDirectory) {
   // 1. Reads.
   const githubDeployYmlFile = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8")
 
-  console.log(githubDeployYmlFile)
+  console.log(YAML.stringify(githubDeployYmlFile))
   /*   // 1. Replaces.
   delete githubDeployYmlFile.jobs.typecheck
   githubDeployYmlFile.jobs.deploy.needs =

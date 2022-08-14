@@ -4,17 +4,17 @@
 
 A simple create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
 
-### Who is this template aiming for?
+### 🎯 Who is this template aiming for?
 
-This template is aiming for those who loves to build their stuff from the ground, with a solid and well tested template to start coding right away.<br />
+This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested template, to start coding right away.<br />
 
 - Clean and easy start.
 - Solid template with all the features from the bigger stacks.
 
-You build from here. I've just included the batteries!.<br />
+We've just included the batteries. You build the rest!<br />
 Inspired in [Blues Stack](https://github.com/remix-run/blues-stack), other cool stacks.
 
-**Javascript version is on the way!**
+Javascript version of this template, is on the way!
 
 ```
 npx create-remix --template dev-xo/barebones-stack
@@ -22,9 +22,9 @@ npx create-remix --template dev-xo/barebones-stack
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
-### Features
+### 💿 Features
 
-- [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
+- [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)S
 - Production-Ready with [PostgreSQL Database](https://www.postgresql.org/)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for Deploy on merge to production and staging environments.
@@ -40,7 +40,7 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 Would you like to change something? Fork it, change it, and use `npx create-remix --template your/repo`!<br/>
 Make it your own.
 
-## Development
+### 🛠 Development
 
 - This step only applies if you've opted out of having the CLI install dependencies for you:
 
@@ -80,7 +80,7 @@ The database seed script creates a welcome message that will let you know, datab
 
 If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
 
-## Deployment
+### 🚀 Deployment
 
 This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments.
 
@@ -154,13 +154,13 @@ Now that everything is set up you can commit and push your changes to your repo.
 
 If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io). They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and questions.
 
-## GitHub Actions
+### 📋 GitHub Actions
 
 We use GitHub Actions for continuous integration and deployment. Anything that gets into the `master` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
 
-## Testing
+### 🔎 Testing
 
-### Cypress
+## Cypress
 
 We use Cypress for our End-to-End tests in this project. You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
 
@@ -168,15 +168,15 @@ We use [`@testing-library/cypress`](https://testing-library.com/cypress) for sel
 
 To run these tests in development, run `npm run test:e2e:dev` which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
 
-### Vitest
+## Vitest
 
 For lower level tests of utilities and individual components, we use `vitest`. We have DOM-specific assertion helpers via [`@testing-library/jest-dom`](https://testing-library.com/jest-dom).
 
-### Type Checking
+## Type Checking
 
 This project uses TypeScript. It's recommended to get TypeScript set up for your editor to get a really great in-editor experience with type checking and auto-complete. To run type checking across the whole project, run `npm run typecheck`.
 
-### Linting
+## Linting
 
 This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 

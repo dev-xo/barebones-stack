@@ -153,9 +153,9 @@ function removeUnusedDependencies(dependencies, unusedDependencies) {
 
 /**
  * @description
- * Updates packageJson, removing all Typescript references.
+ * Cleans up Typescript references from package.json
  */
-const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
+async function updatePackageJson(rootDirectory, isTypeScript, APP_NAME) {
   // Reads.
   const packageJson = await PackageJson.load(rootDirectory)
 
@@ -189,6 +189,18 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
 
   // Saves.
   await packageJson.save()
+}
+
+/**
+ * @description
+ * Cleans up Typescript references from Cypress folders.
+ */
+async function cleanupCypressFiles(rootDirectory) {
+  /*   filesEntries.flatMap(([filePath, content]) => {
+    const newContent = content.replace("npx ts-node", "node")
+
+    return [fs.writeFile(filePath, newContent)]
+  }) */
 }
 
 /**

@@ -240,3 +240,5 @@ async function cleanupVitestConfig(rootDirectory) {
 }
 
 module.exports = main
+
+// TODO: Remove vite tsconfig paths, and fix it.

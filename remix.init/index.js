@@ -40,13 +40,21 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   // Replaces `Dockerfile` and adds a `lockfile`, based on the provided package manager from user.
   await replaceDockerLockFile(rootDirectory, packageManager)
 
-  // Seeds database.
+  // Setup and seeds database.
   execSync("npm run setup", { cwd: rootDirectory, stdio: "inherit" })
+
+  // Formats the entire project.
+  execSync("npm run format -- --loglevel warn", {
+    cwd: rootDirectory,
+    stdio: "inherit",
+  })
 
   console.log(
     `
-Setup is complete. 🔋 Batteries has been included!
-Start development with \`npm run dev\`
+🔋 Batteries has been successfully set!
+🎉 Go ahead and build something amazing!
+
+💿 Start development with \`npm run dev\`
  `.trim()
   )
 }

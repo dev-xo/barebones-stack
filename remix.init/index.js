@@ -51,10 +51,11 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
   console.log(
     `
-🔋 Batteries has been successfully set!
-🎉 Go ahead and build something amazing!
+🔋 Batteries has been successfully set.
+❗️ Go ahead and build something amazing!
 
-💿 Start development with \`npm run dev\`
+📀 Start development with \`npm run dev\`
+
  `.trim()
   )
 }

@@ -11,7 +11,6 @@ const path = require("path")
 const crypto = require("crypto")
 
 const toml = require("@iarna/toml")
-const PackageJson = require("@npmcli/package-json")
 
 /**
  * @description
@@ -25,6 +24,10 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   if (!isTypeScript) {
     // Updates packageJson, removing all Typescript references.
     /* await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME }) */
+
+    throw new Error(
+      "Javascript implementation is already on development stage! Sorry!"
+    )
   }
 
   // Creates and initiates a newly `.env` file,
@@ -37,15 +40,6 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   // Replaces `Dockerfile` and adds a `lockfile`,
   // based on the provided package manager from user.
   await replaceDockerLockFile(rootDirectory, packageManager)
-
-  /*
-  execSync("npm run setup", { cwd: rootDirectory, stdio: "inherit" });
-
-  execSync("npm run format -- --loglevel warn", {
-    cwd: rootDirectory,
-    stdio: "inherit",
-  });
-  }) */
 
   console.log(
     `

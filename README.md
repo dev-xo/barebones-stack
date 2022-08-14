@@ -161,7 +161,7 @@ We use [Prettier](https://prettier.io/) for auto-formatting in this project. It'
 
 ## ❤️ Acknowledgments
 
-Simply wanna say Thank You! Im having a great time developing this stack and improving with each step!.<br />
+Simply wanna say thank you all! Im having a great time developing this stack. Remix is just amazing! ❤️<br />
 Some of the cool features that are implemented in the template are from [Indie Stack](https://github.com/remix-run/indie-stack)
 
 Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>

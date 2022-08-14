@@ -2,7 +2,7 @@
  * Barebones Stack
  * @author @dev-xo https://github.com/dev-xo
  *
- * Most of the Typescript related scripts, are related to other authors.
+ * Some of the Typescript related scripts, are related to other authors.
  * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  * @author @kentcdodds https://github.com/kentcdodds
  */
@@ -23,9 +23,8 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
   if (!isTypeScript) {
-    // TODO: SHOULD BE AN OBJECT? INSTEAD OF PROPS?
     // Updates packageJson, removing all Typescript references.
-    await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME })
+    await updatePackageJson(rootDirectory, isTypeScript, APP_NAME)
 
     // Cleans up Typescript references from Github Actions deploy workflow.
     await cleanupDeployWorkflow(rootDirectory)
@@ -156,12 +155,6 @@ async function replaceDockerLockFile(rootDirectory, packageManager) {
   await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile)
 }
 
-/**
- * Typescript cleanups related scripts.
- * @author @MichaelDeBoey https://github.com/MichaelDeBoey
- * @author @kentcdodds https://github.com/kentcdodds
- */
-
 function removeUnusedDependencies(dependencies, unusedDependencies) {
   Object.fromEntries(
     Object.entries(dependencies).filter(
@@ -174,7 +167,7 @@ function removeUnusedDependencies(dependencies, unusedDependencies) {
  * @description
  * Updates packageJson, removing all Typescript references.
  */
-const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
+const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
   // 1. Reads.
   const packageJson = await PackageJson.load(rootDirectory)
 
@@ -222,20 +215,16 @@ async function cleanupDeployWorkflow(rootDirectory) {
     "deploy.yml"
   )
 
-  // 1. Reads.
+  // Reads, parses, deletes and writes a new file.
   const githubDeployYmlFile = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8")
-
-  // 2. Parses.
   let githubDeployYmlParsedFile = YAML.parse(githubDeployYmlFile)
 
-  // 3. Deletes.
   delete githubDeployYmlParsedFile.jobs.typecheck
   githubDeployYmlParsedFile.jobs.deploy.needs =
     githubDeployYmlParsedFile.jobs.deploy.needs.filter(
       (need) => need !== "typecheck"
     )
 
-  // 4 Writes.
   return await fs.writeFile(
     DEPLOY_WORKFLOW_PATH,
     YAML.stringify(githubDeployYmlParsedFile)
@@ -249,7 +238,7 @@ async function cleanupDeployWorkflow(rootDirectory) {
 async function cleanupVitestConfig(rootDirectory) {
   const VITEST_CONFIG_PATH = path.join(rootDirectory, "vitest.config.js")
 
-  // Reads, replaces and writes new file.
+  // Reads, replaces and writes a new file.
   const vitestConfigFile = await fs.readFile(VITEST_CONFIG_PATH, "utf-8")
   const replacedVitestConfig = vitestConfigFile.replace(
     "setup-test-env.ts",

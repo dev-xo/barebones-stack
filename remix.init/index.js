@@ -25,7 +25,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   if (!isTypeScript) {
     const packageJson = PackageJson.load(rootDirectory)
 
-    updatePackageJson({ APP_NAME, isTypeScript, packageJson })
+    updatePackageJson({ packageJson, isTypeScript, APP_NAME })
 
     /* throw new Error(
       "😓 Javascript implementation of this template will be released soon! We apologise!"

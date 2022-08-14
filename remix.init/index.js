@@ -25,7 +25,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   if (!isTypeScript) {
     // Cleans up Typescript references from the project.
     await updatePackageJson(rootDirectory, isTypeScript, APP_NAME)
-    /*   await cleanupCypressFiles(rootDirectory) */
+    await cleanupCypressFiles(rootDirectory)
     await cleanupVitestConfig(rootDirectory)
     await cleanupDeployWorkflow(rootDirectory)
   }
@@ -196,7 +196,7 @@ async function updatePackageJson(rootDirectory, isTypeScript, APP_NAME) {
  * @description
  * Cleans up Typescript references from Cypress folders.
  */
-/* async function cleanupCypressFiles(rootDirectory) {
+async function cleanupCypressFiles(rootDirectory) {
   const CYPRESS_CONFIG_PATH = path.join(rootDirectory, "cypress.config.js")
 
   // Reads, replaces and writes a new file.
@@ -206,7 +206,7 @@ async function updatePackageJson(rootDirectory, isTypeScript, APP_NAME) {
     "module.exports ="
   )
   await fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig)
-} */
+}
 
 /**
  * @description

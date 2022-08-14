@@ -2,11 +2,17 @@
 
 [![Product Name Screen Shot][product-screenshot]](#)
 
-A simple Remix Stack that follows community guidelines and applies best practices into a clean, batteries included template.
+A simple create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
 
-Authentication less, fancy stuff less.<br />
+### Who is this template aiming for?
+
+This template is aiming for those who loves to build their stuff from the ground, with a solid and well tested template to start coding right away.<br />
+
+- Clean and easy start.
+- Solid template with all the features from the bigger stacks.
+
 You build from here. I've just included the batteries!.<br />
-Inspired in [Blues Stacks](https://github.com/remix-run/blues-stack), other cool stacks.
+Inspired in [Blues Stack](https://github.com/remix-run/blues-stack), other cool stacks.
 
 **Javascript version is on the way!**
 
@@ -31,7 +37,8 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 - Code formatting with [Prettier](https://prettier.io/)
 - Static Types with [TypeScript](https://www.typescriptlang.org/)
 
-Would you like to change something? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
+Would you like to change something? Fork it, change it, and use `npx create-remix --template your/repo`!<br/>
+Make it your own.
 
 ## Development
 

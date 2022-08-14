@@ -24,7 +24,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   // Javascript support is on the way!
   if (!isTypeScript) {
     // Updates packageJson, removing all Typescript references.
-    /*  await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME }) */
+    await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME })
   }
 
   // Creates and initiates a newly `.env` file,
@@ -90,8 +90,6 @@ async function replaceProjectNameFromFiles(rootDirectory, APP_NAME) {
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
   const README_PATH = path.join(rootDirectory, "README.md")
 
-  // const README_HEADER_MATCHER = /#\sRemix\sBarebones\sStack/gm
-  // const APP_NAME_MATCHER = /barebones-stack/gm
   const REPLACER_MATCHER = /barebones[\s|-]stack/gim
 
   // 1. Reads.

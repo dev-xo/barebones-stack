@@ -98,7 +98,7 @@ export default function Index() {
         <div className="h-3" />
 
         <p className="max-w-xl text-center text-lg font-normal drop-shadow-xl">
-          A simple{" "}
+          A solid{" "}
           <a
             href="https://remix.run/docs/en/v1/pages/stacks"
             target="_blank"

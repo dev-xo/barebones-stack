@@ -239,7 +239,7 @@ async function cleanupDeployWorkflow(rootDirectory) {
   // 4 Writes.
   return await fs.writeFile(
     DEPLOY_WORKFLOW_PATH,
-    YAML.stringify(githubDeployYmlFile)
+    YAML.stringify(githubDeployYmlParsedFile)
   )
 }
 

@@ -8,7 +8,8 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested template, to start coding right away.<br />
 
-- Clean and simple start: just `npm run dev`.
+- Clean and easy start: `npm run dev`
+- Everything is already set up and it will work without extra magic tricks.
 - Solid template with all the features from the bigger stacks.
 
 We've just included the batteries. You build the rest!<br />

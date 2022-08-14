@@ -123,10 +123,7 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
   replacedTomlFile.app = replacedTomlFile.app.replace(REPLACER_MATCHER, appName)
 
   // Replaces README.md file.
-  const replacedReadmeFile = readmeFile.replace(
-    new RegExp(escapeRegExp(REPLACER_MATCHER), "g"),
-    appName
-  )
+  const replacedReadmeFile = readmeFile.replace(REPLACER_MATCHER, appName)
 
   // 3. Writes.
   await Promise.all([

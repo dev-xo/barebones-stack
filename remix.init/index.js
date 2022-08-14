@@ -171,10 +171,7 @@ async function updatePackageJson(rootDirectory, isTypeScript, APP_NAME) {
     name: APP_NAME,
     devDependencies: isTypeScript
       ? devDependencies
-      : removeUnusedDependencies(devDependencies, [
-          "ts-node",
-          "vite-tsconfig-paths",
-        ]),
+      : removeUnusedDependencies(devDependencies, ["ts-node"]),
     prisma: isTypeScript
       ? { ...prisma, seed: prismaSeed }
       : {

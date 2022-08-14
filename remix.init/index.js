@@ -2,7 +2,7 @@
  * Barebones Stack
  * @author @dev-xo https://github.com/dev-xo
  *
- * Some of the Typescript related scripts, are related to other authors.
+ * Some of the Typescript related scripts, have been developed by other authors.
  * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  * @author @kentcdodds https://github.com/kentcdodds
  */

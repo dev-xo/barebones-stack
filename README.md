@@ -2,7 +2,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](#)
 
-A simple create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
+A solid create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
 
 ## 🎯 Who is this template aiming for?
 

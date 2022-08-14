@@ -48,24 +48,10 @@ Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
   npx remix init
   ```
 
-- Start the Postgres Database in [Docker](https://www.docker.com/get-started):
-
-  ```sh
-  npm run docker
-  ```
-
-  > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
-
-- Initial setup:
+- Initial setup: _If you just generated this project, this step has been done for you._
 
   ```sh
   npm run setup
-  ```
-
-- Run the first build:
-
-  ```sh
-  npm run build
   ```
 
 - Start dev server:
@@ -98,13 +84,13 @@ Prior to your first deployment, you'll need to do a few things:
 - Create two apps on Fly, one for staging and one for production:
 
   ```sh
-  fly apps create barebones-stack-template
-  fly apps create barebones-stack-template-staging
+  fly apps create indie-stack-template
+  fly apps create indie-stack-template-staging
   ```
 
-  > **Note:** Once you've successfully created an app, double-check the `fly.toml` file to ensure that the `app` key is the name of the production app you created. This Stack [automatically appends a unique suffix at init](https://github.com/remix-run/blues-stack/blob/4c2f1af416b539187beb8126dd16f6bc38f47639/remix.init/index.js#L29) which may not match the apps you created on Fly. You will likely see [404 errors in your Github Actions CI logs](https://community.fly.io/t/404-failure-with-deployment-with-remix-blues-stack/4526/3) if you have this mismatch.
+  > **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
 
-- Initialize Git.
+  - Initialize Git.
 
   ```sh
   git init
@@ -121,35 +107,26 @@ Prior to your first deployment, you'll need to do a few things:
 - Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app barebones-stack-template
-  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app barebones-stack-template-staging
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app indie-stack-template
+  fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app indie-stack-template-staging
   ```
-
-  > **Note:** When creating the staging secret, you may get a warning from the Fly CLI that looks like this:
-  >
-  > ```
-  > WARN app flag 'barebones-stack-template-staging' does not match app name in config file 'barebones-stack-template'
-  > ```
-  >
-  > This simply means that the current directory contains a config that references the production app we created in the first step. Ignore this warning and proceed to create the secret.
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
-- Create a database for both your staging and production environments. Run the following:
+- Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 
   ```sh
-  fly postgres create --name barebones-stack-template-db
-  fly postgres attach --postgres-app barebones-stack-template-db --app barebones-stack-template
-
-  fly postgres create --name barebones-stack-template-staging-db
-  fly postgres attach --postgres-app barebones-stack-template-staging-db --app barebones-stack-template-staging
+  fly volumes create data --size 1 --app indie-stack-template
+  fly volumes create data --size 1 --app indie-stack-template-staging
   ```
 
-  > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
+Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
-Fly will take care of setting the `DATABASE_URL` secret for you.
+### Connecting to your database
 
-Now that everything is set up you can commit and push your changes to your repo. Every commit to your `master` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
+The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by running `fly ssh console -C database-cli`.
+
+### Getting Help with Deployment
 
 If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io). They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and questions.
 

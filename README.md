@@ -63,8 +63,6 @@ Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
 This starts your app in development mode, rebuilding assets on file changes.
 The database seed script creates a welcome message that will let you know, database is up and running.
 
-If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
-
 ## 🚀 Deployment
 
 This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments.

@@ -1,17 +1,17 @@
 app = "barebones-stack"
-
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
-
-[env]
-  PORT = "8080"
 
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
   cmd = "start.sh"
-  entrypoint = "sh" 
+  entrypoint = "sh"
+
+[mounts]
+  destination = "/data"
+  source = "data"
 
 [[services]]
   internal_port = 8080
@@ -22,6 +22,16 @@ processes = []
     hard_limit = 25
     soft_limit = 20
     type = "connections"
+
+  [[services.http_checks]]
+    grace_period = "5s"
+    interval = "10s"
+    method = "get"
+    path = "/healthcheck"
+    protocol = "http"
+    timeout = "2s"
+    tls_skip_verify = false
+    [services.http_checks.headers]
 
   [[services.ports]]
     force_https = true
@@ -37,15 +47,4 @@ processes = []
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
-
-  [[services.http_checks]]
-    interval = "10s"
-    grace_period = "5s"
-    method = "get"
-    path = "/healthcheck"
-    protocol = "http"
-    timeout = "2s"
-    tls_skip_verify = false
-    [services.http_checks.headers]
-
     

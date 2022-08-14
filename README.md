@@ -14,7 +14,8 @@ This template is aiming for those who loves to build their stuff **from the grou
 We've just included the batteries. You build the rest!<br />
 Inspired in [Blues Stack](https://github.com/remix-run/blues-stack) and other cool stacks.
 
-Javascript version of this template is still on development. (It works, but needs some fixes.)
+- Javascript version of this template will be available soon.
+- ⚠️ This template is moving to SQLite database, for an easy start and less configuration. ⚠️
 
 ## 🔋 Getting Started
 

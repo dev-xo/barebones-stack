@@ -11,6 +11,7 @@ const path = require("path")
 const crypto = require("crypto")
 
 const toml = require("@iarna/toml")
+const PackageJson = require("@npmcli/package-json")
 
 /**
  * @description
@@ -23,11 +24,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   // Javascript support is on the way!
   if (!isTypeScript) {
     // Updates packageJson, removing all Typescript references.
-    /* await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME }) */
-
-    throw new Error(
-      "Javascript implementation is already on development stage! Sorry!"
-    )
+    /*  await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME }) */
   }
 
   // Creates and initiates a newly `.env` file,
@@ -40,6 +37,12 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   // Replaces `Dockerfile` and adds a `lockfile`,
   // based on the provided package manager from user.
   await replaceDockerLockFile(rootDirectory, packageManager)
+
+  /*
+  execSync("npm run format -- --loglevel warn", {
+    stdio: "inherit",
+    cwd: rootDirectory,
+  }) */
 
   console.log(
     `
@@ -84,7 +87,6 @@ async function createAndInitEnvFile(rootDirectory) {
  * - README.md
  */
 async function replaceProjectNameFromFiles(rootDirectory, APP_NAME) {
-  const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json")
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
   const README_PATH = path.join(rootDirectory, "README.md")
 
@@ -94,7 +96,6 @@ async function replaceProjectNameFromFiles(rootDirectory, APP_NAME) {
 
   // 1. Reads.
   const [tomlFile, readmeFile] = await Promise.all([
-    fs.readFile(PACKAGE_JSON_PATH, "utf-8"),
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
   ])
@@ -150,5 +151,56 @@ async function replaceDockerLockFile(rootDirectory, packageManager) {
  * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  * @author @kentcdodds https://github.com/kentcdodds
  */
+
+/**
+ * @description
+ */
+function removeUnusedDependencies(dependencies, unusedDependencies) {
+  Object.fromEntries(
+    Object.entries(dependencies).filter(
+      ([key]) => !unusedDependencies.includes(key)
+    )
+  )
+}
+
+/**
+ * @description
+ * Updates packageJson, removing all Typescript references.
+ */
+const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
+  // 1. Reads.
+  const packageJson = await PackageJson.load(rootDirectory)
+
+  const {
+    devDependencies,
+    prisma: { seed: prismaSeed, ...prisma },
+    scripts: { typecheck, validate, ...scripts },
+  } = packageJson.content
+
+  // 2. Updates.
+  packageJson.update({
+    name: APP_NAME,
+    devDependencies: isTypeScript
+      ? devDependencies
+      : removeUnusedDependencies(devDependencies, [
+          "ts-node",
+          "vite-tsconfig-paths",
+        ]),
+    prisma: isTypeScript
+      ? prisma
+      : {
+          ...prisma,
+          seed: prismaSeed
+            .replace("ts-node", "node")
+            .replace("seed.ts", "seed.js"),
+        },
+    scripts: isTypeScript
+      ? { ...scripts, typecheck, validate }
+      : { ...scripts, validate: validate.replace(" typecheck", "") },
+  })
+
+  // 3. Saves.
+  await packageJson.save()
+}
 
 module.exports = main

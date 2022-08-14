@@ -23,11 +23,8 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
   // Javascript support is on the way!
   if (!isTypeScript) {
+    // Updates packageJson, removing all Typescript references.
     await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME })
-
-    /* throw new Error(
-      "😓 Javascript implementation of this template will be released soon! We apologise!"
-    ) */
   }
 
   // Creates and initiates a newly `.env` file,
@@ -170,11 +167,11 @@ function removeUnusedDependencies(dependencies, unusedDependencies) {
 
 /**
  * @description
+ * Updates packageJson, removing all Typescript references.
  */
 const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
+  // 1. Reads.
   const packageJson = await PackageJson.load(rootDirectory)
-
-  console.log(packageJson)
 
   const {
     devDependencies,
@@ -182,6 +179,7 @@ const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
     scripts: { typecheck, validate, ...scripts },
   } = packageJson.content
 
+  // 2. Updates.
   packageJson.update({
     name: APP_NAME,
     devDependencies: isTypeScript
@@ -203,6 +201,7 @@ const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
       : { ...scripts, validate: validate.replace(" typecheck", "") },
   })
 
+  // 3. Saves.
   await packageJson.save()
 }
 

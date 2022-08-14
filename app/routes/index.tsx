@@ -28,6 +28,17 @@ export default function Index() {
         alt=""
       />
 
+      {/* Database welcome message. */}
+      {/* This will confirm that the database has been set correctly. */}
+      {dbWelcomeMessage?.message && (
+        <p
+          className="shake fixed bottom-6 z-[1] rounded-full border border-slate-200 bg-slate-800 py-[7px] px-4 
+          text-center text-base font-semibold text-white drop-shadow-xl transition hover:scale-105 hover:cursor-default"
+        >
+          {dbWelcomeMessage.message}
+        </p>
+      )}
+
       {/* Project Socials. */}
       <div className="fixed top-4 right-4 flex flex-row items-center">
         <a
@@ -174,15 +185,6 @@ export default function Index() {
           ))}
         </div>
       </div>
-
-      {dbWelcomeMessage?.message && (
-        <p
-          className="shake fixed bottom-6 z-[1] rounded-full border border-slate-200 bg-slate-800 py-[7px] px-4 
-          text-center text-base font-semibold text-white drop-shadow-xl transition hover:scale-105 hover:cursor-default"
-        >
-          {dbWelcomeMessage.message}
-        </p>
-      )}
     </div>
   )
 }

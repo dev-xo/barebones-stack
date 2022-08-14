@@ -1,30 +1,39 @@
 /**
  * Barebones Stack
- * @author @dev-xo: https://github.com/dev-xo
+ * @author @dev-xo https://github.com/dev-xo
+ *
+ * Most of the Typescript related scripts, are related to other authors.
+ * @author @MichaelDeBoey https://github.com/MichaelDeBoey
+ * @author @kentcdodds https://github.com/kentcdodds
  */
 const fs = require("fs/promises")
 const path = require("path")
 const crypto = require("crypto")
 
 const toml = require("@iarna/toml")
-const sort = require("sort-package-json")
+const PackageJson = require("@npmcli/package-json")
 
 /**
- * @description Runs after the project has been generated
- * and dependencies have been installed.
+ * @description
+ * Runs after the project has been generated and dependencies have been installed.
  */
 async function main({ rootDirectory, packageManager, isTypeScript }) {
-  // Javascript support is on the way!
-  if (!isTypeScript) {
-    throw new Error(
-      "😓 Javascript implementation of this template will be released soon! We apologise!"
-    )
-  }
-
   const DIR_NAME = path.basename(rootDirectory)
   const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
-  // Creates and initiates a newly `.env` file,with provided variables from `.env.example`.
+  // Javascript support is on the way!
+  if (!isTypeScript) {
+    const packageJson = PackageJson.load(rootDirectory)
+
+    updatePackageJson({ APP_NAME, isTypeScript, packageJson })
+
+    /* throw new Error(
+      "😓 Javascript implementation of this template will be released soon! We apologise!"
+    ) */
+  }
+
+  // Creates and initiates a newly `.env` file,
+  // with provided variables from `.env.example`.
   await createAndInitEnvFile(rootDirectory)
 
   // Replaces default project name for the one provided by `DIR_NAME`.
@@ -34,9 +43,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   // based on the provided package manager from user.
   await replaceDockerLockFile(rootDirectory, packageManager)
 
-  /* const prodToml = toml.parse(prodContent)
-  prodToml.app = prodToml.app.replace(REPLACER, APP_NAME)
-  
+  /*
   execSync("npm run format -- --loglevel warn", {
     stdio: "inherit",
     cwd: rootDirectory,
@@ -50,27 +57,18 @@ Start development with \`npm run dev\`
   )
 }
 
-/**
- * @param {*} string
- * @returns
- */
 function escapeRegExp(string) {
   // $& means the whole matched string.
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 }
 
-/**
- *
- * @param {*} length
- * @returns
- */
 function getRandomString(length) {
   return crypto.randomBytes(length).toString("hex")
 }
 
 /**
- * @description Creates and initiates a newly `.env` file,
- * with provided variables from `.env.example`.
+ * @description
+ * Creates and initiates a newly `.env` file, with provided variables from `.env.example`.
  */
 async function createAndInitEnvFile(rootDirectory) {
   const ENV_PATH = path.join(rootDirectory, ".env")
@@ -93,7 +91,7 @@ async function createAndInitEnvFile(rootDirectory) {
  * - fly.toml
  * - README.md
  */
-async function replaceProjectNameFromFiles(rootDirectory, appName) {
+async function replaceProjectNameFromFiles(rootDirectory, APP_NAME) {
   const PACKAGE_JSON_PATH = path.join(rootDirectory, "package.json")
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
   const README_PATH = path.join(rootDirectory, "README.md")
@@ -110,20 +108,15 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
   ])
 
   // 2. Replaces.
-  // Replaces Package.json file.
-  const replacedPackageJsonFile =
-    JSON.stringify(
-      sort({ ...JSON.parse(packageJsonFile), name: appName }),
-      null,
-      2
-    ) + "\n"
-
   // Replaces Fly.toml file.
   const replacedTomlFile = toml.parse(tomlFile)
-  replacedTomlFile.app = replacedTomlFile.app.replace(REPLACER_MATCHER, appName)
+  replacedTomlFile.app = replacedTomlFile.app.replace(
+    REPLACER_MATCHER,
+    APP_NAME
+  )
 
   // Replaces README.md file.
-  const replacedReadmeFile = readmeFile.replace(REPLACER_MATCHER, appName)
+  const replacedReadmeFile = readmeFile.replace(REPLACER_MATCHER, APP_NAME)
 
   // 3. Writes.
   await Promise.all([
@@ -159,6 +152,55 @@ async function replaceDockerLockFile(rootDirectory, packageManager) {
 
   // 3. Writes.
   await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile)
+}
+
+/**
+ * Typescript related scripts.
+ * @author @MichaelDeBoey https://github.com/MichaelDeBoey
+ * @author @kentcdodds https://github.com/kentcdodds
+ */
+
+/**
+ * @description
+ */
+function removeUnusedDependencies(dependencies, unusedDependencies) {
+  Object.fromEntries(
+    Object.entries(dependencies).filter(
+      ([key]) => !unusedDependencies.includes(key)
+    )
+  )
+}
+
+/**
+ * @description
+ */
+const updatePackageJson = ({ packageJson, isTypeScript, APP_NAME }) => {
+  const {
+    devDependencies,
+    prisma: { seed: prismaSeed, ...prisma },
+    scripts: { typecheck, validate, ...scripts },
+  } = packageJson.content
+
+  packageJson.update({
+    name: APP_NAME,
+    devDependencies: isTypeScript
+      ? devDependencies
+      : removeUnusedDependencies(devDependencies, [
+          "ts-node",
+          "vite-tsconfig-paths",
+        ]),
+    prisma: isTypeScript
+      ? prisma
+      : {
+          ...prisma,
+          seed: prismaSeed
+            .replace("ts-node", "node")
+            .replace("seed.ts", "seed.js"),
+        },
+    scripts: isTypeScript
+      ? { ...scripts, typecheck, validate }
+      : { ...scripts, validate: validate.replace(" typecheck", "") },
+  })
 }
 
 module.exports = main

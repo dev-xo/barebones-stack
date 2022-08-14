@@ -16,13 +16,13 @@ Inspired in [Blues Stack](https://github.com/remix-run/blues-stack), other cool 
 
 Javascript version of this template, is on the way!
 
-## 🔋 Getting started.
+## 🔋 Getting Started
 
 ```
 npx create-remix --template dev-xo/barebones-stack
 ```
 
-## 💿 Features.
+## 💿 Features
 
 - [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
 - Production-Ready with [PostgreSQL Database](https://www.postgresql.org/)
@@ -40,7 +40,7 @@ npx create-remix --template dev-xo/barebones-stack
 Would you like to change something? Fork it, change it, and use `npx create-remix --template your/repo`!<br/>
 Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
 
-## 🛠 Development.
+## 🛠 Development
 
 - This step only applies if you've opted out of having the CLI install dependencies for you:
 
@@ -79,7 +79,7 @@ The database seed script creates a welcome message that will let you know, datab
 
 If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
 
-## 🚀 Deployment.
+## 🚀 Deployment
 
 This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments.
 
@@ -153,11 +153,11 @@ Now that everything is set up you can commit and push your changes to your repo.
 
 If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io). They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and questions.
 
-## ⚙️ GitHub Actions.
+## ⚙️ GitHub Actions
 
 We use GitHub Actions for continuous integration and deployment. Anything that gets into the `master` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
 
-## 🔎 Testing.
+## 🔎 Testing
 
 ### Cypress
 

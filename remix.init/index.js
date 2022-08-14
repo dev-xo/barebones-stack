@@ -100,7 +100,7 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
 
   // const README_HEADER_MATCHER = /#\sRemix\sBarebones\sStack/gm
   // const APP_NAME_MATCHER = /barebones-stack/gm
-  const REPLACER_MATCHER = /barebones[\s|-]Stack/gim
+  const REPLACER_MATCHER = /barebones[\s|-]stack/gim
 
   // 1. Reads.
   const [packageJsonFile, tomlFile, readmeFile] = await Promise.all([
@@ -123,12 +123,8 @@ async function replaceProjectNameFromFiles(rootDirectory, appName) {
   replacedTomlFile.app = replacedTomlFile.app.replace(REPLACER_MATCHER, appName)
 
   // Replaces README.md file.
-  const replacedReadmeHeader = readmeFile.replace(
-    REPLACER_MATCHER,
-    "# " + appName
-  )
-  const replacedReadmeFile = replacedReadmeHeader.replace(
-    REPLACER_MATCHER,
+  const replacedReadmeFile = readmeFile.replace(
+    new RegExp(escapeRegExp(REPLACER_MATCHER), "g"),
     appName
   )
 

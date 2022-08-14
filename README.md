@@ -164,7 +164,7 @@ Simply wanna say thank you for the support on twitter and on the repo!<br />
 Some of the cool scripts that are implemented in the template are from [Blues Stack](https://github.com/remix-run/blues-stack)
 
 Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>
-He's doing an amazing job on `remix.init` folders and so on!.
+He's doing an amazing job on `remix.init` folders and so on!
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

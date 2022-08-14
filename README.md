@@ -16,15 +16,15 @@ Inspired in [Blues Stack](https://github.com/remix-run/blues-stack), other cool 
 
 Javascript version of this template, is on the way!
 
+## 🔋 Get Started
+
 ```
 npx create-remix --template dev-xo/barebones-stack
 ```
 
-Learn more about [Remix Stacks](https://remix.run/stacks).
-
 ### 💿 Features
 
-- [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)S
+- [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
 - Production-Ready with [PostgreSQL Database](https://www.postgresql.org/)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for Deploy on merge to production and staging environments.
@@ -38,7 +38,7 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 - Static Types with [TypeScript](https://www.typescriptlang.org/)
 
 Would you like to change something? Fork it, change it, and use `npx create-remix --template your/repo`!<br/>
-Make it your own.
+Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ### 🛠 Development
 
@@ -186,4 +186,4 @@ We use [Prettier](https://prettier.io/) for auto-formatting in this project. It'
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[product-screenshot]: ./app/assets/images/Thumbnail.png
+[product-screenshot]: ./app/assets/images/thumbnail.png

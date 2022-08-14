@@ -28,7 +28,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
     // Updates packageJson, removing all Typescript references.
     await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME })
 
-    // Clears up Typescript references from Github Actions deploy workflow.
+    // Cleans up Typescript references from Github Actions deploy workflow.
     await cleanupDeployWorkflow(rootDirectory)
   }
 
@@ -213,7 +213,7 @@ const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
 
 /**
  * @description
- * Clears up Typescript references from Github Actions deploy workflow.
+ * Cleans up Typescript references from Github Actions deploy workflow.
  */
 async function cleanupDeployWorkflow(rootDirectory) {
   const DEPLOY_WORKFLOW_PATH = path.join(
@@ -226,7 +226,8 @@ async function cleanupDeployWorkflow(rootDirectory) {
   // 1. Reads.
   const githubDeployYmlFile = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8")
 
-  // 1. Replaces.
+  console.log(githubDeployYmlFile)
+  /*   // 1. Replaces.
   delete githubDeployYmlFile.jobs.typecheck
   githubDeployYmlFile.jobs.deploy.needs =
     githubDeployYmlFile.jobs.deploy.needs.filter((need) => need !== "typecheck")
@@ -235,7 +236,7 @@ async function cleanupDeployWorkflow(rootDirectory) {
   return await fs.writeFile(
     DEPLOY_WORKFLOW_PATH,
     YAML.stringify(githubDeployYmlFile)
-  )
+  ) */
 }
 
 module.exports = main

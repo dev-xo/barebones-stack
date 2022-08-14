@@ -11,6 +11,7 @@ const path = require("path")
 const crypto = require("crypto")
 
 const toml = require("@iarna/toml")
+const YAML = require("yaml")
 const PackageJson = require("@npmcli/package-json")
 
 /**
@@ -23,8 +24,12 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
   // Javascript support is on the way!
   if (!isTypeScript) {
+    // TODO: SHOULD BE AN OBJECT? INSTEAD OF PROPS?
     // Updates packageJson, removing all Typescript references.
     await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME })
+
+    // Clears up Typescript references from Github Actions deploy workflow.
+    await cleanupDeployWorkflow(rootDirectory)
   }
 
   // Creates and initiates a newly `.env` file,
@@ -52,6 +57,10 @@ Start development with \`npm run dev\`
   )
 }
 
+/**
+ * Helper related scripts.
+ * @link https://github.com/remix-run/indie-stack
+ */
 function escapeRegExp(string) {
   // $& means the whole matched string.
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
@@ -60,6 +69,10 @@ function escapeRegExp(string) {
 function getRandomString(length) {
   return crypto.randomBytes(length).toString("hex")
 }
+
+/**
+ * Functionality related scripts.
+ */
 
 /**
  * @description
@@ -145,14 +158,11 @@ async function replaceDockerLockFile(rootDirectory, packageManager) {
 }
 
 /**
- * Typescript related scripts.
+ * Typescript cleanups related scripts.
  * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  * @author @kentcdodds https://github.com/kentcdodds
  */
 
-/**
- * @description
- */
 function removeUnusedDependencies(dependencies, unusedDependencies) {
   Object.fromEntries(
     Object.entries(dependencies).filter(
@@ -199,6 +209,33 @@ const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
 
   // 3. Saves.
   await packageJson.save()
+}
+
+/**
+ * @description
+ * Clears up Typescript references from Github Actions deploy workflow.
+ */
+async function cleanupDeployWorkflow(rootDirectory) {
+  const DEPLOY_WORKFLOW_PATH = path.join(
+    rootDirectory,
+    ".github",
+    "workflows",
+    "deploy.yml"
+  )
+
+  // 1. Reads.
+  const githubDeployYmlFile = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8")
+
+  // 1. Replaces.
+  delete githubDeployYmlFile.jobs.typecheck
+  githubDeployYmlFile.jobs.deploy.needs =
+    githubDeployYmlFile.jobs.deploy.needs.filter((need) => need !== "typecheck")
+
+  // Writes.
+  return await fs.writeFile(
+    DEPLOY_WORKFLOW_PATH,
+    YAML.stringify(githubDeployYmlFile)
+  )
 }
 
 module.exports = main

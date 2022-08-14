@@ -32,8 +32,8 @@ export default function Index() {
       {/* This will confirm that the database has been correctly set. */}
       {welcomeMessage?.message && (
         <p
-          className="shake fixed bottom-6 z-[1] rounded-full border border-slate-200 bg-slate-800 py-[7px] px-4 
-          text-center text-base font-semibold text-white drop-shadow-xl transition hover:scale-105 hover:cursor-default"
+          className="shake fixed bottom-6 z-[1] rounded-full border-slate-200 bg-slate-800 py-[7px] px-4 
+          text-center text-base font-medium text-white drop-shadow-xl transition hover:scale-105 hover:cursor-default"
         >
           {welcomeMessage.message}
         </p>
@@ -90,7 +90,7 @@ export default function Index() {
           Barebones Stack
           <span
             className="absolute top-[-24px] right-[-6px] flex flex-row rounded-md bg-[rgba(244,44,64,0.8)] 
-            px-[6px] py-[4px] text-[12px] text-white md:right-[-36px] md:top-[-16px]"
+            px-[6px] py-[4px] text-[16px] text-white md:right-[-36px] md:top-[-16px]"
           >
             v1.0
           </span>

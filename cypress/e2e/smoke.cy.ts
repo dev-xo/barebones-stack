@@ -7,5 +7,3 @@ describe("Smoke test!.", () => {
     cy.findByText("Remix Stack")
   })
 })
-
-export {}

@@ -23,33 +23,20 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
   if (!isTypeScript) {
-    // Updates packageJson, removing all Typescript references.
+    // Cleans up Typescript references from the project.
     await updatePackageJson(rootDirectory, isTypeScript, APP_NAME)
-
-    // Cleans up Typescript references from Github Actions deploy workflow.
     await cleanupDeployWorkflow(rootDirectory)
-
-    // Cleans up Typescript references from Vitest config.
     await cleanupVitestConfig(rootDirectory)
   }
 
-  // Creates and initiates a newly `.env` file,
-  // with provided variables from `.env.example`.
+  // Creates and initiates a newly `.env` file, with provided variables from `.env.example`.
   await createAndInitEnvFile(rootDirectory)
 
   // Replaces default project name for the one provided by `DIR_NAME`.
   await replaceProjectNameFromFiles(rootDirectory, APP_NAME)
 
-  // Replaces `Dockerfile` and adds a `lockfile`,
-  // based on the provided package manager from user.
+  // Replaces `Dockerfile` and adds a `lockfile`, based on the provided package manager from user.
   await replaceDockerLockFile(rootDirectory, packageManager)
-
-  /*
-  TODO: check more cmds.
-  execSync("npm run format -- --loglevel warn", {
-    stdio: "inherit",
-    cwd: rootDirectory,
-  }) */
 
   console.log(
     `
@@ -64,8 +51,7 @@ Start development with \`npm run dev\`
  * @link https://github.com/remix-run/indie-stack
  */
 function escapeRegExp(string) {
-  // $& means the whole matched string.
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") // $& means the whole matched string.
 }
 
 function getRandomString(length) {
@@ -80,20 +66,20 @@ async function createAndInitEnvFile(rootDirectory) {
   const ENV_PATH = path.join(rootDirectory, ".env")
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example")
 
-  const exampleEnvFil = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
-  const replacedExampleEnvFile = exampleEnvFil.replace(
+  // Reads, replaces and writes a new file.
+  const exampleEnv = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
+  const replacedExampleEnv = exampleEnv.replace(
     /^SESSION_SECRET=.*$/m,
     `SESSION_SECRET="${getRandomString(16)}"`
   )
-
-  await fs.writeFile(ENV_PATH, replacedExampleEnvFile)
+  await fs.writeFile(ENV_PATH, replacedExampleEnv)
 }
 
 /**
- * @description Replaces default project name for the one provided by `DIR_NAME`.
+ * @description
+ * Replaces default project name for the one provided by `DIR_NAME`.
  *
  * Files that are being updated:
- * - package.json
  * - fly.toml
  * - README.md
  */
@@ -103,24 +89,22 @@ async function replaceProjectNameFromFiles(rootDirectory, APP_NAME) {
 
   const REPLACER_MATCHER = /barebones[\s|-]stack/gim
 
-  // 1. Reads.
+  // Reads.
   const [tomlFile, readmeFile] = await Promise.all([
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
   ])
 
-  // 2. Replaces.
   // Replaces Fly.toml file.
   const replacedTomlFile = toml.parse(tomlFile)
   replacedTomlFile.app = replacedTomlFile.app.replace(
     REPLACER_MATCHER,
     APP_NAME
   )
-
   // Replaces README.md file.
   const replacedReadmeFile = readmeFile.replace(REPLACER_MATCHER, APP_NAME)
 
-  // 3. Writes.
+  // Writes.
   await Promise.all([
     fs.writeFile(FLY_TOML_PATH, toml.stringify(replacedTomlFile)),
     fs.writeFile(README_PATH, replacedReadmeFile),
@@ -128,16 +112,16 @@ async function replaceProjectNameFromFiles(rootDirectory, APP_NAME) {
 }
 
 /**
- * @description Replaces `Dockerfile` and adds a lockfile,
- * based on the provided package manager from user.
+ * @description
+ * Replaces `Dockerfile` and adds a lockfile, based on the provided package manager from user.
  */
 async function replaceDockerLockFile(rootDirectory, packageManager) {
   const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile")
 
-  // 1. Reads.
+  // Reads.
   const dockerfile = await fs.readFile(DOCKERFILE_PATH, "utf-8")
 
-  // 2. Replaces.
+  // Replaces.
   const lockfile = {
     npm: "package-lock.json",
     yarn: "yarn.lock",
@@ -151,10 +135,14 @@ async function replaceDockerLockFile(rootDirectory, packageManager) {
       )
     : dockerfile
 
-  // 3. Writes.
+  // Writes.
   await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile)
 }
 
+/**
+ * @description
+ * Filters out unused 'dependencies'.
+ */
 function removeUnusedDependencies(dependencies, unusedDependencies) {
   Object.fromEntries(
     Object.entries(dependencies).filter(
@@ -168,7 +156,7 @@ function removeUnusedDependencies(dependencies, unusedDependencies) {
  * Updates packageJson, removing all Typescript references.
  */
 const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
-  // 1. Reads.
+  // Reads.
   const packageJson = await PackageJson.load(rootDirectory)
 
   const {
@@ -177,7 +165,7 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
     scripts: { typecheck, validate, ...scripts },
   } = packageJson.content
 
-  // 2. Updates.
+  // Updates.
   packageJson.update({
     name: APP_NAME,
     devDependencies: isTypeScript
@@ -199,7 +187,7 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
       : { ...scripts, validate: validate.replace(" typecheck", "") },
   })
 
-  // 3. Saves.
+  // Saves.
   await packageJson.save()
 }
 
@@ -215,16 +203,20 @@ async function cleanupDeployWorkflow(rootDirectory) {
     "deploy.yml"
   )
 
-  // Reads, parses, deletes and writes a new file.
+  // Reads.
   const githubDeployYmlFile = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8")
+
+  // Parses.
   let githubDeployYmlParsedFile = YAML.parse(githubDeployYmlFile)
 
+  // Deletes.
   delete githubDeployYmlParsedFile.jobs.typecheck
   githubDeployYmlParsedFile.jobs.deploy.needs =
     githubDeployYmlParsedFile.jobs.deploy.needs.filter(
       (need) => need !== "typecheck"
     )
 
+  // Writes.
   return await fs.writeFile(
     DEPLOY_WORKFLOW_PATH,
     YAML.stringify(githubDeployYmlParsedFile)
@@ -244,7 +236,7 @@ async function cleanupVitestConfig(rootDirectory) {
     "setup-test-env.ts",
     "setup-test-env.js"
   )
-  return await fs.writeFile(VITEST_CONFIG_PATH, replacedVitestConfig)
+  await fs.writeFile(VITEST_CONFIG_PATH, replacedVitestConfig)
 }
 
 module.exports = main

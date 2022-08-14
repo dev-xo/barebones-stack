@@ -39,9 +39,12 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   await replaceDockerLockFile(rootDirectory, packageManager)
 
   /*
+  execSync("npm run setup", { cwd: rootDirectory, stdio: "inherit" });
+
   execSync("npm run format -- --loglevel warn", {
-    stdio: "inherit",
     cwd: rootDirectory,
+    stdio: "inherit",
+  });
   }) */
 
   console.log(
@@ -173,7 +176,9 @@ const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
   // 1. Reads.
   const packageJson = await PackageJson.load(rootDirectory)
 
-  const {
+  console.log(packageJson)
+
+  /*   const {
     devDependencies,
     prisma: { seed: prismaSeed, ...prisma },
     scripts: { typecheck, validate, ...scripts },
@@ -202,7 +207,7 @@ const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
   })
 
   // 3. Saves.
-  await packageJson.save()
+  await packageJson.save() */
 }
 
 module.exports = main

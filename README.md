@@ -13,7 +13,7 @@ This template is aiming for those who loves to build their stuff **from the grou
 - Solid template with all the features from the bigger stacks.
 
 We've just included the batteries. You build the rest!<br />
-Inspired in [Blues Stack](https://github.com/remix-run/blues-stack) and other cool stacks.
+Inspired in [Indie Stack](https://github.com/remix-run/indie-stack) and other cool stacks.
 
 - Javascript version of this template is currently on development.
 
@@ -161,8 +161,8 @@ We use [Prettier](https://prettier.io/) for auto-formatting in this project. It'
 
 ## ❤️ Acknowledgments
 
-Simply wanna say thank you for the support on twitter and on the repo!<br />
-Some of the cool scripts that are implemented in the template are from [Blues Stack](https://github.com/remix-run/blues-stack)
+Simply wanna say Thank You! Im having a great time developing this stack and improving with each step!.<br />
+Some of the cool features that are implemented in the template are from [Indie Stack](https://github.com/remix-run/indie-stack)
 
 Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>
 He's doing an amazing job on `remix.init` folders and so on!

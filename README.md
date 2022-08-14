@@ -185,7 +185,7 @@ We use [Prettier](https://prettier.io/) for auto-formatting in this project. It'
 
 ## ❤️ Acknowledgments
 
-Simply wanna say thank you for the support on twitter and on the repo!
+Simply wanna say thank you for the support on twitter and on the repo!<br />
 Some of the cool scripts that are implemented in the template are from [Blues Stack](https://github.com/remix-run/blues-stack)
 
 Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>

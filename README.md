@@ -183,6 +183,14 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
 
+## ❤️ Acknowledgments
+
+Simply wanna say thank you for the support on twitter and on the repo!
+Some of the cool scripts that are implemented in the template are from [Blues Stack](https://github.com/remix-run/blues-stack)
+
+Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>
+He's doing an amazing job on `remix.init` folders and so on!.
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 

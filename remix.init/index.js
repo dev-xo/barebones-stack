@@ -23,9 +23,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
   // Javascript support is on the way!
   if (!isTypeScript) {
-    const packageJson = PackageJson.load(rootDirectory)
-
-    updatePackageJson({ packageJson, isTypeScript, APP_NAME })
+    await updatePackageJson({ rootDirectory, isTypeScript, APP_NAME })
 
     /* throw new Error(
       "😓 Javascript implementation of this template will be released soon! We apologise!"
@@ -173,7 +171,11 @@ function removeUnusedDependencies(dependencies, unusedDependencies) {
 /**
  * @description
  */
-const updatePackageJson = ({ packageJson, isTypeScript, APP_NAME }) => {
+const updatePackageJson = async ({ rootDirectory, isTypeScript, APP_NAME }) => {
+  const packageJson = await PackageJson.load(rootDirectory)
+
+  console.log(packageJson)
+
   const {
     devDependencies,
     prisma: { seed: prismaSeed, ...prisma },
@@ -200,6 +202,8 @@ const updatePackageJson = ({ packageJson, isTypeScript, APP_NAME }) => {
       ? { ...scripts, typecheck, validate }
       : { ...scripts, validate: validate.replace(" typecheck", "") },
   })
+
+  await packageJson.save()
 }
 
 module.exports = main

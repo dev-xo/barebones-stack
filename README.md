@@ -60,7 +60,7 @@ Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
   npm run dev
   ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+This starts your app in development mode, rebuilding assets on file changes.<br />
 The database seed script creates a welcome message that will let you know, database is up and running.
 
 ## 🚀 Deployment
@@ -88,7 +88,7 @@ Prior to your first deployment, you'll need to do a few things:
 
   > **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
 
-  - Initialize Git.
+  - Initialize Git.<br />
 
   ```sh
   git init

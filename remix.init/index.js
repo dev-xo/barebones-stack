@@ -6,6 +6,7 @@
  * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  * @author @kentcdodds https://github.com/kentcdodds
  */
+const { execSync } = require("child_process")
 const fs = require("fs/promises")
 const path = require("path")
 const crypto = require("crypto")
@@ -38,6 +39,9 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
   // Replaces `Dockerfile` and adds a `lockfile`, based on the provided package manager from user.
   await replaceDockerLockFile(rootDirectory, packageManager)
+
+  // Seeds database.
+  execSync("npm run setup", { cwd: rootDirectory, stdio: "inherit" })
 
   console.log(
     `

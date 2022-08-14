@@ -8,13 +8,13 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested template, to start coding right away.<br />
 
-- Clean and easy start.
+- Clean and simple start: just `npm run dev`. Everything will be set up for you.
 - Solid template with all the features from the bigger stacks.
 
 We've just included the batteries. You build the rest!<br />
 Inspired in [Blues Stack](https://github.com/remix-run/blues-stack) and other cool stacks.
 
-- Javascript version of this template will be available soon.
+- Javascript version of this template is currently on development.
 
 ## 🔋 Getting Started
 

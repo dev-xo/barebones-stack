@@ -165,7 +165,7 @@ Simply wanna say thank you all! Im having a great time developing this stack.<br
 Some of the cool features that are implemented in the template are from [Indie Stack](https://github.com/remix-run/indie-stack)
 
 Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>
-He's doing an amazing job on `remix.init` folders and so on!.
+He's doing an amazing job on `remix.init` folders and so on!
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

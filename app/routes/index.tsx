@@ -92,7 +92,7 @@ export default function Index() {
             className="absolute top-[-24px] right-[-6px] flex flex-row rounded-md bg-[rgba(244,44,64,0.8)] 
             px-[6px] py-[4px] text-[16px] text-white md:right-[-36px] md:top-[-16px]"
           >
-            v1.0
+            v1.1 Dev!
           </span>
         </h1>
         <div className="h-3" />

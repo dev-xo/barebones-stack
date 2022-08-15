@@ -9,16 +9,16 @@ import BeamsPNG from "~/assets/images/beams.png"
 import ThumbnailPNG from "~/assets/images/bone.png"
 
 type LoaderData = {
-  dbWelcomeMessage: Awaited<Welcome> | null
+  welcomeMessage: Awaited<Welcome> | null
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const dbWelcomeMessage = await prisma.welcome.findFirst()
-  return json<LoaderData>({ dbWelcomeMessage })
+  const welcomeMessage = await prisma.welcome.findFirst()
+  return json<LoaderData>({ welcomeMessage })
 }
 
 export default function Index() {
-  const { dbWelcomeMessage } = useLoaderData() as LoaderData
+  const { welcomeMessage } = useLoaderData() as LoaderData
 
   return (
     <div className="flex flex-col items-center justify-center overflow-x-hidden px-6">
@@ -29,13 +29,13 @@ export default function Index() {
       />
 
       {/* Database welcome message. */}
-      {/* This will confirm that the database has been set correctly. */}
-      {dbWelcomeMessage?.message && (
+      {/* This will confirm that the database has been correctly set. */}
+      {welcomeMessage?.message && (
         <p
-          className="shake fixed bottom-6 z-[1] rounded-full border border-slate-200 bg-slate-800 py-[7px] px-4 
-          text-center text-base font-semibold text-white drop-shadow-xl transition hover:scale-105 hover:cursor-default"
+          className="shake fixed bottom-6 z-[1] rounded-full border-slate-200 bg-slate-800 py-[7px] px-4 
+          text-center text-base font-medium text-white drop-shadow-xl transition hover:scale-105 hover:cursor-default"
         >
-          {dbWelcomeMessage.message}
+          {welcomeMessage.message}
         </p>
       )}
 
@@ -49,7 +49,7 @@ export default function Index() {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            className="h-7 fill-slate-400 duration-100 hover:scale-110 hover:fill-slate-800
+            className="h-8 fill-slate-400 duration-100 hover:scale-110 hover:fill-slate-800
             active:scale-95 active:ease-in"
           >
             <path
@@ -69,7 +69,7 @@ export default function Index() {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            className="h-7 fill-slate-400 duration-100 hover:scale-110 hover:fill-slate-800
+            className="h-8 fill-slate-400 duration-100 hover:scale-110 hover:fill-slate-800
             active:scale-95 active:ease-in"
           >
             <path d="M19.633 7.997c.013.175.013.349.013.523 0 5.325-4.053 11.461-11.46 11.461-2.282 0-4.402-.661-6.186-1.809.324.037.636.05.973.05a8.07 8.07 0 0 0 5.001-1.721 4.036 4.036 0 0 1-3.767-2.793c.249.037.499.062.761.062.361 0 .724-.05 1.061-.137a4.027 4.027 0 0 1-3.23-3.953v-.05c.537.299 1.16.486 1.82.511a4.022 4.022 0 0 1-1.796-3.354c0-.748.199-1.434.548-2.032a11.457 11.457 0 0 0 8.306 4.215c-.062-.3-.1-.611-.1-.923a4.026 4.026 0 0 1 4.028-4.028c1.16 0 2.207.486 2.943 1.272a7.957 7.957 0 0 0 2.556-.973 4.02 4.02 0 0 1-1.771 2.22 8.073 8.073 0 0 0 2.319-.624 8.645 8.645 0 0 1-2.019 2.083z" />
@@ -90,7 +90,7 @@ export default function Index() {
           Barebones Stack
           <span
             className="absolute top-[-24px] right-[-6px] flex flex-row rounded-md bg-[rgba(244,44,64,0.8)] 
-            px-[6px] py-[4px] text-[12px] text-white md:right-[-36px] md:top-[-16px]"
+            px-[6px] py-[4px] text-[16px] text-white md:right-[-36px] md:top-[-16px]"
           >
             v1.0
           </span>
@@ -98,7 +98,7 @@ export default function Index() {
         <div className="h-3" />
 
         <p className="max-w-xl text-center text-lg font-normal drop-shadow-xl">
-          A simple{" "}
+          A solid{" "}
           <a
             href="https://remix.run/docs/en/v1/pages/stacks"
             target="_blank"
@@ -120,19 +120,19 @@ export default function Index() {
               href: "https://fly.io",
             },
             {
-              src: "https://avatars.githubusercontent.com/u/44036562?s=280&v=4",
-              alt: "Github Actions",
-              href: "https://github.com/features/actions",
-            },
-            {
-              src: "https://user-images.githubusercontent.com/1500684/158238105-e7279a0c-1640-40db-86b0-3d3a10aab824.svg",
-              alt: "PostgreSQL",
-              href: "https://www.postgresql.org/",
-            },
-            {
               src: "https://user-images.githubusercontent.com/1500684/157764484-ad64a21a-d7fb-47e3-8669-ec046da20c1f.svg",
               alt: "Prisma",
               href: "https://prisma.io",
+            },
+            {
+              src: "https://user-images.githubusercontent.com/1500684/157764395-137ec949-382c-43bd-a3c0-0cb8cb22e22d.svg",
+              alt: "SQLite",
+              href: "https://sqlite.org",
+            },
+            {
+              src: "https://avatars.githubusercontent.com/u/44036562?s=280&v=4",
+              alt: "Github Actions",
+              href: "https://github.com/features/actions",
             },
             {
               src: "https://user-images.githubusercontent.com/1500684/157764454-48ac8c71-a2a9-4b5e-b19c-edef8b8953d6.svg",

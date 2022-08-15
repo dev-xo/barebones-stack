@@ -1,7 +1,4 @@
 /**
- * Script from Indie Stack
- * @link https://github.com/remix-run/indie-stack/blob/main/app/routes/healthcheck.tsx
- *
  * Learn more: https://fly.io/docs/reference/configuration/#services-http_checks
  */
 import type { LoaderArgs } from "@remix-run/node"

@@ -26,7 +26,7 @@ npx create-remix --template dev-xo/barebones-stack
 ## 💿 Features
 
 - [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
-- Production-Ready with [PostgreSQL Database](https://www.postgresql.org/)
+- Production-Ready with [SQLite Database](https://sqlite.org/index.html)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)
 - [GitHub Actions](https://github.com/features/actions) for Deploy on merge to production and staging environments.
 - Database ORM with [Prisma](https://www.prisma.io/)

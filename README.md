@@ -168,6 +168,5 @@ Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>
 He's doing an amazing job on `remix.init` folders and so on!
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [product-screenshot]: ./app/assets/images/thumbnail.png

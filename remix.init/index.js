@@ -224,11 +224,13 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
       cleanupCypressFiles(rootDirectory),
       cleanupVitestConfigFile(rootDirectory),
       cleanupDeployWorkflowFile(rootDirectory),
-      updatePackageJson(rootDirectory, isTypeScript, APP_NAME),
     ]);
   }
 
   await Promise.all([
+    // Updates package.json.
+    updatePackageJson(rootDirectory, isTypeScript, APP_NAME),
+
     // Creates and initiates a newly `.env` file, with provided variables from `.env.example`.
     createAndInitEnvFile(rootDirectory),
 

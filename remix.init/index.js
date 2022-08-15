@@ -30,14 +30,28 @@ const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
  */
 const cleanupCypressFiles = async (rootDirectory) => {
   const CYPRESS_CONFIG_PATH = path.join(rootDirectory, "cypress.config.js");
+  const CYPRESS_ESLINTRC_JS_PATH = path.join(
+    rootDirectory,
+    "cypress",
+    ".eslintrc.js"
+  );
 
-  // Reads, replaces and writes a new file.
+  // Reads.
   const cypressConfig = await fs.readFile(CYPRESS_CONFIG_PATH, "utf-8");
+  const cypressEslint = await fs.readFile(CYPRESS_ESLINTRC_JS_PATH, "utf-8");
+
+  // Replaces.
   const replacedCypressConfig = cypressConfig.replace(
     "export default",
     "module.exports ="
   );
-  await fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig);
+  const replacedCypressEslint = cypressEslint.replace("tsconfig", "jsconfig");
+
+  // Writes.
+  await Promise.all([
+    fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig),
+    fs.writeFile(CYPRESS_ESLINTRC_JS_PATH, replacedCypressEslint),
+  ]);
 };
 
 /**

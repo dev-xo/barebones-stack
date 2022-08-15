@@ -3,7 +3,7 @@
  */
 describe("Smoke test!.", () => {
   it("Should display Barebones welcome text.", () => {
-    cy.visit("/");
-    cy.findByText("Remix Stack");
-  });
-});
+    cy.visit("/")
+    cy.findByText("Remix Stack")
+  })
+})

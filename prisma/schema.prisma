@@ -1,5 +1,5 @@
 // This is your Prisma schema file,
-// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -8,12 +8,4 @@ generator client {
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
-}
-
-model Welcome {
-  id      String  @id @default(cuid())
-  message String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

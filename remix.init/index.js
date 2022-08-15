@@ -45,11 +45,16 @@ const cleanupCypressFiles = async (rootDirectory) => {
     "export default",
     "module.exports ="
   )
-  const replacedCypressEslint = cypressEslint.replace("tsconfig", "jsconfig")
+  const replacedCypressEslint = cypressEslint.replace(
+    "./tsconfig.json",
+    "./jsconfig.json"
+  )
 
   // Writes.
-  await fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig)
-  await fs.writeFile(CYPRESS_ESLINTRC_JS_PATH, replacedCypressEslint)
+  await Promise.all([
+    fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig),
+    fs.writeFile(CYPRESS_ESLINTRC_JS_PATH, replacedCypressEslint),
+  ])
 }
 
 /**

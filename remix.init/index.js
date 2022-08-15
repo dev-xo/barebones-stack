@@ -17,16 +17,22 @@ const PackageJson = require("@npmcli/package-json")
 
 /**
  * Helpers.
- * @link https://github.com/remix-run/indie-stack
  */
-const escapeRegExp = (string) =>
-  // $& means the whole matched string
-  string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-
+const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex")
 
 /**
- * @description Cleans up Typescript references from Cypress folders.
+ * Filters out unused dependencies.
+ */
+const removeUnusedDependencies = (dependencies, unusedDependencies) =>
+  Object.fromEntries(
+    Object.entries(dependencies).filter(
+      ([key]) => !unusedDependencies.includes(key)
+    )
+  )
+
+/**
+ * Cleans up Typescript references from Cypress folders.
  */
 const cleanupCypressFiles = async (rootDirectory) => {
   const CYPRESS_CONFIG_PATH = path.join(rootDirectory, "cypress.config.js")
@@ -41,7 +47,7 @@ const cleanupCypressFiles = async (rootDirectory) => {
 }
 
 /**
- * @description Cleans up Typescript references from Vitest config.
+ * Cleans up Typescript references from Vitest config.
  */
 const cleanupVitestConfigFile = async (rootDirectory) => {
   const VITEST_CONFIG_PATH = path.join(rootDirectory, "vitest.config.js")
@@ -56,7 +62,7 @@ const cleanupVitestConfigFile = async (rootDirectory) => {
 }
 
 /**
- * @description Cleans up Typescript references from .Github deploy Workflow.
+ * Cleans up Typescript references from Github workflows.
  */
 const cleanupDeployWorkflowFile = async (rootDirectory) => {
   const DEPLOY_WORKFLOW_PATH = path.join(
@@ -66,19 +72,15 @@ const cleanupDeployWorkflowFile = async (rootDirectory) => {
     "deploy.yml"
   )
 
-  // Reads.
+  // Reads, parses, replaces and writes a new file.
   const deployWorkflow = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8")
+  const parsedWorkflow = YAML.parse(deployWorkflow)
 
-  // Parses.
-  let parsedWorkflow = YAML.parse(deployWorkflow)
-
-  // Deletes.
   delete parsedWorkflow.jobs.typecheck
   parsedWorkflow.jobs.deploy.needs = parsedWorkflow.jobs.deploy.needs.filter(
     (need) => need !== "typecheck"
   )
 
-  // Writes.
   return await fs.writeFile(
     DEPLOY_WORKFLOW_PATH,
     YAML.stringify(parsedWorkflow)
@@ -86,21 +88,9 @@ const cleanupDeployWorkflowFile = async (rootDirectory) => {
 }
 
 /**
- * @description Filters out unused dependencies.
- */
-const removeUnusedDependencies = (dependencies, unusedDependencies) => {
-  Object.fromEntries(
-    Object.entries(dependencies).filter(
-      ([key]) => !unusedDependencies.includes(key)
-    )
-  )
-}
-
-/**
- * @description Updates package.json
+ * Updates package.json
  */
 const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
-  // Reads.
   const packageJson = await PackageJson.load(rootDirectory)
 
   const {
@@ -109,7 +99,6 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
     scripts: { typecheck, validate, ...scripts },
   } = packageJson.content
 
-  // Updates.
   packageJson.update({
     name: APP_NAME,
     devDependencies: isTypeScript
@@ -128,12 +117,11 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
       : { ...scripts, validate: validate.replace(" typecheck", "") },
   })
 
-  // Saves.
   await packageJson.save()
 }
 
 /**
- * @description Creates and initiates a newly `.env` file,
+ * Creates and initiates a newly `.env` file,
  * with provided variables from `.env.example`.
  */
 const createAndInitEnvFile = async (rootDirectory) => {
@@ -150,7 +138,7 @@ const createAndInitEnvFile = async (rootDirectory) => {
 }
 
 /**
- * @description Replaces default project name for the one provided by `DIR_NAME`.
+ * Replaces default project name for the one provided by `DIR_NAME`.
  *
  * Files that are being updated:
  * - fly.toml
@@ -159,10 +147,8 @@ const createAndInitEnvFile = async (rootDirectory) => {
 const replaceProjectNameFromFiles = async (rootDirectory, APP_NAME) => {
   const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
   const README_PATH = path.join(rootDirectory, "README.md")
-
   const REPLACER = /barebones[\s|-]stack/gim
 
-  // Reads.
   const [flyToml, readme] = await Promise.all([
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
@@ -175,7 +161,6 @@ const replaceProjectNameFromFiles = async (rootDirectory, APP_NAME) => {
   // Replaces README.md file.
   const replacedReadme = readme.replace(REPLACER, APP_NAME)
 
-  // Writes.
   await Promise.all([
     fs.writeFile(FLY_TOML_PATH, toml.stringify(replacedFlyToml)),
     fs.writeFile(README_PATH, replacedReadme),
@@ -183,22 +168,19 @@ const replaceProjectNameFromFiles = async (rootDirectory, APP_NAME) => {
 }
 
 /**
- * @description Replaces `Dockerfile` and adds a `lockfile`,
+ * Replaces `Dockerfile` and adds a `lockfile`,
  * based on the provided package manager from user.
  */
 const replaceDockerLockFile = async (rootDirectory, packageManager) => {
   const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile")
 
-  // Reads.
   const dockerfile = await fs.readFile(DOCKERFILE_PATH, "utf-8")
-
   const lockfile = {
     npm: "package-lock.json",
     yarn: "yarn.lock",
     pnpm: "pnpm-lock.yaml",
   }[packageManager]
 
-  // Replaces.
   const replacedDockerFile = lockfile
     ? dockerfile.replace(
         new RegExp(escapeRegExp("ADD package.json"), "g"),
@@ -206,20 +188,19 @@ const replaceDockerLockFile = async (rootDirectory, packageManager) => {
       )
     : dockerfile
 
-  // Writes.
   await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile)
 }
 
 /**
- * @description
- * Runs after the project has been generated and dependencies have been installed.
+ * Runs after the project has been generated
+ * and dependencies have been installed.
  */
 async function main({ rootDirectory, packageManager, isTypeScript }) {
   const DIR_NAME = path.basename(rootDirectory)
   const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
   if (!isTypeScript) {
-    // Cleans up Typescript references from the project.
+    // Cleans up all Typescript references from the project.
     await Promise.all([
       cleanupCypressFiles(rootDirectory),
       cleanupVitestConfigFile(rootDirectory),
@@ -231,17 +212,19 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
     // Updates package.json.
     updatePackageJson(rootDirectory, isTypeScript, APP_NAME),
 
-    // Creates and initiates a newly `.env` file, with provided variables from `.env.example`.
+    // Creates and initiates a newly `.env` file,
+    // with provided variables from `.env.example`.
     createAndInitEnvFile(rootDirectory),
 
     // Replaces default project name for the one provided by `DIR_NAME`.
     replaceProjectNameFromFiles(rootDirectory, APP_NAME),
 
-    // Replaces `Dockerfile` and adds a `lockfile`, based on the provided package manager from user.
+    // Replaces `Dockerfile` and adds a `lockfile`,
+    // based on the provided package manager from user.
     replaceDockerLockFile(rootDirectory, packageManager),
   ])
 
-  // Setup and seeds database.
+  // Seeds database.
   execSync("npm run setup", { cwd: rootDirectory, stdio: "inherit" })
 
   // Formats the entire project.

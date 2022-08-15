@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-// This is your Prisma schema file.
-// Learn more about it in the docs: https://pris.ly/d/prisma-schema
-=======
 // This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
->>>>>>> a0eeb5647d4b32ac121f9ad21b70fcffdf1ea7f8
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"

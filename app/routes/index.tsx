@@ -18,6 +18,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     take: 1,
   });
 
+  return json<LoaderData>({ message: sortedMessages[0].message });
+  
   const latestMessage = sortedMessages[0]?.message
     ? sortedMessages[0].message
     : null;

@@ -13,17 +13,10 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const dbMessages = await prisma.welcome.findMany({
-    select: {
-      message: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 1,
+  const dbMessage = await prisma.welcome.findFirst();
+  return json<LoaderData>({
+    message: dbMessage?.message ? dbMessage.message : null,
   });
-
-  return json<LoaderData>({ message: dbMessages[0].message });
 };
 
 const Socials = () => {

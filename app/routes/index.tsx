@@ -9,20 +9,22 @@ import BeamsPNG from "~/assets/images/beams.png";
 import ThumbnailPNG from "~/assets/images/bone.png";
 
 type LoaderData = {
-  welcomeMessage: Awaited<Welcome> | null;
+  message: Awaited<Welcome["message"]>;
 };
 
-/**
- * Gets and returns a `message` from Welcome database model.
- */
 export const loader: LoaderFunction = async ({ request }) => {
-  const welcomeMessage = await prisma.welcome.findFirst();
-  return json<LoaderData>({ welcomeMessage });
+  // Findig many, instead of find first, allowes us to push messages on the fly,
+  // customizing the deployed template a bit more.
+  const sortedMessage = await prisma.welcome.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 1,
+  });
+
+  return json<LoaderData>({ message: sortedMessage[0].message });
 };
 
-/**
- * Renders author socials.
- */
 const Socials = () => {
   return (
     <div className="fixed top-4 right-4 flex flex-row items-center">
@@ -63,10 +65,6 @@ const Socials = () => {
     </div>
   );
 };
-
-/**
- * Renders template intro, displaying its packages and its features.
- */
 const Intro = () => {
   return (
     <div className="overflow-x flex min-h-screen flex-col items-center justify-center">
@@ -180,7 +178,7 @@ const Intro = () => {
 };
 
 export default function Index() {
-  const { welcomeMessage } = useLoaderData() as LoaderData;
+  const { message } = useLoaderData() as LoaderData;
 
   return (
     <div className="flex  flex-col items-center justify-center p-6 sm:p-0">
@@ -197,13 +195,13 @@ export default function Index() {
       {/* Intro. */}
       {Intro()}
 
-      {/* Welcome Message. */}
-      {welcomeMessage?.message && (
+      {/* Database Message. */}
+      {message && (
         <p
-          className="shake fixed bottom-6 z-[1] rounded-xl border-slate-200 bg-slate-900 py-[7px] px-4 
+          className="shake fixed bottom-6 z-[1] rounded-xl border-slate-200 bg-slate-900 py-[7px] px-3 
           text-center text-base font-medium text-white drop-shadow-xl hover:scale-105 hover:cursor-default"
         >
-          {welcomeMessage.message}
+          {message}
         </p>
       )}
     </div>

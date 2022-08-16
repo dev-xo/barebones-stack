@@ -9,12 +9,21 @@ import BeamsPNG from "~/assets/images/beams.png";
 import ThumbnailPNG from "~/assets/images/bone.png";
 
 type LoaderData = {
-  welcomeMessage: Awaited<Welcome> | null;
+  message: Awaited<Welcome["message"]>;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const welcomeMessage = await prisma.welcome.findFirst();
-  return json<LoaderData>({ welcomeMessage });
+  const dbMessages = await prisma.welcome.findMany({
+    select: {
+      message: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 1,
+  });
+
+  return json<LoaderData>({ message: dbMessages[0].message });
 };
 
 const Socials = () => {
@@ -170,7 +179,7 @@ const Intro = () => {
 };
 
 export default function Index() {
-  const { welcomeMessage } = useLoaderData() as LoaderData;
+  const { message } = useLoaderData() as LoaderData;
 
   return (
     <div className="flex  flex-col items-center justify-center p-6 sm:p-0">
@@ -186,12 +195,12 @@ export default function Index() {
       {Intro()}
 
       {/* Database Message. */}
-      {welcomeMessage?.message && (
+      {message && (
         <p
           className="shake fixed bottom-6 z-[1] rounded-xl border-slate-200 bg-slate-900 py-[7px] px-3 
           text-center text-base font-medium text-white drop-shadow-xl hover:scale-105 hover:cursor-default"
         >
-          {welcomeMessage.message}
+          {message}
         </p>
       )}
     </div>

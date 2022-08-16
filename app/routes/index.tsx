@@ -15,12 +15,12 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   // Findig many, instead of find first, allowes us to INSERT messages,
   // from `fly ssh console`, customizing the deployed template a bit more.
-  const sortedMessage = await prisma.welcome.findMany({
+  /* const sortedMessage = await prisma.welcome.findMany({
     orderBy: { createdAt: "desc" },
     take: 1,
-  });
+  }); */
 
-  return json<LoaderData>({ message: sortedMessage[0].message });
+  return json<LoaderData>({ message: "" });
 };
 
 const Socials = () => {

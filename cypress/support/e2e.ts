@@ -1,5 +1,5 @@
-import "@testing-library/cypress/add-commands"
-import "./commands"
+import "@testing-library/cypress/add-commands";
+import "./commands";
 
 // ***********************************************************
 // This example support/e2e.ts is processed and
@@ -24,6 +24,6 @@ Cypress.on("uncaught:exception", (err) => {
     /Minified React error #418/.test(err.message) ||
     /Minified React error #423/.test(err.message)
   ) {
-    return false
+    return false;
   }
-})
+});

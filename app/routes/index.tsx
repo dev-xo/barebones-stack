@@ -1,23 +1,23 @@
-import type { Welcome } from "@prisma/client"
-import type { LoaderFunction } from "@remix-run/node"
+import type { Welcome } from "@prisma/client";
+import type { LoaderFunction } from "@remix-run/node";
 
-import { json } from "@remix-run/node"
-import { prisma } from "~/utils/db.server"
-import { useLoaderData } from "@remix-run/react"
+import { json } from "@remix-run/node";
+import { prisma } from "~/utils/db.server";
+import { useLoaderData } from "@remix-run/react";
 
-import BeamsPNG from "~/assets/images/beams.png"
-import ThumbnailPNG from "~/assets/images/bone.png"
+import BeamsPNG from "~/assets/images/beams.png";
+import ThumbnailPNG from "~/assets/images/bone.png";
 
 type LoaderData = {
-  message: Awaited<Welcome["message"]>
-}
+  message: Awaited<Welcome["message"]>;
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const dbMessage = await prisma.welcome.findFirst()
+  const dbMessage = await prisma.welcome.findFirst();
   return json<LoaderData>({
     message: dbMessage?.message ? dbMessage.message : null,
-  })
-}
+  });
+};
 
 const Socials = () => {
   return (
@@ -57,8 +57,8 @@ const Socials = () => {
         </svg>
       </a>
     </div>
-  )
-}
+  );
+};
 const Intro = () => {
   return (
     <div className="overflow-x flex min-h-screen flex-col items-center justify-center">
@@ -168,11 +168,11 @@ const Intro = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default function Index() {
-  const { message } = useLoaderData() as LoaderData
+  const { message } = useLoaderData() as LoaderData;
 
   return (
     <div className="flex  flex-col items-center justify-center p-6 sm:p-0">
@@ -197,5 +197,5 @@ export default function Index() {
         </p>
       )}
     </div>
-  )
+  );
 }

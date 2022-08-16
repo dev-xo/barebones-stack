@@ -13,12 +13,10 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  // Findig many, instead of find first, allowes us to push messages on the fly,
-  // customizing the deployed template a bit more.
+  // Findig many, instead of find first, allowes us to INSERT messages,
+  // from `fly ssh console`, customizing the deployed template a bit more.
   const sortedMessage = await prisma.welcome.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: { createdAt: "desc" },
     take: 1,
   });
 
@@ -189,10 +187,8 @@ export default function Index() {
         alt=""
       />
 
-      {/* Socials. */}
+      {/* Template Components. */}
       {Socials()}
-
-      {/* Intro. */}
       {Intro()}
 
       {/* Database Message. */}

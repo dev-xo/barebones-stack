@@ -19,12 +19,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
 
   return json<LoaderData>({ message: sortedMessages[0].message });
-  
-  const latestMessage = sortedMessages[0]?.message
-    ? sortedMessages[0].message
-    : null;
-
-  return json<LoaderData>({ message: latestMessage });
 };
 
 const Socials = () => {

@@ -1,24 +1,24 @@
-import type { Welcome } from "@prisma/client"
-import type { LoaderFunction } from "@remix-run/node"
+import type { Welcome } from "@prisma/client";
+import type { LoaderFunction } from "@remix-run/node";
 
-import { json } from "@remix-run/node"
-import { prisma } from "~/utils/db.server"
-import { useLoaderData } from "@remix-run/react"
+import { json } from "@remix-run/node";
+import { prisma } from "~/utils/db.server";
+import { useLoaderData } from "@remix-run/react";
 
-import BeamsPNG from "~/assets/images/beams.png"
-import ThumbnailPNG from "~/assets/images/bone.png"
+import BeamsPNG from "~/assets/images/beams.png";
+import ThumbnailPNG from "~/assets/images/bone.png";
 
 type LoaderData = {
-  welcomeMessage: Awaited<Welcome> | null
-}
+  welcomeMessage: Awaited<Welcome> | null;
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const welcomeMessage = await prisma.welcome.findFirst()
-  return json<LoaderData>({ welcomeMessage })
-}
+  const welcomeMessage = await prisma.welcome.findFirst();
+  return json<LoaderData>({ welcomeMessage });
+};
 
 export default function Index() {
-  const { welcomeMessage } = useLoaderData() as LoaderData
+  const { welcomeMessage } = useLoaderData() as LoaderData;
 
   return (
     <div className="flex flex-col items-center justify-center overflow-x-hidden px-6">
@@ -180,14 +180,11 @@ export default function Index() {
               href={img.href}
               className="flex h-16 w-32 justify-center p-1 grayscale transition hover:scale-110 hover:grayscale-0 focus:grayscale-0"
             >
-              <img
-                alt={img.alt}
-                src={img.src}
-              />
+              <img alt={img.alt} src={img.src} />
             </a>
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }

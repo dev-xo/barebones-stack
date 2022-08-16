@@ -3,8 +3,8 @@
  * @author @dev-xo https://github.com/dev-xo
  *
  * Some of the Typescript related scripts, have been developed by other authors.
- * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  * @author @kentcdodds https://github.com/kentcdodds
+ * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  */
 const { execSync } = require("child_process");
 const fs = require("fs/promises");
@@ -13,6 +13,7 @@ const crypto = require("crypto");
 
 const toml = require("@iarna/toml");
 const YAML = require("yaml");
+const semver = require("semver");
 const PackageJson = require("@npmcli/package-json");
 
 /**
@@ -20,6 +21,47 @@ const PackageJson = require("@npmcli/package-json");
  */
 const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
+
+/**
+ * Returns commands for the package manager used in the workspace.
+ * By default, the package manager is derived based on the lock file,
+ * but it can also be passed in explicitly.
+ */
+const getPackageManagerCommand = (packageManager) =>
+  ({
+    npm: () => ({
+      exec: "npx",
+      lockfile: "package-lock.json",
+      run: (script, args) => `npm run ${script} ${args ? `-- ${args}` : ""}`,
+    }),
+    pnpm: () => {
+      const pnpmVersion = getPackageManagerVersion("pnpm");
+      const includeDoubleDashBeforeArgs = semver.lt(pnpmVersion, "7.0.0");
+      const useExec = semver.gte(pnpmVersion, "6.13.0");
+
+      return {
+        exec: useExec ? "pnpm exec" : "pnpx",
+        lockfile: "pnpm-lock.yaml",
+        run: (script, args) =>
+          includeDoubleDashBeforeArgs
+            ? `pnpm run ${script} ${args ? `-- ${args}` : ""}`
+            : `pnpm run ${script} ${args || ""}`,
+      };
+    },
+    yarn: () => ({
+      exec: "yarn",
+      lockfile: "yarn.lock",
+      run: (script, args) => `yarn ${script} ${args || ""}`,
+    }),
+  }[packageManager]());
+
+/**
+ * Returns the version of the package manager used in the workspace.
+ * By default, the package manager is derived based on the lock file,
+ * but it can also be passed in explicitly.
+ */
+const getPackageManagerVersion = (packageManager) =>
+  execSync(`${packageManager} --version`).toString("utf-8").trim();
 
 /**
  * Filters out unused dependencies.
@@ -168,23 +210,17 @@ const replaceProjectNameFromFiles = async (rootDirectory, APP_NAME) => {
 };
 
 /**
- * Replaces `Dockerfile` and adds a `lockfile`,
- * based on the provided package manager from user.
+ * Replaces `lockfile` based on the package manager used in the workspace.
  */
-const replaceDockerLockFile = async (rootDirectory, packageManager) => {
+const replaceDockerLockFile = async (rootDirectory, pm, packageManager) => {
   const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile");
 
   const dockerfile = await fs.readFile(DOCKERFILE_PATH, "utf-8");
-  const lockfile = {
-    npm: "package-lock.json",
-    yarn: "yarn.lock",
-    pnpm: "pnpm-lock.yaml",
-  }[packageManager];
 
-  const replacedDockerFile = lockfile
+  const replacedDockerFile = pm.lockfile
     ? dockerfile.replace(
         new RegExp(escapeRegExp("ADD package.json"), "g"),
-        `ADD package.json ${lockfile}`
+        `ADD package.json ${pm.lockfile}`
       )
     : dockerfile;
 
@@ -198,6 +234,8 @@ const replaceDockerLockFile = async (rootDirectory, packageManager) => {
 async function main({ rootDirectory, packageManager, isTypeScript }) {
   const DIR_NAME = path.basename(rootDirectory);
   const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-");
+
+  const pm = getPackageManagerCommand(packageManager);
 
   if (!isTypeScript) {
     // Cleans up all Typescript references from the project.
@@ -219,28 +257,27 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
     // Replaces default project name for the one provided by `DIR_NAME`.
     replaceProjectNameFromFiles(rootDirectory, APP_NAME),
 
-    // Replaces `Dockerfile` and adds a `lockfile`,
-    // based on the provided package manager from user.
-    replaceDockerLockFile(rootDirectory, packageManager),
+    // Replaces `lockfile` based on the package manager used in the workspace.
+    replaceDockerLockFile(rootDirectory, pm, packageManager),
   ]);
 
   // Seeds database.
-  execSync("npm run setup", { cwd: rootDirectory, stdio: "inherit" });
+  execSync(pm.run("setup"), { cwd: rootDirectory, stdio: "inherit" });
 
   // Formats the entire project.
-  execSync("npm run format -- --loglevel warn", {
+  execSync(pm.run("format", "--loglevel warn"), {
     cwd: rootDirectory,
     stdio: "inherit",
   });
 
   console.log(
     `
-🔋 Batteries has been successfully set.
-❗️ Go ahead and build something amazing!
-
-📀 Start development with \`npm run dev\`
-
- `.trim()
+ 🔋 Batteries has been successfully set.
+ ❗️ Go ahead and build something amazing!
+ 
+ 📀 Start development with \`${pm.run("dev")}\`
+ 
+  `.trim()
   );
 }
 

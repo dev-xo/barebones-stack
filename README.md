@@ -19,6 +19,8 @@ Inspired on [Indie Stack](https://github.com/remix-run/indie-stack) and some oth
 
 ## 🔋 Getting Started
 
+- Initialize the following template into your workspace.
+
 ```
 npx create-remix --template dev-xo/barebones-stack
 ```

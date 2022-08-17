@@ -13,7 +13,11 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const dbMessage = await prisma.welcome.findFirst();
+  const dbMessage = await prisma.welcome.findFirst({
+    orderBy: { createdAt: "desc" },
+    take: 1,
+  });
+
   return json<LoaderData>({
     message: dbMessage?.message ? dbMessage.message : null,
   });

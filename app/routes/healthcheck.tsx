@@ -1,10 +1,10 @@
 /**
  * Learn more: https://fly.io/docs/reference/configuration/#services-http_checks
  */
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
 import { prisma } from "~/utils/db.server";
 
-export async function loader({ request }: LoaderArgs) {
+export const loader: LoaderFunction = async ({ request }) => {
   const host =
     request.headers.get("X-Forwarded-Host") ?? request.headers.get("host");
 
@@ -18,9 +18,10 @@ export async function loader({ request }: LoaderArgs) {
         if (!r.ok) return Promise.reject(r);
       }),
     ]);
+
     return new Response("OK");
   } catch (error: unknown) {
     console.log("Healthcheck ❌", { error });
     return new Response("ERROR", { status: 500 });
   }
-}
+};

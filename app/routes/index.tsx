@@ -1,5 +1,5 @@
-import type { Welcome } from "@prisma/client";
 import type { LoaderFunction } from "@remix-run/node";
+import type { Welcome } from "@prisma/client";
 
 import { json } from "@remix-run/node";
 import { prisma } from "~/utils/db.server";

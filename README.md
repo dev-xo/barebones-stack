@@ -39,7 +39,7 @@ Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
 
 - Initialize the following template into your workspace.
 
-  ```
+  ```sh
   npx create-remix --template dev-xo/barebones-stack
   ```
 

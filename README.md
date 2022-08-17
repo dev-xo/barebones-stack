@@ -17,12 +17,6 @@ Inspired on [Indie Stack](https://github.com/remix-run/indie-stack) and some oth
 
 - Javascript support for this template is currently on development. It works, but needs improvements.
 
-## 🔋 Getting Started
-
-```
-npx create-remix --template dev-xo/barebones-stack
-```
-
 ## 💿 Features
 
 - [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
@@ -40,6 +34,12 @@ npx create-remix --template dev-xo/barebones-stack
 
 Would you like to change something? Fork it, change it, and use `npx create-remix --template your/repo`!<br/>
 Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
+
+## 🔋 Getting Started
+
+```
+npx create-remix --template dev-xo/barebones-stack
+```
 
 ## 🛠 Development
 

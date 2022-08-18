@@ -257,7 +257,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
     replaceProjectNameFromFiles(rootDirectory, APP_NAME),
 
     // Replaces `lockfile` based on the package manager used in the workspace.
-    replaceDockerLockFile(rootDirectory, pm, packageManager),
+    replaceDockerLockFile(rootDirectory, pm),
   ])
 
   // Seeds database.

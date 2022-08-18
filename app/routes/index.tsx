@@ -6,7 +6,7 @@ import { prisma } from "~/utils/db.server"
 import { useLoaderData } from "@remix-run/react"
 
 import BeamsPNG from "~/assets/images/beams.png"
-import ThumbnailPNG from "~/assets/images/bone.png"
+import BonePNG from "~/assets/images/bone.png"
 
 type LoaderData = {
   message: Awaited<Welcome["message"]>
@@ -76,7 +76,7 @@ export default function Index() {
       {/* Intro. */}
       <div className="overflow-x flex min-h-screen flex-col items-center justify-center">
         <img
-          src={ThumbnailPNG}
+          src={BonePNG}
           alt=""
           className="pulse relative left-[18px] h-36 drop-shadow-xl"
         />

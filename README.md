@@ -12,7 +12,7 @@ This template is aiming for those who loves to build their stuff **from the grou
 - Everything is already set up, and it will work out of the box.
 - Solid template with all the good features from the bigger stacks.
 
-We've just included the batteries. You build the rest! Inspired on [Indie Stack](https://github.com/remix-run/indie-stack) and some other cool stacks.
+We've just included the batteries. You build the rest!
 
 - This template has support for Javascript users! And we'll keep improving it over time.
 

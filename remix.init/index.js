@@ -6,21 +6,21 @@
  * @author @kentcdodds https://github.com/kentcdodds
  * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  */
-const { execSync } = require("child_process");
-const fs = require("fs/promises");
-const path = require("path");
-const crypto = require("crypto");
+const { execSync } = require("child_process")
+const fs = require("fs/promises")
+const path = require("path")
+const crypto = require("crypto")
 
-const toml = require("@iarna/toml");
-const YAML = require("yaml");
-const semver = require("semver");
-const PackageJson = require("@npmcli/package-json");
+const toml = require("@iarna/toml")
+const YAML = require("yaml")
+const semver = require("semver")
+const PackageJson = require("@npmcli/package-json")
 
 /**
  * Helpers.
  */
-const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
+const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+const getRandomString = (length) => crypto.randomBytes(length).toString("hex")
 
 /**
  * Returns commands for the package manager used in the workspace.
@@ -35,9 +35,9 @@ const getPackageManagerCommand = (packageManager) =>
       run: (script, args) => `npm run ${script} ${args ? `-- ${args}` : ""}`,
     }),
     pnpm: () => {
-      const pnpmVersion = getPackageManagerVersion("pnpm");
-      const includeDoubleDashBeforeArgs = semver.lt(pnpmVersion, "7.0.0");
-      const useExec = semver.gte(pnpmVersion, "6.13.0");
+      const pnpmVersion = getPackageManagerVersion("pnpm")
+      const includeDoubleDashBeforeArgs = semver.lt(pnpmVersion, "7.0.0")
+      const useExec = semver.gte(pnpmVersion, "6.13.0")
 
       return {
         exec: useExec ? "pnpm exec" : "pnpx",
@@ -46,14 +46,14 @@ const getPackageManagerCommand = (packageManager) =>
           includeDoubleDashBeforeArgs
             ? `pnpm run ${script} ${args ? `-- ${args}` : ""}`
             : `pnpm run ${script} ${args || ""}`,
-      };
+      }
     },
     yarn: () => ({
       exec: "yarn",
       lockfile: "yarn.lock",
       run: (script, args) => `yarn ${script} ${args || ""}`,
     }),
-  }[packageManager]());
+  }[packageManager]())
 
 /**
  * Returns the version of the package manager used in the workspace.
@@ -61,7 +61,7 @@ const getPackageManagerCommand = (packageManager) =>
  * but it can also be passed in explicitly.
  */
 const getPackageManagerVersion = (packageManager) =>
-  execSync(`${packageManager} --version`).toString("utf-8").trim();
+  execSync(`${packageManager} --version`).toString("utf-8").trim()
 
 /**
  * Filters out unused dependencies.
@@ -71,37 +71,37 @@ const removeUnusedDependencies = (dependencies, unusedDependencies) =>
     Object.entries(dependencies).filter(
       ([key]) => !unusedDependencies.includes(key)
     )
-  );
+  )
 
 /**
  * Cleans up Typescript references from Cypress folders.
  */
 const cleanupCypressFiles = async (rootDirectory) => {
-  const CYPRESS_CONFIG_PATH = path.join(rootDirectory, "cypress.config.js");
+  const CYPRESS_CONFIG_PATH = path.join(rootDirectory, "cypress.config.js")
 
   // Reads, replaces and writes a new file.
-  const cypressConfig = await fs.readFile(CYPRESS_CONFIG_PATH, "utf-8");
+  const cypressConfig = await fs.readFile(CYPRESS_CONFIG_PATH, "utf-8")
   const replacedCypressConfig = cypressConfig.replace(
     "export default",
     "module.exports ="
-  );
-  await fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig);
-};
+  )
+  await fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig)
+}
 
 /**
  * Cleans up Typescript references from Vitest config.
  */
 const cleanupVitestConfigFile = async (rootDirectory) => {
-  const VITEST_CONFIG_PATH = path.join(rootDirectory, "vitest.config.js");
+  const VITEST_CONFIG_PATH = path.join(rootDirectory, "vitest.config.js")
 
   // Reads, replaces and writes a new file.
-  const vitestConfig = await fs.readFile(VITEST_CONFIG_PATH, "utf-8");
+  const vitestConfig = await fs.readFile(VITEST_CONFIG_PATH, "utf-8")
   const replacedVitestConfig = vitestConfig.replace(
     "setup-test-env.ts",
     "setup-test-env.js"
-  );
-  await fs.writeFile(VITEST_CONFIG_PATH, replacedVitestConfig);
-};
+  )
+  await fs.writeFile(VITEST_CONFIG_PATH, replacedVitestConfig)
+}
 
 /**
  * Cleans up Typescript references from Github workflows.
@@ -112,34 +112,34 @@ const cleanupDeployWorkflowFile = async (rootDirectory) => {
     ".github",
     "workflows",
     "deploy.yml"
-  );
+  )
 
   // Reads, parses, replaces and writes a new file.
-  const deployWorkflow = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8");
-  const parsedWorkflow = YAML.parse(deployWorkflow);
+  const deployWorkflow = await fs.readFile(DEPLOY_WORKFLOW_PATH, "utf-8")
+  const parsedWorkflow = YAML.parse(deployWorkflow)
 
-  delete parsedWorkflow.jobs.typecheck;
+  delete parsedWorkflow.jobs.typecheck
   parsedWorkflow.jobs.deploy.needs = parsedWorkflow.jobs.deploy.needs.filter(
     (need) => need !== "typecheck"
-  );
+  )
 
   return await fs.writeFile(
     DEPLOY_WORKFLOW_PATH,
     YAML.stringify(parsedWorkflow)
-  );
-};
+  )
+}
 
 /**
  * Updates package.json
  */
 const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
-  const packageJson = await PackageJson.load(rootDirectory);
+  const packageJson = await PackageJson.load(rootDirectory)
 
   const {
     devDependencies,
     prisma: { seed: prismaSeed, ...prisma },
     scripts: { typecheck, validate, ...scripts },
-  } = packageJson.content;
+  } = packageJson.content
 
   packageJson.update({
     name: APP_NAME,
@@ -157,27 +157,27 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
     scripts: isTypeScript
       ? { ...scripts, typecheck, validate }
       : { ...scripts, validate: validate.replace(" typecheck", "") },
-  });
+  })
 
-  await packageJson.save();
-};
+  await packageJson.save()
+}
 
 /**
  * Creates and initiates a newly `.env` file,
  * with provided variables from `.env.example`.
  */
 const createAndInitEnvFile = async (rootDirectory) => {
-  const ENV_PATH = path.join(rootDirectory, ".env");
-  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example");
+  const ENV_PATH = path.join(rootDirectory, ".env")
+  const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example")
 
   // Reads, replaces and writes a new file.
-  const exampleEnv = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8");
+  const exampleEnv = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
   const replacedExampleEnv = exampleEnv.replace(
     /^SESSION_SECRET=.*$/m,
     `SESSION_SECRET="${getRandomString(16)}"`
-  );
-  await fs.writeFile(ENV_PATH, replacedExampleEnv);
-};
+  )
+  await fs.writeFile(ENV_PATH, replacedExampleEnv)
+}
 
 /**
  * Replaces default project name for the one provided by `DIR_NAME`.
@@ -187,55 +187,55 @@ const createAndInitEnvFile = async (rootDirectory) => {
  * - README.md
  */
 const replaceProjectNameFromFiles = async (rootDirectory, APP_NAME) => {
-  const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml");
-  const README_PATH = path.join(rootDirectory, "README.md");
-  const REPLACER = /barebones[\s|-]stack/gim;
+  const FLY_TOML_PATH = path.join(rootDirectory, "fly.toml")
+  const README_PATH = path.join(rootDirectory, "README.md")
+  const REPLACER = /barebones[\s|-]stack/gim
 
   const [flyToml, readme] = await Promise.all([
     fs.readFile(FLY_TOML_PATH, "utf-8"),
     fs.readFile(README_PATH, "utf-8"),
-  ]);
+  ])
 
   // Replaces Fly.toml file.
-  const replacedFlyToml = toml.parse(flyToml);
-  replacedFlyToml.app = replacedFlyToml.app.replace(REPLACER, APP_NAME);
+  const replacedFlyToml = toml.parse(flyToml)
+  replacedFlyToml.app = replacedFlyToml.app.replace(REPLACER, APP_NAME)
 
   // Replaces README.md file.
-  const replacedReadme = readme.replace(REPLACER, APP_NAME);
+  const replacedReadme = readme.replace(REPLACER, APP_NAME)
 
   await Promise.all([
     fs.writeFile(FLY_TOML_PATH, toml.stringify(replacedFlyToml)),
     fs.writeFile(README_PATH, replacedReadme),
-  ]);
-};
+  ])
+}
 
 /**
  * Replaces `lockfile` based on the package manager used in the workspace.
  */
 const replaceDockerLockFile = async (rootDirectory, pm, packageManager) => {
-  const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile");
+  const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile")
 
-  const dockerfile = await fs.readFile(DOCKERFILE_PATH, "utf-8");
+  const dockerfile = await fs.readFile(DOCKERFILE_PATH, "utf-8")
 
   const replacedDockerFile = pm.lockfile
     ? dockerfile.replace(
         new RegExp(escapeRegExp("ADD package.json"), "g"),
         `ADD package.json ${pm.lockfile}`
       )
-    : dockerfile;
+    : dockerfile
 
-  await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile);
-};
+  await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile)
+}
 
 /**
  * Runs after the project has been generated
  * and dependencies have been installed.
  */
 async function main({ rootDirectory, packageManager, isTypeScript }) {
-  const DIR_NAME = path.basename(rootDirectory);
-  const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-");
+  const DIR_NAME = path.basename(rootDirectory)
+  const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
-  const pm = getPackageManagerCommand(packageManager);
+  const pm = getPackageManagerCommand(packageManager)
 
   if (!isTypeScript) {
     // Cleans up all Typescript references from the project.
@@ -243,7 +243,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
       cleanupCypressFiles(rootDirectory),
       cleanupVitestConfigFile(rootDirectory),
       cleanupDeployWorkflowFile(rootDirectory),
-    ]);
+    ])
   }
 
   await Promise.all([
@@ -259,16 +259,16 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
     // Replaces `lockfile` based on the package manager used in the workspace.
     replaceDockerLockFile(rootDirectory, pm, packageManager),
-  ]);
+  ])
 
   // Seeds database.
-  execSync(pm.run("setup"), { cwd: rootDirectory, stdio: "inherit" });
+  execSync(pm.run("setup"), { cwd: rootDirectory, stdio: "inherit" })
 
   // Formats the entire project.
   execSync(pm.run("format", "--loglevel warn"), {
     cwd: rootDirectory,
     stdio: "inherit",
-  });
+  })
 
   console.log(
     `
@@ -278,7 +278,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
  📀 Start development with \`${pm.run("dev")}\`
  
   `.trim()
-  );
+  )
 }
 
-module.exports = main;
+module.exports = main

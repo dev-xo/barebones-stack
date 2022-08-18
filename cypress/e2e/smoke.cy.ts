@@ -10,7 +10,7 @@
  */
 describe("Smoke test!.", () => {
   it("Should display template name text.", () => {
-    cy.visit("/");
-    cy.findByText("Barebones Stack");
-  });
-});
+    cy.visit("/")
+    cy.findByText("Barebones Stack")
+  })
+})

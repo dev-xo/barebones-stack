@@ -6,7 +6,7 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 ## 🎯 Who is this template aiming for?
 
-This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested template, to start coding right away.
+This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested background, to start coding right away.
 "_We've just included the batteries. You build the rest!_"
 
 - Clean and easy start.

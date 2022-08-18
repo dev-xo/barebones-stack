@@ -2,6 +2,10 @@
 
 [![Product Name Screen Shot][product-screenshot]](#)
 
+```sh
+npx create-remix --template dev-xo/barebones-stack
+```
+
 A solid create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
 
 ## 🎯 Who is this template aiming for?

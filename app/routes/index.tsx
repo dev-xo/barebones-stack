@@ -88,7 +88,7 @@ export default function Index() {
             className="absolute top-[-24px] right-[-6px] flex flex-row rounded-md bg-[rgba(244,44,64,0.8)] 
             px-[6px] py-[4px] text-[16px] text-white md:right-[-36px]"
           >
-            SQLite Update!
+            Javascript 💛 Supported
           </span>
         </h1>
         <div className="h-3" />

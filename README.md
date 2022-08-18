@@ -164,4 +164,4 @@ He's doing an amazing job on `remix.init` folders and so on!
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- This text will be removed. Only propouse is to call github actions. -->
 
-[product-screenshot]: ./app/assets/images/thumbnail.png
+[product-screenshot]: ./app/assets/images/thumbnail-1.png

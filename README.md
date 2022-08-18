@@ -6,15 +6,13 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 ## 🎯 Who is this template aiming for?
 
-This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested template, to start coding right away.<br />
+This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested template, to start coding right away.
+We've just included the batteries. You build the rest!
 
 - Clean and easy start.
 - Everything is already set up, and it will work out of the box.
-- Solid template with all the good features from the bigger stacks.
-
-We've just included the batteries. You build the rest!
-
-- This template has support for Javascript users! And we'll keep improving it over time.
+- Solid template with all the great features from the bigger stacks.
+- Support for Javascript users with continuous updates over time.
 
 ## 💿 Features
 

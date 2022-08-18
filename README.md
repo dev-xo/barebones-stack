@@ -15,7 +15,7 @@ This template is aiming for those who loves to build their stuff **from the grou
 We've just included the batteries. You build the rest!<br />
 Inspired on [Indie Stack](https://github.com/remix-run/indie-stack) and some other cool stacks.
 
-- Javascript support for this template is currently on development. It works, but needs improvements.
+- This template has support for Javascript users! And we'll keep improving it over time.
 
 ## 💿 Features
 

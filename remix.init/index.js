@@ -212,18 +212,16 @@ const replaceProjectNameFromFiles = async (rootDirectory, APP_NAME) => {
 /**
  * Replaces `lockfile` based on the package manager used in the workspace.
  */
-const replaceDockerLockFile = async (rootDirectory, pm, packageManager) => {
+const replaceDockerLockFile = async (rootDirectory, pm) => {
   const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile")
 
   const dockerfile = await fs.readFile(DOCKERFILE_PATH, "utf-8")
-
   const replacedDockerFile = pm.lockfile
     ? dockerfile.replace(
         new RegExp(escapeRegExp("ADD package.json"), "g"),
         `ADD package.json ${pm.lockfile}`
       )
     : dockerfile
-
   await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile)
 }
 
@@ -235,6 +233,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
   const DIR_NAME = path.basename(rootDirectory)
   const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
+  // Returns commands for the package manager used in the workspace.
   const pm = getPackageManagerCommand(packageManager)
 
   if (!isTypeScript) {

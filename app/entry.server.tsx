@@ -21,7 +21,10 @@ export default function handleRequest(
     let didError = false
 
     const { pipe, abort } = renderToPipeableStream(
-      <RemixServer context={remixContext} url={request.url} />,
+      <RemixServer
+        context={remixContext}
+        url={request.url}
+      />,
       {
         [callbackName]() {
           let body = new PassThrough()

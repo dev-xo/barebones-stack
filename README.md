@@ -14,6 +14,8 @@ This template is aiming for those who loves to build their stuff **from the grou
 - Solid template with all the great features from the bigger stacks.
 - Support for Javascript users with continuous updates over time.
 
+Inspired on [Indie Stack](https://github.com/remix-run/indie-stack) and some other cool stacks.
+
 ## 💿 Features
 
 - [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)

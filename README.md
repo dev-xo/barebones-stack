@@ -8,6 +8,10 @@ npx create-remix --template dev-xo/barebones-stack
 
 A solid create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
 
+## 🆕 New!
+
+- ✨ [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version of this template has been released!
+
 ## 🎯 Who is this template aiming for?
 
 This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested background, to start coding right away.

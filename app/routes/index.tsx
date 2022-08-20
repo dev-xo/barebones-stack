@@ -85,10 +85,17 @@ export default function Index() {
         <h1 className="relative text-center text-6xl font-bold drop-shadow-xl">
           Barebones Stack
           <span
-            className="absolute top-[-24px] right-[-6px] flex flex-row rounded-md bg-[rgba(244,44,64,0.8)] 
-            px-[6px] py-[4px] text-[16px] text-white md:right-[-36px]"
+            className="absolute top-[-28px] flex flex-row rounded-md bg-[rgba(244,44,64,0.8)] px-[8px] 
+            py-[6px] text-white transition hover:scale-110  md:right-[-36px]"
           >
-            Javascript 💛 Supported
+            <a
+              href="https://github.com/dev-xo/barebones-postgres-stack"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[16px] hover:underline"
+            >
+              New PostgreSQL Version!
+            </a>
           </span>
         </h1>
         <div className="h-3" />

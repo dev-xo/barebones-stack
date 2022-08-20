@@ -8,21 +8,16 @@ npx create-remix --template dev-xo/barebones-stack
 
 A solid create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
 
-## 🎯 Who is this template aiming for?
+## 🎯 Intro
 
-This template is aiming for those who loves to build their stuff **from the ground**, with a solid and well tested background, to start coding right away.
-"_We've just included the batteries. You build the rest!_"
+This Stack has been created with two main purposes: **Simplicity and Solidity.**<br/><br/> Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away. "_We've just included the batteries. You build the rest!_"
 
 - Clean and easy start.
 - Everything is already set up, and it will work out of the box.
 - Solid template with all the great features from the bigger stacks.
 - Support for Javascript users with continuous updates over time.
 
-Inspired on [Indie Stack](https://github.com/remix-run/indie-stack) and some other cool stacks.
-
-## 🐳 Looking for the PostgreSQL version?
-
-✨ Check it here: [Barebones PostgreSQL Stack](https://github.com/dev-xo/barebones-postgres-stack)
+### We've got an 🐘 [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version also.
 
 ## 💿 Features
 

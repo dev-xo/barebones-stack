@@ -10,7 +10,7 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 ## 🆕 New!
 
-- ✨ [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version of this template has been released!
+✨ [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version of this template has been released!
 
 ## 🎯 Who is this template aiming for?
 

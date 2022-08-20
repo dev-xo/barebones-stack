@@ -22,7 +22,7 @@ Inspired on [Indie Stack](https://github.com/remix-run/indie-stack) and some oth
 
 ## 🐳 Looking for the PostgreSQL version?
 
-✨ Check it here: [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack)
+✨ Check it here: [Barebones PostgreSQL Stack](https://github.com/dev-xo/barebones-postgres-stack)
 
 ## 💿 Features
 

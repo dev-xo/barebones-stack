@@ -15,7 +15,7 @@ This Stack has been created with two main purposes: **Simplicity and Solidity.**
 - Clean and easy start.
 - Everything is already set up, and it will work out of the box.
 - Solid template with all the great features from the bigger stacks.
-- Support for Javascript users with continuous updates over time.
+- Support for Javascript developers with continuous updates over time.
 
 ### We've got a 🐘 [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version also.
 

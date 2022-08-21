@@ -127,9 +127,9 @@ If you run into any issues deploying to Fly, make sure you've followed all of th
 
 ## ⚙️ GitHub Actions
 
-We use GitHub Actions for continuous integration and deployment. Anything that gets into the `master` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
+We use GitHub Actions for continuous integration and deployment.<br/> Anything that gets into the `main` branch will be deployed to production after running tests / build / etc. Anything in the `dev` branch will be deployed to staging.
 
-## 🔎 Testing
+## 🧪 Testing
 
 ### Cypress
 
@@ -155,15 +155,19 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
 
-## ❤️ Acknowledgments
+## 💛 Support
 
-Simply wanna say thank you all! Im having a great time developing this stack.<br />
+If you like or found this project useful, please star ⭐ it.<br/>
+It will help us to keep updating and working on this / other Remix projects.
+
+### ️Acknowledgments
+
+Simply wanna say thank you all! Im having a great time developing and updating the stack.<br />
 Some of the cool features that are implemented in the template are from [Indie Stack](https://github.com/remix-run/indie-stack)
 
 Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>
 He's doing an amazing job on `remix.init` folders and so on!
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- This text will be removed. Only propouse is to call github actions. -->
 
 [product-screenshot]: ./app/assets/images/thumbnail.png

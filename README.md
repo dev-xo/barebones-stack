@@ -159,7 +159,7 @@ We use [Prettier](https://prettier.io/) for auto-formatting in this project. It'
 
 ## 💛 Support
 
-If you like or found this project useful, please star ⭐ it.<br/>
+If you like or found this project useful, please [star](https://github.com/dev-xo/barebones-stack) ⭐ it.<br/>
 It will help us to keep updating and working on this / other Remix projects.
 
 ### ️Acknowledgments

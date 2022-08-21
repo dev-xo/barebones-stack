@@ -37,7 +37,7 @@ This Stack has been created with two main purposes: **Simplicity and Solidity.**
 Would you like to change something? Fork it, change it, and use `npx create-remix --template your/repo`!<br/>
 Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
 
-## 🔋 Getting Started
+## 🔋 Quickstart
 
 - Initialize the following template into your workspace.
 

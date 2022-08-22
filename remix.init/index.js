@@ -23,6 +23,14 @@ const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 const getRandomString = (length) => crypto.randomBytes(length).toString("hex")
 
 /**
+ * Returns the version of the package manager used in the workspace.
+ * By default, the package manager is derived based on the lock file,
+ * but it can also be passed in explicitly.
+ */
+const getPackageManagerVersion = (packageManager) =>
+  execSync(`${packageManager} --version`).toString("utf-8").trim()
+
+/**
  * Returns commands for the package manager used in the workspace.
  * By default, the package manager is derived based on the lock file,
  * but it can also be passed in explicitly.
@@ -54,14 +62,6 @@ const getPackageManagerCommand = (packageManager) =>
       run: (script, args) => `yarn ${script} ${args || ""}`,
     }),
   }[packageManager]())
-
-/**
- * Returns the version of the package manager used in the workspace.
- * By default, the package manager is derived based on the lock file,
- * but it can also be passed in explicitly.
- */
-const getPackageManagerVersion = (packageManager) =>
-  execSync(`${packageManager} --version`).toString("utf-8").trim()
 
 /**
  * Filters out unused dependencies.
@@ -166,17 +166,20 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
  * Creates and initiates a newly `.env` file,
  * with provided variables from `.env.example`.
  */
-const createAndInitEnvFile = async (rootDirectory) => {
+const replaceAndInitEnvFiles = async (rootDirectory) => {
   const ENV_PATH = path.join(rootDirectory, ".env")
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, ".env.example")
 
-  // Reads, replaces and writes a new file.
+  // Reads, replaces and writes a new `.env` file.
   const exampleEnv = await fs.readFile(EXAMPLE_ENV_PATH, "utf-8")
   const replacedExampleEnv = exampleEnv.replace(
     /^SESSION_SECRET=.*$/m,
     `SESSION_SECRET="${getRandomString(16)}"`
   )
   await fs.writeFile(ENV_PATH, replacedExampleEnv)
+
+  // Removes `.env.example` file from directory.
+  await fs.unlink(EXAMPLE_ENV_PATH)
 }
 
 /**
@@ -229,7 +232,7 @@ const replaceDockerLockFile = async (rootDirectory, pm) => {
  * Runs after the project has been generated
  * and dependencies have been installed.
  */
-async function main({ rootDirectory, packageManager, isTypeScript }) {
+const main = async ({ rootDirectory, packageManager, isTypeScript }) => {
   const DIR_NAME = path.basename(rootDirectory)
   const APP_NAME = DIR_NAME.replace(/[^a-zA-Z0-9-_]/g, "-")
 
@@ -251,7 +254,7 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
     // Creates and initiates a newly `.env` file,
     // with provided variables from `.env.example`.
-    createAndInitEnvFile(rootDirectory),
+    replaceAndInitEnvFiles(rootDirectory),
 
     // Replaces default project name for the one provided by `DIR_NAME`.
     replaceProjectNameFromFiles(rootDirectory, APP_NAME),
@@ -271,12 +274,12 @@ async function main({ rootDirectory, packageManager, isTypeScript }) {
 
   console.log(
     `
- 🔋 Batteries has been successfully set.
- ❗️ Go ahead and build something amazing!
- 
- 📀 Start development with \`${pm.run("dev")}\`
- 
-  `.trim()
+  🔋 Batteries has been successfully set.
+  ❗️ Go ahead and build something amazing!
+  
+  📀 Start development with \`${pm.run("dev")}\`
+  
+   `.trim()
   )
 }
 

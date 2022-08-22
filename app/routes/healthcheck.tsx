@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node"
+import type { LoaderFunction } from "@remix-run/node"
 import { prisma } from "~/utils/db.server"
 
 /**
@@ -10,7 +10,7 @@ import { prisma } from "~/utils/db.server"
  *
  * Learn more: https://fly.io/docs/reference/configuration/#services-http_checks
  */
-export async function loader({ request }: LoaderArgs) {
+export const loader: LoaderFunction = async ({ request }) => {
   const host =
     request.headers.get("X-Forwarded-Host") ?? request.headers.get("host")
 

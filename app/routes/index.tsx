@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node"
+import type { LoaderFunction } from "@remix-run/node"
 import type { Welcome } from "@prisma/client"
 
 import { json } from "@remix-run/node"
@@ -12,7 +12,7 @@ type LoaderData = {
   message: Awaited<Welcome["message"]>
 }
 
-export async function loader({ request }: LoaderArgs) {
+export const loader: LoaderFunction = async ({ request }) => {
   const dbMessage = await prisma.welcome.findFirst({
     orderBy: { createdAt: "desc" },
     take: 1,
@@ -183,7 +183,10 @@ export default function Index() {
               href={img.href}
               className="flex h-16 w-32 justify-center p-1 grayscale transition hover:scale-110 hover:grayscale-0 focus:grayscale-0"
             >
-              <img alt={img.alt} src={img.src} />
+              <img
+                alt={img.alt}
+                src={img.src}
+              />
             </a>
           ))}
         </div>

@@ -16,8 +16,6 @@ export async function loader({ request }: LoaderArgs) {
 
   try {
     const url = new URL("/", `http://${host}`)
-    // If we can connect to database to make a simple query and a HEAD request
-    // to ourselves, then we're good.
     await Promise.all([
       prisma.welcome.count(),
 

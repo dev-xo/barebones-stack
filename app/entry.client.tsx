@@ -1,6 +1,6 @@
-import * as React from "react"
-import { RemixBrowser } from "@remix-run/react"
-import { hydrateRoot } from "react-dom/client"
+import * as React from "react";
+import { RemixBrowser } from "@remix-run/react";
+import { hydrateRoot } from "react-dom/client";
 
 function hydrate() {
   React.startTransition(() => {
@@ -9,12 +9,12 @@ function hydrate() {
       <React.StrictMode>
         <RemixBrowser />
       </React.StrictMode>
-    )
-  })
+    );
+  });
 }
 
 if (window.requestIdleCallback) {
-  window.requestIdleCallback(hydrate)
+  window.requestIdleCallback(hydrate);
 } else {
-  window.setTimeout(hydrate, 1)
+  window.setTimeout(hydrate, 1);
 }

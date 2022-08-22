@@ -26,7 +26,7 @@
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"
   },
   "prettier": {
-    "semi": true
+    "semi": false
   },
   "eslintIgnore": [
     "/node_modules",

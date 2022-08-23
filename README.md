@@ -10,7 +10,7 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 ## 🎯 Intro
 
-This Stack has been created with two main purposes: **Simplicity and Solidity.**<br/><br/> Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away.
+This Stack has been created with two main purposes: **simplicity and solidity.**<br/><br/> Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away.
 
 - Clean and easy start.
 - Everything is already set up, and it will work out of the box.

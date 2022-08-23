@@ -2,9 +2,6 @@ import type { LoaderFunction } from "@remix-run/node"
 import { prisma } from "~/utils/db.server"
 
 /**
- * Remix - Loader.
- * @protected Template code.
- *
  * If we can connect to database to make a simple query
  * and a HEAD request to ourselves, then we're good.
  *

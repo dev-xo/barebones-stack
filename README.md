@@ -10,7 +10,7 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 ## 💿 Features
 
-This Stack has been created with two main purposes: **simplicity and solidity.**<br/><br/> Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away.
+This Stack has been created with two main purposes: **simplicity and solidity.**<br/>Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away.
 
 - [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
 - Production-Ready with [SQLite Database](https://sqlite.org/index.html)
@@ -144,14 +144,13 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
 
-## 💛 Support
+## ⭐ Support
 
-If you like or found this project useful, please [star](https://github.com/dev-xo/barebones-stack) ⭐ it.<br/>
-It will help us to keep updating and working on this / other Remix projects.
+If you found this project useful, leave us a [star](https://github.com/dev-xo/barebones-stack).<br/>
+It will help us to keep updating and working on this, other Remix projects.
 
 ### ️Acknowledgments
 
-Simply wanna say thank you all! Im having a great time developing and updating the stack.<br />
 Some of the cool features that are implemented in the template are from [Indie Stack](https://github.com/remix-run/indie-stack)
 
 Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).<br/>

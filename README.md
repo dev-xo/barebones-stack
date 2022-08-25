@@ -53,9 +53,9 @@ This Remix Stack comes with two GitHub Actions that handle automatically deployi
 
 Prior to your first deployment, you'll need to do a few things:
 
-- [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
+- [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/).
 
-- Sign up and log in to Fly.
+- Sign up and log in to Fly:
 
 ```sh
 fly auth signup
@@ -72,7 +72,7 @@ fly apps create barebones-stack-staging
 
 > **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
 
-- Initialize Git.
+- Initialize Git:
 
 ```sh
 git init
@@ -147,7 +147,7 @@ We use [Prettier](https://prettier.io/) for auto-formatting in this project. It'
 ## ⭐ Support
 
 Feel free to [star](https://github.com/dev-xo/barebones-stack) the project if you found it useful.<br/>
-It will help us to keep updating and working on this, other Remix projects. Thanks!
+It will help us to keep updating and working on this, other Remix projects. Thanks!a
 
 ### ️Acknowledgments
 

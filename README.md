@@ -10,7 +10,7 @@ A solid create-remix app, that follows community guidelines and applies best pra
 
 ## 💿 Features
 
-This Stack has been created with two main purposes: **simplicity and solidity.**<br/>Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away.
+This Stack has been created with two main purposes: **simplicity and solidity.** Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away.
 
 - [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
 - Production-Ready with [SQLite Database](https://sqlite.org/index.html)
@@ -44,7 +44,8 @@ npm run setup
 npm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes. The database seed script creates a welcome message that will let you know, database is up and running.
+This starts your app in development mode, rebuilding assets on file changes.<br />
+The database seed script creates a welcome message that will let you know, database is up and running.
 
 ## 🚀 Deployment
 

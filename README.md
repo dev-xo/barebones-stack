@@ -93,7 +93,7 @@ fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app barebones-stack
 fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app barebones-stack-staging
 ```
 
-> **Note:**If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
+> **Note:** If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
 - Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 

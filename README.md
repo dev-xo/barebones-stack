@@ -37,14 +37,14 @@ Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).
 # Initialize the following template into your workspace:
 npx create-remix --template dev-xo/barebones-stack
 
-# Seeds database: (If you just generated this project, this step has been done for you.)
+# Seed database: (If you just generated this project, this step has been done for you.)
 npm run setup
 
-# Starts dev server:
+# Start dev server:
 npm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.<br />
+Done! This starts your app in development mode, rebuilding assets on file changes.<br />
 The database seed script creates a welcome message that will let you know, database is up and running.
 
 ## 🚀 Deployment

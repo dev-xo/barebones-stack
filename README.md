@@ -8,18 +8,9 @@ npx create-remix --template dev-xo/barebones-stack
 
 A solid create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
 
-## 🎯 Intro
+## 💿 Features
 
 This Stack has been created with two main purposes: **simplicity and solidity.**<br/><br/> Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away.
-
-- Clean and easy start.
-- Everything is already set up, and it will work out of the box.
-- Solid template with all the great features from the bigger stacks.
-- Support for Javascript developers with continuous updates over time.
-
-### We've got a 🐘 [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version also.
-
-## 💿 Features
 
 - [Fly app Deployment](https://fly.io) with [Docker](https://www.docker.com/products/docker-desktop/)
 - Production-Ready with [SQLite Database](https://sqlite.org/index.html)
@@ -33,6 +24,9 @@ This Stack has been created with two main purposes: **simplicity and solidity.**
 - Linting with [ESLint](https://eslint.org/)
 - Code formatting with [Prettier](https://prettier.io/)
 - Static Types with [TypeScript](https://www.typescriptlang.org/)
+- Support for Javascript developers with continuous updates over time.
+
+### We've got a 🐘 [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version also.
 
 Would you like to change something? Fork it, change it, and use `npx create-remix --template your/repo`!<br/>
 Make it your own. Learn more about [Remix Stacks](https://remix.run/stacks).

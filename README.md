@@ -44,8 +44,7 @@ npm run setup
 npm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.<br />
-The database seed script creates a welcome message that will let you know, database is up and running.
+This starts your app in development mode, rebuilding assets on file changes. The database seed script creates a welcome message that will let you know, database is up and running.
 
 ## 🚀 Deployment
 

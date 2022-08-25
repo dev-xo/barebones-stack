@@ -102,7 +102,7 @@ fly volumes create data --size 1 --app barebones-stack
 fly volumes create data --size 1 --app barebones-stack-staging
 ```
 
-Now that everything is set up you can commit and push your changes to your repo.<br/> Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
+Now that everything is set up you can **commit and push** your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
 ### Connecting to your database
 

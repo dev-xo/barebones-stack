@@ -55,26 +55,23 @@ Prior to your first deployment, you'll need to do a few things:
 
 - [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
 
-- Sign up and log in to Fly.
-
   ```sh
+  # Sign up and log in to Fly.
   fly auth signup
   ```
 
   > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
 
-- Create two apps on Fly, one for staging and one for production:
-
   ```sh
+  # Create two apps on Fly, one for staging and one for production:
   fly apps create barebones-stack
   fly apps create barebones-stack-staging
   ```
 
   > **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
 
-- Initialize Git.
-
   ```sh
+  # Initialize Git.
   git init
   ```
 
@@ -95,14 +92,13 @@ Prior to your first deployment, you'll need to do a few things:
 
   If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
-- Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
-
   ```sh
+  # Create a persistent volume for the sqlite database for both your staging and production environments:
   fly volumes create data --size 1 --app barebones-stack
   fly volumes create data --size 1 --app barebones-stack-staging
   ```
 
-Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
+Now that everything is set up you can commit and push your changes to your repo.<br/> Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
 ### Connecting to your database
 

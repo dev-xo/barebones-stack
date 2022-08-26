@@ -27,12 +27,14 @@ export const meta: MetaFunction = () => {
     "og:image":
       "https://raw.githubusercontent.com/dev-xo/barebones-stack/main/app/assets/images/thumbnail.png",
     "og:card": "summary_large_image",
+    "og:creator": "@DanielKanem",
     "og:site": "https://barebones-stack.fly.dev",
     "og:description":
       "A solid create-remix app. SQLite version. Deploys to Fly.io",
     "twitter:image":
       "https://raw.githubusercontent.com/dev-xo/barebones-stack/main/app/assets/images/thumbnail.png",
     "twitter:card": "summary_large_image",
+    "twitter:creator": "@DanielKanem",
     "twitter:title": "Remix Barebones Stack",
     "twitter:description":
       "A solid create-remix app. SQLite version. Deploys to Fly.io",

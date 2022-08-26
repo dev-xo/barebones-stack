@@ -1,4 +1,8 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node"
+import type {
+  LinksFunction,
+  MetaFunction,
+  ErrorBoundaryComponent,
+} from "@remix-run/node"
 import {
   Links,
   LiveReload,
@@ -39,6 +43,24 @@ export const meta: MetaFunction = () => {
     "twitter:description":
       "A solid create-remix app. SQLite version. Deploys to Fly.io",
   }
+}
+
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
+  console.error(error)
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body className="flex h-screen flex-col items-center justify-center">
+        {/* Add here the UI you want your users to see. */}
+        <h1 className="text-2xl">Something went wrong!</h1>
+        <Scripts />
+      </body>
+    </html>
+  )
 }
 
 export default function App() {

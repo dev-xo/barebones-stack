@@ -72,7 +72,7 @@ export default function Index() {
           Barebones Stack
           <span
             className="absolute right-[-50px] top-[-28px] flex cursor-default flex-row rounded-lg
-           bg-[rgba(244,44,64,0.8)] px-2 py-[6px] text-sm font-semibold text-white transition hover:scale-110"
+           bg-[rgba(244,44,64,0.8)] px-2 py-[4px] text-base font-semibold text-white transition hover:scale-110"
           >
             {message ? message : "Help us with a Star on Github!"}
           </span>

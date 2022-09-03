@@ -34,7 +34,7 @@ export default function Index() {
       "
       >
         <a
-          href="/"
+          href="https://github.com/dev-xo/barebones-stack"
           target="_blank"
           rel="noopener noreferrer"
         >

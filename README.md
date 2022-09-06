@@ -158,4 +158,4 @@ He's doing an amazing job on `remix.init` folders and so on!
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[product-screenshot]: ./app/assets/images/thumbnail.png
+[product-screenshot]: https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail.png

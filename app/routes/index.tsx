@@ -174,9 +174,9 @@ export default function Index() {
               href: "https://fly.io",
             },
             {
-              src: "https://user-images.githubusercontent.com/1500684/158238105-e7279a0c-1640-40db-86b0-3d3a10aab824.svg",
-              alt: "PostgreSQL",
-              href: "https://www.postgresql.org/",
+              src: "https://user-images.githubusercontent.com/1500684/157764395-137ec949-382c-43bd-a3c0-0cb8cb22e22d.svg",
+              alt: "SQLite",
+              href: "https://sqlite.org",
             },
             {
               src: "https://user-images.githubusercontent.com/1500684/157764484-ad64a21a-d7fb-47e3-8669-ec046da20c1f.svg",
@@ -234,8 +234,8 @@ export default function Index() {
               href={img.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-14 w-28 select-none justify-center p-1 opacity-80 drop-shadow-sm grayscale transition hover:scale-110
-            hover:opacity-100 hover:grayscale-0 focus:grayscale-0"
+              className="flex h-14 w-28 select-none justify-center p-1 opacity-80 drop-shadow-sm
+              grayscale transition hover:scale-110 hover:opacity-100 hover:grayscale-0 focus:grayscale-0"
             >
               <img
                 alt={img.alt}

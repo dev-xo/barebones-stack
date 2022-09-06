@@ -34,7 +34,7 @@ export default function Index() {
       />
 
       {/*  Navigation  */}
-      <nav className="z-20 flex w-full flex-row items-center justify-between py-4 px-2">
+      <nav className="z-20 flex w-full flex-row items-center justify-end py-4 px-2">
         <div className="flex flex-row items-center">
           <a
             href="https://github.com/dev-xo/barebones-stack"

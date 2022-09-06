@@ -1,6 +1,29 @@
-import { Link } from "react-router-dom"
+import type { LoaderFunction } from "@remix-run/node"
+import type { Welcome } from "@prisma/client"
+
+import { json } from "@remix-run/node"
+import { prisma } from "~/utils/db.server"
+import { useLoaderData, Link } from "@remix-run/react"
+
+type LoaderData = {
+  message: Awaited<Welcome["message"]>
+}
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const dbMessage = await prisma.welcome.findFirst({
+    orderBy: { createdAt: "desc" },
+    take: 1,
+  })
+
+  return json<LoaderData>({
+    message: dbMessage?.message ? dbMessage.message : null,
+  })
+}
 
 export default function Index() {
+  const { message } = useLoaderData() as LoaderData
+  console.log("Database message: " + message)
+
   return (
     <div className="flex h-screen w-full flex-col items-center px-4">
       {/* Background Image. */}
@@ -67,7 +90,7 @@ export default function Index() {
       </nav>
 
       {/* Main. */}
-      <main className="relative bottom-16 flex h-full flex-col items-center justify-center">
+      <main className="relative bottom-3 flex h-full flex-col items-center justify-center">
         {/* Headers. */}
         <div className="flex flex-col items-center">
           <div className="transition hover:scale-110 active:scale-100">
@@ -102,7 +125,7 @@ export default function Index() {
           </div>
           <div className="m-2" />
 
-          <div className="relative flex flex-col items-center">
+          <div className="flex flex-col items-center">
             <h1 className="text-5xl font-bold text-slate-900 drop-shadow-xl sm:text-6xl">
               Barebones
             </h1>

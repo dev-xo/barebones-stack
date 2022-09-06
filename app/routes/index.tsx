@@ -70,7 +70,7 @@ export default function Index() {
 
         <div className="flex flex-row items-center">
           <a
-            href="https://github.com/dev-xo/stripe-stack"
+            href="https://github.com/dev-xo/barebones-stack"
             target="_blank"
             rel="noopener noreferrer"
           >

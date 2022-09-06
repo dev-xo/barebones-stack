@@ -28,7 +28,6 @@ export default function handleRequest(
       {
         [callbackName]: () => {
           const body = new PassThrough()
-
           responseHeaders.set("Content-Type", "text/html")
 
           resolve(
@@ -45,7 +44,6 @@ export default function handleRequest(
         },
         onError: (error: unknown) => {
           didError = true
-
           console.error(error)
         },
       }

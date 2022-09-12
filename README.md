@@ -1,8 +1,7 @@
-![GitHub-Mark-Light](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/dark-logo.png#gh-light-mode-only)
-![GitHub-Mark-Dark ](https://github.com/dev-xo/dev-xo/blob/main/barebones-stack/assets/images/light-logo.png#gh-dark-mode-only)
+![GitHub-Mark-Light](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/light-logo-v1.png#gh-light-mode-only)
+![GitHub-Mark-Dark ](https://github.com/dev-xo/dev-xo/blob/main/barebones-stack/assets/images/dark-logo-v1.png#gh-dark-mode-only)
 
 <p align="center">
-  <h3 align="center">Barebones Stack</h3>
   <p align="center">
     <a href="https://barebones-stack.fly.dev">Live Demo</a>
     ·
@@ -154,13 +153,9 @@ Contributions are Welcome! Jump in and help us improve this Community Template o
 
 ## 🍪 Support
 
-If you found this template useful, help us by [Staring ⭐ It](https://github.com/dev-xo/barebones-stack)!
-It helps a lot and gives me motivation to keep working on this and other Remix projects for the community. Thanks you!
+If you found the project useful, help it by [Staring ⭐ It](https://github.com/dev-xo/barebones-stack)!
+It helps the repository grow and gives me motivation to keep working on it. Thanks you!
 
 ### ️Acknowledgments
 
-A big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey). He's doing an amazing job on `remix.init` folders and so on!
-
-<!-- MARKDOWN LINKS & IMAGES -->
-
-[product-screenshot]: https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail.png
+Also, a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey). He's doing an amazing job on `remix.init` and contributing to Remix community!

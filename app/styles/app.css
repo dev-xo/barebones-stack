@@ -7,22 +7,22 @@
 @tailwind utilities;
 
 @keyframes pulse {
-  from {
-    transform: scale3d(1, 1, 1);
-  }
+	from {
+		transform: scale3d(1, 1, 1);
+	}
 
-  50% {
-    transform: scale3d(1.2, 1.2, 1.2);
-  }
+	50% {
+		transform: scale3d(1.2, 1.2, 1.2);
+	}
 
-  to {
-    transform: scale3d(1, 1, 1);
-  }
+	to {
+		transform: scale3d(1, 1, 1);
+	}
 }
 
 .pulse {
-  animation-name: pulse;
-  animation-timing-function: ease-in-out;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
+	animation-name: pulse;
+	animation-timing-function: ease-in-out;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
 }

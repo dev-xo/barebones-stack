@@ -6,17 +6,17 @@
  * @param { string } defaultRedirect Default redirect if `to` is unsafe.
  */
 export const safeRedirect = (
-  to: FormDataEntryValue | string | null | undefined,
-  defaultRedirect = "/"
+	to: FormDataEntryValue | string | null | undefined,
+	defaultRedirect = '/',
 ) => {
-  if (
-    !to ||
-    typeof to !== "string" ||
-    !to.startsWith("/") ||
-    to.startsWith("//")
-  ) {
-    return defaultRedirect
-  }
+	if (
+		!to ||
+		typeof to !== 'string' ||
+		!to.startsWith('/') ||
+		to.startsWith('//')
+	) {
+		return defaultRedirect
+	}
 
-  return to
+	return to
 }

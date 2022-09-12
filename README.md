@@ -103,7 +103,7 @@ fly volumes create data --size 1 --app barebones-stack-staging
 
 > Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
-### ▫️ Connecting to your database
+### Connecting to your database
 
 The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by running `fly ssh console -C database-cli`.
 
@@ -115,7 +115,7 @@ Anything in the `dev` branch will be deployed to staging.
 
 ## 💅 Testing
 
-### ▫️ Cypress
+### Cypress
 
 We use Cypress for our End-to-End tests in this project. You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
 
@@ -123,19 +123,19 @@ We use [`@testing-library/cypress`](https://testing-library.com/cypress) for sel
 
 To run these tests in development, run `npm run test:e2e:dev` which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
 
-### ▫️ Vitest
+### Vitest
 
 For lower level tests of utilities and individual components, we use `vitest`. We have DOM-specific assertion helpers via [`@testing-library/jest-dom`](https://testing-library.com/jest-dom).
 
-### ▫️ Type Checking
+### Type Checking
 
 This project uses TypeScript. It's recommended to get TypeScript set up for your editor to get a really great in-editor experience with type checking and auto-complete. To run type checking across the whole project, run `npm run typecheck`.
 
-### ▫️ Linting
+### Linting
 
 This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 
-### ▫️ Formatting
+### Formatting
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
 
@@ -153,12 +153,9 @@ Contributions are Welcome! Jump in and help us improve this Community Template o
 If you found this template useful, help us by [Staring ⭐ It](https://github.com/dev-xo/barebones-stack)!
 It helps a lot and gives me motivation to keep working on this and other Remix projects for the community. Thanks you!
 
-### ️▫️ Acknowledgments
+### ️Acknowledgments
 
-Some of the cool features that are implemented in the template are from [Indie Stack](https://github.com/remix-run/indie-stack)
-
-Also a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey).
-He's doing an amazing job on `remix.init` folders and so on!
+A big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey). He's doing an amazing job on `remix.init` folders and so on!
 
 <!-- MARKDOWN LINKS & IMAGES -->
 

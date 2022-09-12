@@ -77,7 +77,7 @@ export default function Index() {
 							target="_blank"
 							rel="noreferrer"
 							className="text-sm font-semibold text-slate-700 drop-shadow-sm
-            transition hover:scale-110 active:scale-100">
+            	transition hover:scale-110 active:scale-100">
 							Open Source Template
 						</a>
 					</div>
@@ -91,8 +91,8 @@ export default function Index() {
 					<div className="m-3" />
 
 					<p className="max-w-lg text-center text-xl text-slate-900 opacity-80 drop-shadow-sm">
-						A solid create-remix app, that applies best practices into a clean,
-						batteries included template.
+						A robust create-remix app, that applies best practices into a clean,
+						batteries included template. SQLite version. Deploys to Fly.io
 					</p>
 					<div className="m-3" />
 

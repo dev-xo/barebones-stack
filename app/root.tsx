@@ -22,7 +22,8 @@ export const meta: MetaFunction = () => {
 	return {
 		charset: 'utf-8',
 		title: 'Welcome to Remix Barebones Stack!',
-		description: 'A solid create-remix app. SQLite version. Deploys to Fly.io',
+		description:
+			'A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io',
 		keywords:
 			'remix,create-remix,remix-stack,typescript,sqlite,prisma,tailwindcss,fly.io',
 		'og:title': 'Remix Barebones Stack',
@@ -31,17 +32,17 @@ export const meta: MetaFunction = () => {
 		'og:image':
 			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail.png',
 		'og:card': 'summary_large_image',
-		'og:creator': '@DanielKanem',
+		'og:creator': '@DEV_XO2',
 		'og:site': 'https://barebones-stack.fly.dev',
 		'og:description':
-			'A solid create-remix app. SQLite version. Deploys to Fly.io',
+			'A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io',
 		'twitter:image':
 			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail.png',
 		'twitter:card': 'summary_large_image',
-		'twitter:creator': '@DanielKanem',
+		'twitter:creator': '@DEV_XO2',
 		'twitter:title': 'Remix Barebones Stack',
 		'twitter:description':
-			'A solid create-remix app. SQLite version. Deploys to Fly.io',
+			'A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io',
 	}
 }
 

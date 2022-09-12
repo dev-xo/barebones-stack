@@ -1,12 +1,16 @@
-# Remix Barebones Stack
+![GitHub-Mark-Light](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/dark-logo.png#gh-light-mode-only)
+![GitHub-Mark-Dark ](https://github.com/dev-xo/dev-xo/blob/main/barebones-stack/assets/images/light-logo.png#gh-dark-mode-only)
 
-[![Product Name Screen Shot][product-screenshot]](#)
-
-```sh
-npx create-remix --template dev-xo/barebones-stack
-```
-
-A solid create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
+<p align="center">
+  <h3 align="center">Barebones Stack</h3>
+  <p align="center">
+    <a href="https://barebones-stack.fly.dev">Live Demo</a>
+    ·
+    <a href="https://twitter.com/DEV_XO2">Twitter</a>
+    <br/>
+    A robust create-remix app, that follows community guidelines and applies best practices into a clean, batteries included template.
+  </p>
+</p>
 
 ## 💿 Features
 
@@ -146,7 +150,7 @@ Also feel free to update prettier settings from `.package-json` with your prefer
 Contributions are Welcome! Jump in and help us improve this Community Template over time!
 
 - [Contributing Guide](https://github.com/dev-xo/barebones-stack/blob/main/CONTRIBUTING.md) Docs.
-- [Open Project Roadmap](https://github.com/users/dev-xo/projects/6) Check our TODOs, Updates and template maintenance.
+- [Open Project Roadmap](https://github.com/users/dev-xo/projects/6) Check our TODOs, fixes and updates.
 
 ## 🍪 Support
 

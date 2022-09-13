@@ -5,7 +5,7 @@
   <p align="center">
     <a href="https://barebones-stack.fly.dev">Live Demo</a>
     ·
-    <a href="https://twitter.com/DEV_XO2">Twitter</a>
+    <a href="https://twitter.com/DanielKanem">Twitter</a>
     <br/>
     A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io
   </p>

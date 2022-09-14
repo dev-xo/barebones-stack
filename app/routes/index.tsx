@@ -92,7 +92,7 @@ export default function Index() {
 
 					<p className="max-w-lg text-center text-xl text-slate-900 opacity-80 drop-shadow-sm">
 						A robust create-remix app, that applies best practices into a clean,
-						batteries included template. SQLite version. Deploys to Fly.io
+						batteries included template.
 					</p>
 					<div className="m-3" />
 

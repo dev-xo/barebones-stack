@@ -149,7 +149,7 @@ Also feel free to update prettier settings from `.package-json` with your prefer
 Contributions are Welcome! Jump in and help us improve this Community Template over time!
 
 - [Contributing Guide](https://github.com/dev-xo/barebones-stack/blob/main/CONTRIBUTING.md) Docs.
-- [Open Project Roadmap](https://github.com/users/dev-xo/projects/6) Check our TODOs, fixes and updates.
+- [Public Project Roadmap](https://github.com/users/dev-xo/projects/6) Check our TODOs, Fixes and Updates.
 
 ## 🍪 Support
 

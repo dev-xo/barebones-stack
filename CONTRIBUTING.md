@@ -10,6 +10,6 @@ To get an overview of the project, read the [README](README.md). Here are some r
 - [Set up Git](https://docs.github.com/en/get-started/quickstart/set-up-git)
 - [Collaborating with pull requests](https://docs.github.com/en/github/collaborating-with-pull-requests)
 
-## Open Project - Roadmap
+## Public Project - Roadmap
 
-We have an [Open Project Roadmap](https://github.com/users/dev-xo/projects/6) that will be updated with new features, updates, fixes and so on.
+Check our [Public Project Roadmap](https://github.com/users/dev-xo/projects/6)

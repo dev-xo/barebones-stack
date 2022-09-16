@@ -30,14 +30,14 @@ export const meta: MetaFunction = () => {
 		'og:type': 'website',
 		'og:url': 'https://barebones-stack.fly.dev',
 		'og:image':
-			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail-sqlite.png',
+			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail-sqlite-v1.png',
 		'og:card': 'summary_large_image',
 		'og:creator': '@DEV_XO1',
 		'og:site': 'https://barebones-stack.fly.dev',
 		'og:description':
 			'A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io',
 		'twitter:image':
-			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail-sqlite.png',
+			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail-sqlite-v1.png',
 		'twitter:card': 'summary_large_image',
 		'twitter:creator': '@DEV_XO1',
 		'twitter:title': 'Remix Barebones Stack',

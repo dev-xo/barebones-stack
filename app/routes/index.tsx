@@ -56,7 +56,7 @@ export default function Index() {
 
 			{/* Main. */}
 			<main className="relative bottom-3 flex h-full flex-col items-center justify-center">
-				{/* Headers. */}
+				{/* Intro. */}
 				<div className="flex flex-col items-center">
 					<div className="transition hover:scale-110 active:scale-100">
 						<img
@@ -72,14 +72,11 @@ export default function Index() {
 							<span className="font-semibold text-slate-900">Remix</span> Stacks
 						</h1>
 						<div className="mb-1" />
-						<a
-							href="https://github.com/dev-xo"
-							target="_blank"
-							rel="noreferrer"
-							className="text-sm font-semibold text-slate-700 drop-shadow-sm
-            	transition hover:scale-110 active:scale-100">
+						<p
+							className="cursor-default text-base font-semibold text-slate-900
+            	drop-shadow-sm hover:opacity-50">
 							Open Source Template
-						</a>
+						</p>
 					</div>
 					<div className="m-2" />
 
@@ -88,12 +85,6 @@ export default function Index() {
 							Barebones
 						</h1>
 					</div>
-					<div className="m-3" />
-
-					<p className="max-w-lg text-center text-xl text-slate-900 opacity-80 drop-shadow-sm">
-						A robust create-remix app, that applies best practices into a clean,
-						batteries included template.
-					</p>
 					<div className="m-3" />
 
 					<a
@@ -187,8 +178,8 @@ export default function Index() {
 							href={img.href}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="flex h-14 w-28 select-none justify-center p-1 opacity-80 drop-shadow-sm
-              grayscale transition hover:scale-110 hover:opacity-100 hover:grayscale-0 focus:grayscale-0">
+							className="flex h-14 w-28 select-none justify-center p-1 drop-shadow-sm
+              grayscale transition hover:scale-110 hover:grayscale-0 focus:grayscale-0">
 							<img alt={img.alt} src={img.src} />
 						</a>
 					))}
@@ -196,16 +187,16 @@ export default function Index() {
 			</main>
 
 			{/* Footer */}
-			<footer className="z-10 flex flex-col items-center p-6">
+			<footer className="z-10 flex flex-col items-center p-8">
 				<div
 					className="fixed bottom-4 flex select-none flex-row items-center justify-between 
-          rounded-2xl bg-[rgba(255,255,255,0.5)] p-3 px-6 shadow-2xl backdrop-blur-sm 
-          transition hover:scale-105">
+        	rounded-2xl bg-[rgba(255,255,255,0.5)] p-3 px-6 shadow-2xl backdrop-blur-sm 
+        	transition hover:scale-105">
 					{/* Socials. */}
 					<div className="flex flex-row items-center">
 						<div className="flex flex-col">
-							<p className="text-sm font-normal text-slate-400">
-								Discover Remix
+							<p className="text-sm font-semibold text-slate-400">
+								<span className="hidden sm:inline-block">Discover</span> Remix
 							</p>
 						</div>
 						<div className="mx-3" />
@@ -216,7 +207,8 @@ export default function Index() {
 								target="_blank"
 								rel="noopener noreferrer">
 								<svg
-									className="h-6 w-6 fill-slate-400 transition hover:scale-110 hover:fill-slate-900 active:scale-100"
+									className="h-6 w-6 fill-slate-400 transition hover:scale-110
+									hover:fill-slate-900 active:scale-100"
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 24 24">
 									<path
@@ -233,7 +225,8 @@ export default function Index() {
 								target="_blank"
 								rel="noopener noreferrer">
 								<svg
-									className="h-6 w-6 fill-slate-400 transition hover:scale-110 hover:fill-slate-900 active:scale-100"
+									className="h-6 w-6 fill-slate-400 transition hover:scale-110
+									hover:fill-slate-900 active:scale-100"
 									viewBox="0 0 24 24"
 									xmlns="http://www.w3.org/2000/svg">
 									<path d="M19.633 7.997c.013.175.013.349.013.523 0 5.325-4.053 11.461-11.46 11.461-2.282 0-4.402-.661-6.186-1.809.324.037.636.05.973.05a8.07 8.07 0 0 0 5.001-1.721 4.036 4.036 0 0 1-3.767-2.793c.249.037.499.062.761.062.361 0 .724-.05 1.061-.137a4.027 4.027 0 0 1-3.23-3.953v-.05c.537.299 1.16.486 1.82.511a4.022 4.022 0 0 1-1.796-3.354c0-.748.199-1.434.548-2.032a11.457 11.457 0 0 0 8.306 4.215c-.062-.3-.1-.611-.1-.923a4.026 4.026 0 0 1 4.028-4.028c1.16 0 2.207.486 2.943 1.272a7.957 7.957 0 0 0 2.556-.973 4.02 4.02 0 0 1-1.771 2.22 8.073 8.073 0 0 0 2.319-.624 8.645 8.645 0 0 1-2.019 2.083z" />
@@ -246,7 +239,8 @@ export default function Index() {
 								target="_blank"
 								rel="noopener noreferrer">
 								<svg
-									className="h-6 w-6 fill-slate-400 transition hover:scale-110 hover:fill-slate-900 active:scale-100"
+									className="h-6 w-6 fill-slate-400 transition hover:scale-110
+									hover:fill-slate-900 active:scale-100"
 									viewBox="0 0 24 24"
 									xmlns="http://www.w3.org/2000/svg">
 									<path d="M14.82 4.26a10.14 10.14 0 0 0-.53 1.1 14.66 14.66 0 0 0-4.58 0 10.14 10.14 0 0 0-.53-1.1 16 16 0 0 0-4.13 1.3 17.33 17.33 0 0 0-3 11.59 16.6 16.6 0 0 0 5.07 2.59A12.89 12.89 0 0 0 8.23 18a9.65 9.65 0 0 1-1.71-.83 3.39 3.39 0 0 0 .42-.33 11.66 11.66 0 0 0 10.12 0q.21.18.42.33a10.84 10.84 0 0 1-1.71.84 12.41 12.41 0 0 0 1.08 1.78 16.44 16.44 0 0 0 5.06-2.59 17.22 17.22 0 0 0-3-11.59 16.09 16.09 0 0 0-4.09-1.35zM8.68 14.81a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.93 1.93 0 0 1 1.8 2 1.93 1.93 0 0 1-1.8 2zm6.64 0a1.94 1.94 0 0 1-1.8-2 1.93 1.93 0 0 1 1.8-2 1.92 1.92 0 0 1 1.8 2 1.92 1.92 0 0 1-1.8 2z" />

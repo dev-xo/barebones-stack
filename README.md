@@ -7,7 +7,7 @@
     ·
     <a href="https://twitter.com/DEV_XO1">Twitter</a>
     <br/>
-    A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io
+    A robust create-remix template, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io
   </p>
 </p>
 
@@ -27,7 +27,7 @@ This Stack has been created with two main purposes: **simplicity and solidity.**
 - Linting with [ESLint.](https://eslint.org/)
 - Code formatting with [Prettier.](https://prettier.io/)
 - Static Types with [TypeScript.](https://www.typescriptlang.org/)
-- Support for Javascript developers with continuous updates over time.
+- Support for Javascript developers with continuous updates over time based on `remix.init`.
 
 ### We've got a 🐘 [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version also.
 

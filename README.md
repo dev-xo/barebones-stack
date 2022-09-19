@@ -7,7 +7,7 @@
     ·
     <a href="https://twitter.com/DEV_XO1">Twitter</a>
     <br/>
-    A robust create-remix template, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io
+    A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io
   </p>
 </p>
 

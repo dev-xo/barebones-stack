@@ -140,7 +140,7 @@ This project uses ESLint for linting. That is configured in `.eslintrc.js`.
 
 We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
 
-Also feel free to update prettier settings from `.package-json` with your preferred configuration.
+This template has pre-configured prettier settings on `.package-json`. Feel free to update each value with your preferred work style.
 
 ## 👥 Contributing
 

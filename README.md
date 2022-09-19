@@ -36,57 +36,55 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ## 🔋 Quickstart
 
+To get started, run the following commands in your console:
+
 ```sh
-# Initialize the following template into your workspace:
+# Initializes template in your workspace:
 npx create-remix --template dev-xo/barebones-stack
 
-# Seed database: (If you just generated this project, this step has been done for you.)
+# Seeds database: (If you just generated this project, this step has been done for you.)
 npm run setup
 
-# Start dev server:
+# Starts dev server:
 npm run dev
 ```
 
-Done! This starts your app in development mode, rebuilding assets on file changes.
+> Note: Cloning the repository instead of initializing it with the above commands, will result in a inappropriate experience. This template uses `remix.init` to configure itself and prepare your environment.
 
 ## 🚀 Deployment
 
-This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments.
+This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments. Prior to your first deployment, you'll need to do a few things:
 
-Prior to your first deployment, you'll need to do a few things:
-
-- [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
-
-- Sign up and log in to Fly:
+1. [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
+2. Sign up and Log in to Fly:
 
 ```sh
 fly auth signup
 ```
 
-- Create two apps on Fly, one for staging and one for production:
+3. Create two apps on Fly, one for staging and one for production:
 
 ```sh
 fly apps create barebones-stack
 fly apps create barebones-stack-staging
 ```
 
-> **Note:** Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
+> Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
 
-- Initialize Git:
+4. Initialize Git:
 
 ```sh
 git init
 ```
 
-- Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
+5. Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
 
 ```sh
 git remote add origin <ORIGIN_URL>
 ```
 
-- Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
-
-- Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
+6. Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
+7. Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
 
 ```sh
 fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app barebones-stack
@@ -95,14 +93,14 @@ fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app barebones-stack-sta
 
 > **Note:** If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
-- Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
+8. Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
 
 ```sh
 fly volumes create data --size 1 --app barebones-stack
 fly volumes create data --size 1 --app barebones-stack-staging
 ```
 
-- Now that everything is set up you can **commit and push** your changes to your repo.
+9. Now that everything is set up you can **commit and push** your changes to your repo.
 
 > Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
 
@@ -116,7 +114,7 @@ We use GitHub Actions for continuous integration and deployment.<br/><br/>
 Anything that gets into the `main` branch will be deployed to production after running tests / build / etc.<br/>
 Anything in the `dev` branch will be deployed to staging.
 
-## 💅 Testing
+## 🧩 Testing
 
 ### Cypress
 
@@ -144,16 +142,16 @@ We use [Prettier](https://prettier.io/) for auto-formatting in this project. It'
 
 Also feel free to update prettier settings from `.package-json` with your preferred configuration.
 
-## 🤝 Contributing
+## 👥 Contributing
 
 Contributions are Welcome! Jump in and help us improve this Community Template over time!
 
 - [Contributing Guide](https://github.com/dev-xo/barebones-stack/blob/main/CONTRIBUTING.md) Docs.
-- [Public Project Roadmap](https://github.com/users/dev-xo/projects/6) Check our TODOs, Fixes and Updates.
+- [Public Project Roadmap](https://github.com/users/dev-xo/projects/6) Check template's TODOs, fixes and updates.
 
-## 🍪 Support
+## ✨ Support
 
-If you found the project useful, help it by [Staring ⭐ It](https://github.com/dev-xo/barebones-stack)!
+If you found the template useful, support it with a [Star ⭐](https://github.com/dev-xo/barebones-stack)<br />
 It helps the repository grow and gives me motivation to keep working on it. Thanks you!
 
 ### ️Acknowledgments

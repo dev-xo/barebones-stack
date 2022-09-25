@@ -29,7 +29,7 @@ This Stack has been created with two main purposes: **simplicity and solidity.**
 
 ### We've got a 🐘 [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version also.
 
-Would you like to change something? Fork it, change it and use `npx create-remix --template your/repo`!<br/>
+Would you like to change something? Fork it, change it and use `npx create-remix@latest --template your/repo`!<br/>
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ## 🔋 Quickstart
@@ -38,7 +38,7 @@ To get started, run the following commands in your console:
 
 ```sh
 # Initializes template in your workspace:
-npx create-remix --template dev-xo/barebones-stack
+npx create-remix@latest --template dev-xo/barebones-stack
 
 # Seeds database: (If you just generated this project, this step has been done for you.)
 npm run setup

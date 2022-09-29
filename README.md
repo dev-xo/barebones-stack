@@ -4,6 +4,8 @@
 <p align="center">
   <p align="center">
     <a href="https://barebones-stack.fly.dev">Live Demo</a>
+    ·
+    <a href="https://twitter.com/DanielKanem">Twitter</a>
     <br/>
     A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io
   </p>
@@ -155,5 +157,3 @@ It helps the repository grow and gives me motivation to keep working on it. Than
 ### ️Acknowledgments
 
 Also, a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey). He's doing an amazing job on `remix.init` and contributing to Remix community!
-
-<!-- Todo: Remove this comment, added just to refresh Github Actions -->

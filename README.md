@@ -155,3 +155,5 @@ It helps the repository grow and gives me motivation to keep working on it. Than
 ### ️Acknowledgments
 
 Also, a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey). He's doing an amazing job on `remix.init` and contributing to Remix community!
+
+<!-- Todo: Remove this comment, added just to refresh Github Actions -->

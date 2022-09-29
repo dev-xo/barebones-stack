@@ -1,5 +1,5 @@
-![GitHub-Mark-Light](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/light-logo-v1.png#gh-light-mode-only)
-![GitHub-Mark-Dark ](https://github.com/dev-xo/dev-xo/blob/main/barebones-stack/assets/images/dark-logo-v1.png#gh-dark-mode-only)
+![GitHub-Mark-Light](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-light-logo-v2.png#gh-light-mode-only)
+![GitHub-Mark-Dark ](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-dark-logo-v2.png)
 
 <p align="center">
   <p align="center">

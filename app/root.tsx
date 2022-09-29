@@ -23,9 +23,8 @@ export const meta: MetaFunction = () => {
 		charset: 'utf-8',
 		title: 'Welcome to Remix Barebones Stack!',
 		description:
-			'A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io',
-		keywords:
-			'remix,create-remix,remix-stack,typescript,sqlite,prisma,tailwindcss,fly.io',
+			'A robust create-remix app, that applies best practices into a clean, batteries included template. Deploys to Fly.io',
+		keywords: 'remix,remix-stack,typescript,sqlite,prisma,tailwindcss,fly.io',
 		'og:title': 'Remix Barebones Stack',
 		'og:type': 'website',
 		'og:url': 'https://barebones-stack.fly.dev',
@@ -35,14 +34,14 @@ export const meta: MetaFunction = () => {
 		'og:creator': '@DanielKanem',
 		'og:site': 'https://barebones-stack.fly.dev',
 		'og:description':
-			'A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io',
+			'A robust create-remix app, that applies best practices into a clean, batteries included template. Deploys to Fly.io',
 		'twitter:image':
 			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail-sqlite-v1.png',
 		'twitter:card': 'summary_large_image',
 		'twitter:creator': '@DanielKanem',
 		'twitter:title': 'Remix Barebones Stack',
 		'twitter:description':
-			'A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io',
+			'A robust create-remix app, that applies best practices into a clean, batteries included template. Deploys to Fly.io',
 	}
 }
 
@@ -57,7 +56,11 @@ export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
 			</head>
 			<body className="flex h-screen flex-col items-center justify-center">
 				{/* Add here the UI you want your users to see. */}
-				<h1 className="text-2xl">Something went wrong!</h1>
+				<h1 className="text-center text-3xl font-semibold">
+					Whops.
+					<br />
+					Something went wrong!
+				</h1>
 				<Scripts />
 			</body>
 		</html>

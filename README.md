@@ -1,5 +1,5 @@
 ![GitHub-Mark-Light](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-light-logo-v2.png#gh-light-mode-only)
-![GitHub-Mark-Dark ](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-dark-logo-v2.png)
+![GitHub-Mark-Dark ](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-dark-logo-v2.png#gh-dark-mode-only)
 
 <p align="center">
   <p align="center">

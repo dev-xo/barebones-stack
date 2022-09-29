@@ -8,7 +8,9 @@ async function seed() {
 
 	// Create seed.
 	await prisma.welcome.create({
-		data: { message: '🐳 Successfully connected to database!.' },
+		data: {
+			message: '😳 If you see this message, support us with a star on Github!',
+		},
 	})
 
 	console.log(`Database has been successfully seeded. 🌱`)

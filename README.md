@@ -1,5 +1,5 @@
-![GitHub-Mark-Light](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-light-logo-v2.png#gh-light-mode-only)
-![GitHub-Mark-Dark ](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-dark-logo-v2.png#gh-dark-mode-only)
+![GitHub-Mark-Light](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-light-logo-v1.png#gh-light-mode-only)
+![GitHub-Mark-Dark ](https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/sqlite-dark-logo-v1.png#gh-dark-mode-only)
 
 <p align="center">
   <p align="center">
@@ -7,13 +7,13 @@
     ·
     <a href="https://twitter.com/DanielKanem">Twitter</a>
     <br/>
-    A robust create-remix app, that applies best practices into a clean, batteries included template. SQLite version. Deploys to Fly.io
+    A testing-ready create-remix app, that applies best practices into a clean, batteries included template. Javascript Supported. SQLite version. Deploys to Fly.io 
   </p>
 </p>
 
 ## 💿 Features
 
-This Stack has been created with two main purposes: **simplicity and solidity.** Aiming for those who loves to build their stuff from the ground, with a solid and well tested template, to start coding right away.
+This Stack has been created with two main purposes: **simplicity** and **solidity**. Aiming for those who loves to build their stuff from the ground, with a solid, testing-ready template, to start coding right away.
 
 - [Fly app Deployment](https://fly.io) with [Docker.](https://www.docker.com/products/docker-desktop/)
 - Database ORM with [Prisma.](https://www.prisma.io/)

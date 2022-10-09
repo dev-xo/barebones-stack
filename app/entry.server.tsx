@@ -36,9 +36,11 @@ export default function handleRequest(
 
 					pipe(body)
 				},
+
 				onShellError: (err: unknown) => {
 					reject(err)
 				},
+
 				onError: (error: unknown) => {
 					didError = true
 					console.error(error)

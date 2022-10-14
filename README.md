@@ -42,7 +42,7 @@ To get started, run the following commands in your console:
 # Initializes template in your workspace:
 npx create-remix@latest --template dev-xo/barebones-stack
 
-# Seeds database: (If you just generated this project, this step has been done for you.)
+# Seeds database: "If you generated this project, this step has been done for you."
 npm run setup
 
 # Starts dev server:
@@ -127,6 +127,8 @@ To run these tests in development, run `npm run test:e2e:dev` which will start t
 ### Vitest
 
 For lower level tests of utilities and individual components, we use `vitest`. We have DOM-specific assertion helpers via [`@testing-library/jest-dom`](https://testing-library.com/jest-dom).
+
+To run these tests in development, run `npm run test` or `npm run test:cov` to get a detailed summary of your tests.
 
 ### Type Checking
 

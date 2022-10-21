@@ -61,7 +61,7 @@ If your database choice was PostgreSQL, you will need to run Prisma migrations w
 
 In order to keep a better track and an easier maintenance of each deployment documentation, we moved each one to its own file.
 
-Check [SQLite DEPLOYMENT.md](https://github.com/dev-xo/dev-xo/blob/main/stripe-stack/docs/SQLITE-DEPLOYMENT.md) or [PostgreSQL DEPLOYMENT.md](https://github.com/dev-xo/dev-xo/blob/main/stripe-stack/docs/POSTGRESQL-DEPLOYMENT.md) to get your app to production.
+Check [SQLite DEPLOYMENT.md](https://github.com/dev-xo/dev-xo/blob/main/barebones-stack/docs/SQLITE-DEPLOYMENT.md) or [PostgreSQL DEPLOYMENT.md](https://github.com/dev-xo/dev-xo/blob/main/barebones-stack/docs/POSTGRESQL-DEPLOYMENT.md) to get your app to production.
 
 ## ⚙️ GitHub Actions
 

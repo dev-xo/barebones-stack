@@ -7,7 +7,7 @@
     ·
     <a href="https://twitter.com/DanielKanem">Twitter</a>
     <br/>
-    A testing-ready create-remix app, that applies best practices into a clean, batteries included template. Javascript Supported. SQLite version. Deploys to Fly.io 
+    A starter focused create-remix app, that applies best practices into a clean, batteries included template. Support for SQLite and PostgreSQL. Deploys to Fly.io 
   </p>
 </p>
 
@@ -17,7 +17,7 @@ This Stack has been created with two main purposes: **simplicity** and **solidit
 
 - [Fly app Deployment](https://fly.io) with [Docker.](https://www.docker.com/products/docker-desktop/)
 - Database ORM with [Prisma.](https://www.prisma.io/)
-- Production Ready with [SQLite Database.](https://sqlite.org/index.html)
+- Production Ready with [SQLite](https://sqlite.org/index.html) and [PostgreSQL.](https://www.postgresql.org/)
 - [GitHub Actions](https://github.com/features/actions) for Deploy on merge to Production and Staging environments.
 - Healthcheck Endpoint for [Fly backups Region Fallbacks.](https://fly.io/docs/reference/configuration/#services-http_checks)
 - Styling with [Tailwind.css](https://tailwindcss.com/) + [Tailwind Prettier-Plugin.](https://github.com/tailwindlabs/prettier-plugin-tailwindcss)
@@ -29,18 +29,20 @@ This Stack has been created with two main purposes: **simplicity** and **solidit
 - Static Types with [TypeScript.](https://www.typescriptlang.org/)
 - Support for Javascript developers with continuous updates over time based on `remix.init`.
 
-### We've got a 🐘 [PostgreSQL](https://github.com/dev-xo/barebones-postgres-stack) version also.
-
-Would you like to change something? Fork it, change it and use `npx create-remix@latest --template your/repo`!<br/>
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ## 🔋 Quickstart
+
+Barebones Stack has support for multiple database based on Prisma. The installer will prompt a selector allowing you to choose the database your project will run on. Deployment files will be updated matching the required criteria to successfully deploy to Fly.io
 
 To get started, run the following commands in your console:
 
 ```sh
 # Initializes template in your workspace:
 npx create-remix@latest --template dev-xo/barebones-stack
+
+# You will be prompted to select the database your project will run on.
+# ...
 
 # Seeds database: "If you generated this project, this step has been done for you."
 npm run setup
@@ -49,64 +51,17 @@ npm run setup
 npm run dev
 ```
 
+### Prisma Migrations
+
+If your database choice was PostgreSQL, you will need to run Prisma migrations with your Postgres client running on the background. In order to accomplish it, feel free to remove the folder inside `/prisma` called `/migrations`, and run `npx prisma migrate dev --name init` to properly setup them.
+
 > Note: Cloning the repository instead of initializing it with the above commands, will result in a inappropriate experience. This template uses `remix.init` to configure itself and prepare your environment.
 
 ## 🚀 Deployment
 
-This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments. Prior to your first deployment, you'll need to do a few things:
+In order to keep a better track and an easier maintenance of each deployment documentation, we moved each one to its own file.
 
-1. [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
-2. Sign up and Log in to Fly:
-
-```sh
-fly auth signup
-```
-
-3. Create two apps on Fly, one for staging and one for production:
-
-```sh
-fly apps create barebones-stack
-fly apps create barebones-stack-staging
-```
-
-> Make sure this name matches the `app` set in your `fly.toml` file. Otherwise, you will not be able to deploy.
-
-4. Initialize Git:
-
-```sh
-git init
-```
-
-5. Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
-
-```sh
-git remote add origin <ORIGIN_URL>
-```
-
-6. Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
-7. Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
-
-```sh
-fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app barebones-stack
-fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app barebones-stack-staging
-```
-
-> **Note:** If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
-
-8. Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
-
-```sh
-fly volumes create data --size 1 --app barebones-stack
-fly volumes create data --size 1 --app barebones-stack-staging
-```
-
-9. Now that everything is set up you can **commit and push** your changes to your repo.
-
-> Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
-
-### Connecting to your database
-
-The sqlite database lives at `/data/sqlite.db` in your deployed application. You can connect to the live database by running `fly ssh console -C database-cli`.
+Check [SQLite DEPLOYMENT.md](https://github.com/dev-xo/dev-xo/blob/main/stripe-stack/docs/SQLITE-DEPLOYMENT.md) or [PostgreSQL DEPLOYMENT.md](https://github.com/dev-xo/dev-xo/blob/main/stripe-stack/docs/POSTGRESQL-DEPLOYMENT.md) to get your app to production.
 
 ## ⚙️ GitHub Actions
 
@@ -144,13 +99,6 @@ We use [Prettier](https://prettier.io/) for auto-formatting in this project. It'
 
 This template has pre-configured prettier settings on `.package-json`. Feel free to update each value with your preferred work style.
 
-## 👥 Contributing
-
-Contributions are Welcome! Jump in and help us improve this Community Template over time!
-
-- [Contributing Guide](https://github.com/dev-xo/barebones-stack/blob/main/CONTRIBUTING.md) Docs.
-- [Public Project Roadmap](https://github.com/users/dev-xo/projects/6) Check template's TODOs, fixes and updates.
-
 ## ✨ Support
 
 If you found the template useful, support it with a [Star ⭐](https://github.com/dev-xo/barebones-stack)<br />
@@ -158,4 +106,4 @@ It helps the repository grow and gives me motivation to keep working on it. Than
 
 ### ️Acknowledgments
 
-Also, a big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey). He's doing an amazing job on `remix.init` and contributing to Remix community!
+A big shout out to [@MichaelDeBoey](https://github.com/MichaelDeBoey). He's doing an amazing job on `remix.init` and contributing to Remix community!

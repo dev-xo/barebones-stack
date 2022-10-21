@@ -1,15 +1,12 @@
 /**
- * Barebones Stack
+ * Remix Init.
  * @author @dev-xo https://github.com/dev-xo
- *
- * Some of the Typescript related scripts, have been developed by other authors.
- * @author @kentcdodds https://github.com/kentcdodds
- * @author @MichaelDeBoey https://github.com/MichaelDeBoey
  */
 const { execSync } = require('child_process')
 const fs = require('fs/promises')
 const path = require('path')
 const crypto = require('crypto')
+const inquirer = require('inquirer')
 
 const toml = require('@iarna/toml')
 const YAML = require('yaml')
@@ -24,16 +21,12 @@ const getRandomString = (length) => crypto.randomBytes(length).toString('hex')
 
 /**
  * Returns the version of the package manager used in the workspace.
- * By default, the package manager is derived based on the lock file,
- * but it can also be passed in explicitly.
  */
 const getPackageManagerVersion = (packageManager) =>
 	execSync(`${packageManager} --version`).toString('utf-8').trim()
 
 /**
  * Returns commands for the package manager used in the workspace.
- * By default, the package manager is derived based on the lock file,
- * but it can also be passed in explicitly.
  */
 const getPackageManagerCommand = (packageManager) => {
 	return {
@@ -75,39 +68,9 @@ const removeUnusedDependencies = (dependencies, unusedDependencies) =>
 	)
 
 /**
- * Cleans up Typescript references from Cypress folders.
- */
-const cleanupCypressFiles = async (rootDirectory) => {
-	const CYPRESS_CONFIG_PATH = path.join(rootDirectory, 'cypress.config.js')
-
-	// Reads, replaces and writes a new file.
-	const cypressConfig = await fs.readFile(CYPRESS_CONFIG_PATH, 'utf-8')
-	const replacedCypressConfig = cypressConfig.replace(
-		'export default',
-		'module.exports =',
-	)
-	await fs.writeFile(CYPRESS_CONFIG_PATH, replacedCypressConfig)
-}
-
-/**
- * Cleans up Typescript references from Vitest config.
- */
-const cleanupVitestConfigFile = async (rootDirectory) => {
-	const VITEST_CONFIG_PATH = path.join(rootDirectory, 'vitest.config.js')
-
-	// Reads, replaces and writes a new file.
-	const vitestConfig = await fs.readFile(VITEST_CONFIG_PATH, 'utf-8')
-	const replacedVitestSetupConfig = vitestConfig.replace(
-		'setup-vitest.ts',
-		'setup-vitest.js',
-	)
-	await fs.writeFile(VITEST_CONFIG_PATH, replacedVitestSetupConfig)
-}
-
-/**
  * Cleans up Typescript references from Github workflows.
  */
-const cleanupDeployWorkflowFile = async (rootDirectory) => {
+const cleanupTypescriptWorkflow = async (rootDirectory) => {
 	const DEPLOY_WORKFLOW_PATH = path.join(
 		rootDirectory,
 		'.github',
@@ -115,7 +78,6 @@ const cleanupDeployWorkflowFile = async (rootDirectory) => {
 		'deploy.yml',
 	)
 
-	// Reads, parses, replaces and writes a new file.
 	const deployWorkflow = await fs.readFile(DEPLOY_WORKFLOW_PATH, 'utf-8')
 	const parsedWorkflow = YAML.parse(deployWorkflow)
 
@@ -124,14 +86,11 @@ const cleanupDeployWorkflowFile = async (rootDirectory) => {
 		(need) => need !== 'typecheck',
 	)
 
-	return await fs.writeFile(
-		DEPLOY_WORKFLOW_PATH,
-		YAML.stringify(parsedWorkflow),
-	)
+	await fs.writeFile(DEPLOY_WORKFLOW_PATH, YAML.stringify(parsedWorkflow))
 }
 
 /**
- * Updates package.json
+ * Updates package.json.
  */
 const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
 	const packageJson = await PackageJson.load(rootDirectory)
@@ -148,12 +107,12 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
 			? devDependencies
 			: removeUnusedDependencies(devDependencies, ['ts-node']),
 		prisma: isTypeScript
-			? { ...prisma, seed: prismaSeed }
+			? { seed: prismaSeed, ...prisma }
 			: {
-					...prisma,
 					seed: prismaSeed
 						.replace('ts-node', 'node')
 						.replace('seed.ts', 'seed.js'),
+					...prisma,
 			  },
 		scripts: isTypeScript
 			? { ...scripts, typecheck, validate }
@@ -164,20 +123,18 @@ const updatePackageJson = async (rootDirectory, isTypeScript, APP_NAME) => {
 }
 
 /**
- * Creates and initiates a newly `.env` file,
- * with provided variables from `.env.example`.
+ * Creates a new `.env` file, based on `.env.example`.
  */
-const replaceAndInitEnvFiles = async (rootDirectory) => {
-	const ENV_PATH = path.join(rootDirectory, '.env')
+const initEnvFile = async (rootDirectory) => {
+	const NEW_ENV_PATH = path.join(rootDirectory, '.env')
 	const EXAMPLE_ENV_PATH = path.join(rootDirectory, '.env.example')
 
-	// Reads, replaces and writes a new `.env` file.
 	const exampleEnv = await fs.readFile(EXAMPLE_ENV_PATH, 'utf-8')
-	const replacedExampleEnv = exampleEnv.replace(
+	const newEnv = exampleEnv.replace(
 		/^SESSION_SECRET=.*$/m,
 		`SESSION_SECRET="${getRandomString(16)}"`,
 	)
-	await fs.writeFile(ENV_PATH, replacedExampleEnv)
+	await fs.writeFile(NEW_ENV_PATH, newEnv)
 
 	// Removes `.env.example` file from directory.
 	await fs.unlink(EXAMPLE_ENV_PATH)
@@ -185,15 +142,14 @@ const replaceAndInitEnvFiles = async (rootDirectory) => {
 
 /**
  * Replaces default project name for the one provided by `DIR_NAME`.
- *
- * Files that are being updated:
- * - fly.toml
- * - README.md
  */
-const replaceProjectNameFromFiles = async (rootDirectory, APP_NAME) => {
+const updateProjectNameFromRiles = async (rootDirectory, APP_NAME) => {
+	// Paths.
 	const FLY_TOML_PATH = path.join(rootDirectory, 'fly.toml')
 	const README_PATH = path.join(rootDirectory, 'README.md')
-	const REPLACER = /barebones[\s|-]stack/gim
+
+	// Matches.
+	const DEFAULT_PROJECT_NAME_MATCHER = /barebones-stack/gim
 
 	const [flyToml, readme] = await Promise.all([
 		fs.readFile(FLY_TOML_PATH, 'utf-8'),
@@ -201,37 +157,158 @@ const replaceProjectNameFromFiles = async (rootDirectory, APP_NAME) => {
 	])
 
 	// Replaces Fly.toml file.
-	const replacedFlyToml = toml.parse(flyToml)
-	replacedFlyToml.app = replacedFlyToml.app.replace(REPLACER, APP_NAME)
+	const newFlyToml = toml.parse(flyToml)
+	newFlyToml.app = newFlyToml.app.replace(
+		DEFAULT_PROJECT_NAME_MATCHER,
+		APP_NAME,
+	)
 
 	// Replaces README.md file.
-	const replacedReadme = readme.replace(REPLACER, APP_NAME)
+	const newReadme = readme.replace(DEFAULT_PROJECT_NAME_MATCHER, APP_NAME)
 
 	await Promise.all([
-		fs.writeFile(FLY_TOML_PATH, toml.stringify(replacedFlyToml)),
-		fs.writeFile(README_PATH, replacedReadme),
+		fs.writeFile(FLY_TOML_PATH, toml.stringify(newFlyToml)),
+		fs.writeFile(README_PATH, newReadme),
 	])
 }
 
 /**
- * Replaces `lockfile` based on the package manager used in the workspace.
+ * Updates `Dockerfile` based on the package manager used in the workspace.
  */
 const replaceDockerLockFile = async (rootDirectory, pm) => {
 	const DOCKERFILE_PATH = path.join(rootDirectory, 'Dockerfile')
 
 	const dockerfile = await fs.readFile(DOCKERFILE_PATH, 'utf-8')
-	const replacedDockerFile = pm.lockfile
+	const newDockerfile = pm.lockfile
 		? dockerfile.replace(
 				new RegExp(escapeRegExp('ADD package.json'), 'g'),
 				`ADD package.json ${pm.lockfile}`,
 		  )
 		: dockerfile
-	await fs.writeFile(DOCKERFILE_PATH, replacedDockerFile)
+	await fs.writeFile(DOCKERFILE_PATH, newDockerfile)
 }
 
 /**
- * Runs after the project has been generated
- * and dependencies have been installed.
+ * Prepares environment for a PostgreSQL Deploy at Fly.io.
+ * Based on inquirer.js.
+ */
+const initPostgresDeployEnvironment = async (rootDirectory) => {
+	// Constants.
+	const DEFAULT_DB = 'SQLite'
+	const SQLITE_DB = 'SQLite'
+	const POSTGRESQL_DB = 'PostgreSQL'
+
+	// Paths.
+	const PRISMA_SCHEMA_PATH = path.join(rootDirectory, 'prisma', 'schema.prisma')
+
+	const SQLITE_DEPLOY_WORKFLOW_PATH = path.join(
+		rootDirectory,
+		'.github',
+		'workflows',
+		'deploy.yml',
+	)
+	const POSTGRES_DEPLOY_WORKFLOW_PATH = path.join(
+		rootDirectory,
+		'remix.init',
+		'lib',
+		'postgres',
+		'deploy.yml',
+	)
+
+	const SQLITE_DOCKERFILE_PATH = path.join(rootDirectory, 'Dockerfile')
+	const SQLITE_FLY_TOML_PATH = path.join(rootDirectory, 'fly.toml')
+
+	const POSTGRES_DOCKERFILE_PATH = path.join(
+		rootDirectory,
+		'remix.init',
+		'lib',
+		'postgres',
+		'Dockerfile',
+	)
+	const POSTGRES_FLY_TOML_PATH = path.join(
+		rootDirectory,
+		'remix.init',
+		'lib',
+		'postgres',
+		'fly.toml',
+	)
+	const POSTGRES_DOCKER_COMPOSE_YML_PATH = path.join(
+		rootDirectory,
+		'remix.init',
+		'lib',
+		'postgres',
+		'docker-compose.yml',
+	)
+
+	const SQLITE_ENV_EXAMPLE_PATH = path.join(rootDirectory, '.env.example')
+	const POSTGRES_ENV_EXAMPLE_PATH = path.join(
+		rootDirectory,
+		'remix.init',
+		'lib',
+		'postgres',
+		'.env.example',
+	)
+
+	const START_SH_PATH = path.join(rootDirectory, 'start.sh')
+
+	// Matches & Replacers.
+	const PRISMA_SQLITE_MATCHER = 'sqlite'
+	const PRISMA_POSTGRES_REPLACER = 'postgresql'
+
+	// Inquirer.
+	await inquirer
+		.prompt([
+			{
+				type: 'list',
+				name: 'database',
+				message: 'What database will your project run on?',
+				default: DEFAULT_DB,
+				choices: [SQLITE_DB, POSTGRESQL_DB],
+			},
+		])
+		.then(async (answers) => {
+			const dbAnswer = answers.database
+
+			if (dbAnswer === POSTGRESQL_DB) {
+				// Replaces Prisma scheme client provider.
+				const prismaSchema = await fs.readFile(PRISMA_SCHEMA_PATH, 'utf-8')
+				const newPrismaSchema = prismaSchema.replace(
+					PRISMA_SQLITE_MATCHER,
+					PRISMA_POSTGRES_REPLACER,
+				)
+				await fs.writeFile(PRISMA_SCHEMA_PATH, newPrismaSchema)
+
+				// Replaces Github workflows.
+				await fs.unlink(SQLITE_DEPLOY_WORKFLOW_PATH)
+				await fs.rename(
+					POSTGRES_DEPLOY_WORKFLOW_PATH,
+					SQLITE_DEPLOY_WORKFLOW_PATH,
+				)
+
+				// Replaces deploy files.
+				await fs.rename(POSTGRES_DOCKERFILE_PATH, SQLITE_DOCKERFILE_PATH)
+				await fs.rename(POSTGRES_FLY_TOML_PATH, SQLITE_FLY_TOML_PATH)
+				await fs.rename(
+					POSTGRES_DOCKER_COMPOSE_YML_PATH,
+					path.join(rootDirectory, 'docker-compose.yml'),
+				)
+
+				// Replaces .env.example file.
+				await fs.unlink(SQLITE_DEPLOY_WORKFLOW_PATH)
+				await fs.rename(POSTGRES_ENV_EXAMPLE_PATH, SQLITE_ENV_EXAMPLE_PATH)
+
+				// Removes `start.sh`.
+				await fs.unlink(START_SH_PATH)
+			}
+		})
+		.catch((error) => {
+			console.log(error)
+		})
+}
+
+/**
+ * Main function.
+ * Runs after the project has been generated.
  */
 const main = async ({ rootDirectory, packageManager, isTypeScript }) => {
 	const DIR_NAME = path.basename(rootDirectory)
@@ -240,47 +317,43 @@ const main = async ({ rootDirectory, packageManager, isTypeScript }) => {
 	// Returns commands for the package manager used in the workspace.
 	const pm = getPackageManagerCommand(packageManager)
 
-	if (!isTypeScript) {
-		// Cleans up all Typescript references from the project.
-		await Promise.all([
-			cleanupCypressFiles(rootDirectory),
-			cleanupVitestConfigFile(rootDirectory),
-			cleanupDeployWorkflowFile(rootDirectory),
-		])
-	}
+	// Cleans up all Typescript references from the project.
+	if (!isTypeScript)
+		await Promise.all([cleanupTypescriptWorkflow(rootDirectory)])
+
+	// Prepares environment for a PostgreSQL Deploy at Fly.io
+	await initPostgresDeployEnvironment(rootDirectory)
 
 	await Promise.all([
 		// Updates package.json.
 		updatePackageJson(rootDirectory, isTypeScript, APP_NAME),
 
-		// Creates and initiates a newly `.env` file,
-		// with provided variables from `.env.example`.
-		replaceAndInitEnvFiles(rootDirectory),
+		// Creates a new `.env` file, based on `.env.example`.
+		initEnvFile(rootDirectory),
 
 		// Replaces default project name for the one provided by `DIR_NAME`.
-		replaceProjectNameFromFiles(rootDirectory, APP_NAME),
+		updateProjectNameFromRiles(rootDirectory, APP_NAME),
 
-		// Replaces `lockfile` based on the package manager used in the workspace.
+		// Updates `Dockerfile` based on the package manager used in the workspace.
 		replaceDockerLockFile(rootDirectory, pm),
 	])
 
 	// Seeds database.
-	execSync(pm.run('setup'), { cwd: rootDirectory, stdio: 'inherit' })
+	// execSync(pm.run('setup'), { cwd: rootDirectory, stdio: 'inherit' })
 
 	// Formats the entire project.
-	execSync(pm.run('format', '--loglevel warn'), {
+	/* execSync(pm.run('format', '--loglevel warn'), {
 		cwd: rootDirectory,
 		stdio: 'inherit',
-	})
+	}) */
 
 	console.log(
 		`
-    🔋 Batteries has been successfully set.
-    ❗️ Go ahead and build something amazing!
-    
-    📀 Start development with \`${pm.run('dev')}\`
-    
-     `.trim(),
+🥳 Template has been successfully initialized!.
+🙏 Support us on Github if you found it useful.
+ 
+📀 Start development with \`${pm.run('dev')}\`
+ `.trim(),
 	)
 }
 

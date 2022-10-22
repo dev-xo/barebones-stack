@@ -1,5 +1,7 @@
 {
 	"name": "barebones-stack",
+	"author": "https://github.com/dev-xo",
+	"license": "MIT",
 	"private": true,
 	"sideEffects": false,
 	"scripts": {
@@ -14,15 +16,14 @@
 		"setup:db": "prisma generate && prisma migrate deploy",
 		"setup:seed": "prisma db seed",
 		"start": "remix-serve build",
-		"start:mocks": "binode --require ./mocks -- @remix-run/serve:remix-serve build",
 		"format": "prettier --write .",
 		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+		"typecheck": "tsc -b",
 		"test": "vitest",
 		"test:cov": "vitest --coverage",
-		"test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"npx cypress open\"",
+		"test:e2e:dev": "playwright test",
 		"pretest:e2e:run": "npm run build",
-		"test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"npx cypress run\"",
-		"typecheck": "tsc -b && tsc -b cypress",
+		"test:e2e:run": "cross-env CI=true playwright test",
 		"validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"
 	},
 	"prettier": {
@@ -56,9 +57,9 @@
 		"react-dom": "^18.2.0"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.27.0",
 		"@remix-run/dev": "*",
 		"@remix-run/eslint-config": "*",
-		"@testing-library/cypress": "^8.0.3",
 		"@testing-library/dom": "8.19.0",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^13.4.0",
@@ -71,12 +72,9 @@
 		"@vitest/coverage-c8": "^0.24.0",
 		"autoprefixer": "^10.4.11",
 		"binode": "^1.0.5",
-		"c8": "^7.12.0",
 		"cross-env": "^7.0.3",
-		"cypress": "^10.8.0",
 		"eslint": "^8.23.1",
 		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-cypress": "^2.12.1",
 		"happy-dom": "^7.0.6",
 		"msw": "^0.47.2",
 		"npm-run-all": "^4.1.5",
@@ -94,7 +92,7 @@
 		"vitest": "^0.24.0"
 	},
 	"engines": {
-		"node": ">=14"
+		"node": ">=16"
 	},
 	"prisma": {
 		"seed": "ts-node --require tsconfig-paths/register prisma/seed.ts"

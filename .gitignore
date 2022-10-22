@@ -17,14 +17,14 @@ node_modules
 /public/build
 .env
 
-# Tests.
-/cypress/screenshots
-/cypress/videos
-/coverage
-
 # Prisma.
 /prisma/data.db
 /prisma/data.db-journal
+
+# Tests.
+/test-results/
+/playwright-report/
+/playwright/.cache/
 
 # Tailwind CSS.
 /app/styles/tailwind.css

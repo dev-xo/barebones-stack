@@ -23,25 +23,26 @@ export const meta: MetaFunction = () => {
 		charset: 'utf-8',
 		title: 'Welcome to Remix Barebones Stack!',
 		description:
-			'A robust create-remix app, that applies best practices into a clean, batteries included template. Deploys to Fly.io',
-		keywords: 'remix,remix-stack,typescript,sqlite,prisma,tailwindcss,fly.io',
+			'A starter focused Remix Stack, that applies best practices into a clean, batteries included template. Driven by Prisma ORM. Deploys to Fly.io',
+		keywords:
+			'remix,remix-stack,typescript,sqlite,postgresql,prisma,tailwindcss,fly.io',
 		'og:title': 'Remix Barebones Stack',
 		'og:type': 'website',
 		'og:url': 'https://barebones-stack.fly.dev',
 		'og:image':
-			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail-sqlite-v1.png',
+			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/Barebones-Thumbnail.png',
 		'og:card': 'summary_large_image',
 		'og:creator': '@DanielKanem',
 		'og:site': 'https://barebones-stack.fly.dev',
 		'og:description':
-			'A robust create-remix app, that applies best practices into a clean, batteries included template. Deploys to Fly.io',
+			'A starter focused Remix Stack, that applies best practices into a clean, batteries included template. Driven by Prisma ORM. Deploys to Fly.io',
 		'twitter:image':
-			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/thumbnail-sqlite-v1.png',
+			'https://raw.githubusercontent.com/dev-xo/dev-xo/main/barebones-stack/assets/images/Barebones-Thumbnail.png',
 		'twitter:card': 'summary_large_image',
 		'twitter:creator': '@DanielKanem',
 		'twitter:title': 'Remix Barebones Stack',
 		'twitter:description':
-			'A robust create-remix app, that applies best practices into a clean, batteries included template. Deploys to Fly.io',
+			'A starter focused Remix Stack, that applies best practices into a clean, batteries included template. Driven by Prisma ORM. Deploys to Fly.io',
 	}
 }
 

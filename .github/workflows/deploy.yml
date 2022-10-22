@@ -107,8 +107,8 @@ jobs:
       - name: 🌐 Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # - name: 🛠 Setup Database
-      # run: npx prisma migrate reset --force
+      - name: 🛠 Setup Database
+        run: npx prisma migrate reset --force
 
       - name: 🏗 Build
         run: npm run build

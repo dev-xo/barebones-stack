@@ -3,6 +3,7 @@ import { PassThrough } from 'stream'
 import { Response } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
 import { renderToPipeableStream } from 'react-dom/server'
+
 import isbot from 'isbot'
 
 const ABORT_DELAY = 5000
@@ -25,6 +26,7 @@ export default function handleRequest(
 			{
 				[callbackName]: () => {
 					const body = new PassThrough()
+
 					responseHeaders.set('Content-Type', 'text/html')
 
 					resolve(
@@ -36,13 +38,12 @@ export default function handleRequest(
 
 					pipe(body)
 				},
-
 				onShellError: (err: unknown) => {
 					reject(err)
 				},
-
 				onError: (error: unknown) => {
 					didError = true
+
 					console.error(error)
 				},
 			},

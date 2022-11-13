@@ -26,9 +26,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 		failureRedirect: '/login',
 	})
 
-	return json({
-		user,
-	})
+	return json({ user })
 }
 
 /**
@@ -57,7 +55,7 @@ export const action = async ({ request }: ActionArgs) => {
 		await deleteUser(userId)
 
 		/**
-		 * Redirects to 'x' destroying current Auth Session.
+		 * Redirects destroying current Auth Session.
 		 */
 		let session = await getSession(request.headers.get('Cookie'))
 

@@ -353,7 +353,6 @@ const initPostgresDeployEnvironment = async (rootDirectory) => {
 				/**
 				 * Replaces .env.example file.
 				 */
-				await fs.unlink(SQLITE_DEPLOY_WORKFLOW_PATH)
 				await fs.rename(POSTGRES_ENV_EXAMPLE_PATH, SQLITE_ENV_EXAMPLE_PATH)
 
 				/**
